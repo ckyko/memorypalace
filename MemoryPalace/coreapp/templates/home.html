@@ -1,6 +1,7 @@
 {% extends "index.html" %}
 {% block body %}
 {% include "header.html" %}
+{% load staticfiles %}
 <div id="index-banner" class="parallax-container">
   <div class="section no-pad-bot">
     <div class="container">
@@ -16,7 +17,7 @@
 
     </div>
   </div>
-  <div class="parallax"><img src="background1.jpg" alt="Unsplashed background img 1"></div>
+  <div class="parallax"><img src="{% static "images/background.jpg"%}" alt="Unsplashed background img 1"></div>
 </div>
 
 
@@ -33,7 +34,7 @@
 </div>
 <!--  Scripts-->
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="{ %static "js/materialize.js" %}"></script>
-<script src="{ %static "js/init.js" %}"></script>
+<script src="{% static "js/materialize.js"%}"></script>
+<script src="{% static "js/init.js"%}"></script>
 {% include "footer.html" %}
 {% endblock %}
