@@ -19,5 +19,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'coreapp.views.index'),
-	
+    url(r'^MemoryPalace/', 'coreapp.views.MemoryPalace'),
+
 ]
