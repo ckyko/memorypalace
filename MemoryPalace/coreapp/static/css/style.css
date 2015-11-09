@@ -56,12 +56,6 @@ footer.page-footer {
   margin: 0;
 }
 
-.drag{
-position:relative;
-cursor:hand;
-z-index: 100;
-}
-
 #roombg {
   position: relative; top: 10px; left: 50px; width: 1024px; height: 768px;
   background-image: url('../images/room.jpg');
