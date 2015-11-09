@@ -55,3 +55,18 @@ p {
 footer.page-footer {
   margin: 0;
 }
+
+#roombg {
+  position: relative; top: 10px; left: 50px; width: 1024px; height: 768px;
+  background-image: url('../images/room.jpg');
+}
+
+#drag-1, #drag-2 {
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
+}
+
+#drag-me::before {
+  content: "#" attr(id);
+  font-weight: bold;
+}
