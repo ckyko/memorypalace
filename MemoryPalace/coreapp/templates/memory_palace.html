@@ -1,22 +1,15 @@
 {% extends "index.html" %}
 {% block body %}
-{% include "header.html" %}
 {% load staticfiles %}
+{% include "header.html" %}
   <div id="index-banner" class="parallax-container">
     <div class="section no-pad-bot">
       <div class="container">
         <br><br>
         <h1 class="header center teal-text text-lighten-2">Memory Palace</h1>
-        <div id="roombg">
-          <img id="drag-1" class="draggable" src="{% static "images/char1.png"%}" />
-	        <img id="drag-1" class="draggable" src="{% static "images/char2.png"%}" />
-	        <img id="drag-1" class="draggable" src="{% static "images/char3.png"%}" />
-        </div>
-        <br><br>
+        {% include "room.html" %}
       </div>
     </div>
-    <div class="parallax"><img src="{% static "images/background.jpg"%}" alt="Unsplashed background img 1"></div>
-  </div>
   <div class="container">
     <div class="section">
       <div class="row">
@@ -25,8 +18,5 @@
       </div>
     </div>
   </div>
-  <!-- JS -->
-  <script language="javascript" type="text/javascript" src="{% static "js/interact.js"%}"></script>
-  <script language="javascript" type="text/javascript" src="{% static "js/jav.js"%}"></script>
 {% include "footer.html" %}
 {% endblock %}
