@@ -61,7 +61,8 @@ footer.page-footer {
   background-image: url('../images/room.jpg');
 }
 
-#drag-1, #drag-2 {
+.draggable{
+  position:absolute;
   -webkit-transform: translate(0px, 0px);
           transform: translate(0px, 0px);
 }
