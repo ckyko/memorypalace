@@ -67,7 +67,11 @@ footer.page-footer {
           transform: translate(0px, 0px);
 }
 
-#drag-me::before {
+img.draggable:hover{
+  border: 1px dashed black;
+}
+
+#drag-me::before:hover {
   content: "#" attr(id);
   font-weight: bold;
 }

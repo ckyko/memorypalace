@@ -4,7 +4,6 @@ from django.http import HttpResponse
 # Create your views here.
 data = { 'title': 'MemoryPalace'}
 def index(req):
-
     return render_to_response('home.html',data)
 
 def MemoryPalace(req):
