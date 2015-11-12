@@ -71,3 +71,8 @@ footer.page-footer {
   content: "#" attr(id);
   font-weight: bold;
 }
+
+#inputFile{
+  margin: 10px;
+  position: relative; top: 10px; left: 50px;
+}

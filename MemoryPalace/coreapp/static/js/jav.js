@@ -49,21 +49,36 @@ interact('.draggable')
     target.textContent = Math.round(event.rect.width) + '×' + Math.round(event.rect.height);
   });
 
-  function dragMoveListener (event) {
-    var target = event.target,
-        // keep the dragged position in the data-x/data-y attributes
-        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+function dragMoveListener (event) {
+var target = event.target,
+	// keep the dragged position in the data-x/data-y attributes
+	x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+	y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
 
-    // translate the element
-    target.style.webkitTransform =
-    target.style.transform =
-      'translate(' + x + 'px, ' + y + 'px)';
+// translate the element
+target.style.webkitTransform =
+target.style.transform =
+  'translate(' + x + 'px, ' + y + 'px)';
 
-    // update the posiion attributes
-    target.setAttribute('data-x', x);
-    target.setAttribute('data-y', y);
-  }
+// update the posiion attributes
+target.setAttribute('data-x', x);
+target.setAttribute('data-y', y);
+}
 
-  // this is used later in the resizing and gesture demos
-  window.dragMoveListener = dragMoveListener;
+// this is used later in the resizing and gesture demos
+window.dragMoveListener = dragMoveListener;
+  
+
+$(function(){
+   $("#file").change(function(e){
+		 var file = e.target.files||e.dataTransfer.files;
+		 alert(file[0])
+		 if(file){
+			 var reader = new FileReader();
+			 reader.onload=function(){
+					$("<img class='draggable' src='"+this.result+"'/>").appendTo("#roombg");
+			 }
+			reader.readAsDataURL(file[0]);
+		}
+  });
+})
