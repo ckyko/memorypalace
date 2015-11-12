@@ -61,15 +61,15 @@ interact('.draggable')
         x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
         y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
 
-    // translate the element
-    target.style.webkitTransform =
-    target.style.transform =
-      'translate(' + x + 'px, ' + y + 'px)';
+	// translate the element
+	target.style.webkitTransform =
+	target.style.transform =
+	  'translate(' + x + 'px, ' + y + 'px)';
 
-    // update the posiion attributes
-    target.setAttribute('data-x', x);
-    target.setAttribute('data-y', y);
-  }
+	// update the posiion attributes
+	target.setAttribute('data-x', x);
+	target.setAttribute('data-y', y);
+}
 
   // this is used later in the resizing and gesture demos
   window.dragMoveListener = dragMoveListener;
@@ -78,4 +78,19 @@ interact('.draggable')
   $(document).ready(function(){
     $('.slider').slider();
   });
-
+  
+//*** FOR HTE ROOM UPLOAD IMAGES ***
+$(function(){
+   $("#file").change(function(e){
+		 var file = e.target.files||e.dataTransfer.files;
+		 
+		 if(file){
+			 var reader = new FileReader();
+			 reader.onload=function(){
+					// append the "<img class='draggable' src=... />" to roombg
+					$("<img class='draggable' src='"+this.result+"'/>").appendTo("#roombg");
+			 }
+			reader.readAsDataURL(file[0]);
+		}
+  });
+})

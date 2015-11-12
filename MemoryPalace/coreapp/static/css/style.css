@@ -124,3 +124,10 @@ img.draggable:hover {
   z-index: 100;
   /* text-align: left; */
 }
+
+#inputFile{
+  margin: 10px;
+  position: relative; top: 10px; left: 50px;
+  color:#009688;
+
+}
