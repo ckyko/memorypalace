@@ -74,4 +74,8 @@ interact('.draggable')
   // this is used later in the resizing and gesture demos
   window.dragMoveListener = dragMoveListener;
 
+//*** FOR THE HOME PAGE SLIDER ***
+  $(document).ready(function(){
+    $('.slider').slider();
+  });
 
