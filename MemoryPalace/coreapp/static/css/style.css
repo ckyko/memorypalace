@@ -127,7 +127,16 @@ img.draggable:hover {
 
 #inputFile{
   margin: 10px;
+  position: relative; top: 10px; left: -100px;
+  color:#009688;
+  float:left;
+  width:200px;
+}
+
+#saveFile{
+  margin: 10px;
   position: relative; top: 10px; left: 50px;
   color:#009688;
-
+  float:right;
+  width:200px;
 }
