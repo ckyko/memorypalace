@@ -58,7 +58,7 @@ footer.page-footer {
 
 #PalaceElementsContainer {
   position: relative; top: 10px; right: 150px;
-  height: 750px; width:1600px;
+  height: 750px; width:1490px;
 }
 
 #roombg {
@@ -72,20 +72,29 @@ footer.page-footer {
 #vertscrollbox {
   display: inline-block; *display: inline;
   width: 200px; height: 720px;
+  padding: 10px;
   position: relative; left: 10px;
   vertical-align: top;
   background-color: #EFEFEF;
-  border-style: solid;
   border: 2px solid black;
+  overflow-y: auto;
 }
 
-.draggable{
-  position:absolute;
+.draggable {
+  position:absolute; z-index: 100;
   -webkit-transform: translate(0px, 0px);
           transform: translate(0px, 0px);
+  min-width: 50px; min-height: 50px;
 }
 
-img.draggable:hover{
+.scrollBoxImg {
+  display: block;
+  margin: auto;
+  padding: 5px;
+  width: 150px; height: auto;
+}
+
+img.draggable::hover {
   border: 1px dashed black;
 }
 
