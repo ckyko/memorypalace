@@ -80,13 +80,6 @@ footer.page-footer {
   overflow-y: auto;
 }
 
-.draggable {
-  position:absolute; z-index: 100;
-  -webkit-transform: translate(0px, 0px);
-          transform: translate(0px, 0px);
-  min-width: 50px; min-height: 50px;
-}
-
 .scrollBoxImg {
   display: block;
   margin: auto;
@@ -94,8 +87,17 @@ footer.page-footer {
   width: 150px; height: auto;
 }
 
-img.draggable::hover {
+.draggable {
+  position: absolute; z-index: 10;
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
+  width: 15%;
+  min-width: 50px; min-height: 50px;
+}
+
+img.draggable:hover {
   border: 1px dashed black;
+  z-index: 11;
 }
 
 #drag-me::before {
