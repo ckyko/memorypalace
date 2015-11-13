@@ -2,11 +2,19 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 
 # Create your views here.
-def room(req):
+data = { 'title': 'MemoryPalace', 'char1': 'images/char1.png' }
 
-    return render_to_response('room.html',{ 'title': 'room'})
-	
-	
 def index(req):
+    return render_to_response('home.html',data)
 
-    return render_to_response('index.html',{ 'title': 'homepage'})
+def MemoryPalace(req):
+    return render_to_response('memory_palace.html',data)
+
+def about(req):
+    return render_to_response('about.html',data)
+
+def contact(req):
+    return render_to_response('contact.html',data)
+
+def login(req):
+    return render_to_response('login.html',data)
