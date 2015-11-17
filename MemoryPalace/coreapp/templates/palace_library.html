@@ -1,0 +1,55 @@
+{% extends "index.html" %}
+{% load staticfiles %}
+{% block body %}
+<div class="container">
+  <br></br>
+  <div class="row">
+   <div class="col s12">
+     <ul class="tabs">
+       <li class="tab col s6 white white-text tab-accent-red"><a class="active" href="#Public">Public</a></li>
+       <li class="tab col s6 white white-text tab-accent-red"><a href="#Private">Private</a></li>
+     </ul>
+   </div>
+   <div id="Public" class="col s12">
+     <div class="col s12 m3">
+            <div class="card small">
+              <div class="card-image">
+                <img src="{% static "images/previews/pre2.jpg"%}">
+                <span class="card-title">Palace 1</span>
+              </div>
+              <div class="card-content">
+                <p>Palace quicknote</p>
+              </div>
+              <div class="card-action">
+                <a class="btn-floating btn-large red">
+                    <i class="large material-icons">play_circle_filled</i>
+                <a class="btn-floating btn-large red" href="/MemoryPalace">
+                    <i class="large material-icons">mode_edit</i>
+                </a>
+              </div>
+            </div>
+       </div>
+   </div>
+   <div id="Private" class="col s12">
+     <div class="col s12 m3">
+            <div class="card small">
+              <div class="card-image">
+                <img src="{% static "images/previews/pre2.jpg"%}">
+                <span class="card-title">Palace 1</span>
+              </div>
+              <div class="card-content">
+                <p>Palace quicknote</p>
+              </div>
+              <div class="card-action">
+                <a class="btn-floating btn-large red">
+                    <i class="large material-icons">play_circle_filled</i>
+                <a class="btn-floating btn-large red" href="/MemoryPalace">
+                    <i class="large material-icons">mode_edit</i>
+                </a>
+              </div>
+            </div>
+       </div>
+   </div>
+ </div>
+ </div>
+{% endblock %}
