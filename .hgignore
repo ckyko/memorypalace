@@ -4,4 +4,8 @@ syntax: glob
 *.log
 *.pyc
 *~
+*.git/*
+*.gitignore*
+*Procfile
+*/.idea/*
 *db.sqlite3

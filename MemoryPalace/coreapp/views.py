@@ -18,3 +18,6 @@ def contact(req):
 
 def login(req):
     return render_to_response('login.html',data)
+
+def palace_library(req):
+    return render_to_response('palace_library.html',data)
