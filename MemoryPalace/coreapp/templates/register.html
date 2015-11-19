@@ -1,9 +1,8 @@
 {% extends "index.html" %}
 {% block body %}
 <div style="width:300px; margin: auto;">
-    <h4>Register</h4>
+
     <form method="post" enctype="multipart/form-data" action="">
-        <fieldset>
             {%csrf_token%}
             {% if errors%}
                 {% for error in errors %}
@@ -13,26 +12,30 @@
                 </div>
                 {%endfor%}
             {%endif%}
-              <div >
-                <label  for="id_username"><p>username：</p></label>
-                <input  id="id_username" maxlength="30" placeholder=" a-z or 0-9" name="username" type="text" />
-              </div>
-            <div >
-                <label  for="email"><p>Email：</p></label>
-                <input  id="email" maxlength="30" placeholder=" example@mail.com" name="email" type="email" />
-              </div>
-              <div>
-                <label  for="id_password1"><p>password：</p></label>
-                <input  id="id_password1" name="password1" placeholder="must at lease 5 character" type="password" />
-              </div>
-              <div>
-                <label  for="id_password2"><p>conform password：</p></label>
-                <input  id="id_password2" name="password2" type="password" />
-              </div>
-              <div>
-              <input type="submit"  value="submit">
-              </div>
-        </fieldset>
+
+                <div class="input-field col s12">
+                  <input id="id_username"  maxlength="30"  name="username" type="text"  class="validate" >
+                  <label for="id_username"> username </label>
+                </div>
+
+                <div class="input-field col s12">
+                  <input id="email"  maxlength="30"  name="email" type="email"  class="validate" >
+                  <label for="email"> Email </label>
+                </div>
+
+                <div class ="input-field col s12">
+                  <input id="id_password1" name="password1" type="password"  class="validate" >
+                  <label for="id_password1"> Password </label>
+                </div>
+
+                <div class ="input-field col s12">
+                  <input id="id_password2" name="password2"  type="password"  class="validate" >
+                  <label for="id_password2">Confirm your password </label>
+                </div>
+
+                <div>
+                  <input type="submit"  value="submit">
+                </div>
     </form>
 </div>
 
