@@ -6,7 +6,10 @@ from django.contrib.auth.forms import forms
 
 # Create your views here.
 data = {'title': 'MemoryPalace', 'char1': 'images/char1.png'}
-
+header = '''
+      <li><a href="/register">Register</a></li>
+      <li><a href="/login">Login</a></li>
+        '''
 
 def index(req):
 
@@ -28,12 +31,14 @@ def contact(req):
 def login(req):
     if req.method == "POST":
         errors = []
-        name = req.POST['username']
-        password = req.POST['password']
+        name = req.POST.get('username', '')
+        password = req.POST.get('password', '')
+        print(name)
+        print(password)
         user = authenticate(username = name, password=password)
         if user is not None:
             if user.is_active:
-                login(req, user)
+                login(user)
                 req.session['username'] = name
                 return render_to_response('home.html',data)
             else:
@@ -42,7 +47,7 @@ def login(req):
                 temp['errors'] = errors
                 return render_to_response('login.html', temp)
         else:
-            errors.append('invalid login')
+            errors.append('invalid username or password')
             temp = data
             temp['errors'] = errors
             return render_to_response('login.html', temp)

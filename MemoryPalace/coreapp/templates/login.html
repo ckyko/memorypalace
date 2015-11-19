@@ -4,15 +4,23 @@
 <div class = "row">
   <form class = "col s3" method="post" enctype="multipart/form-data" action="">{% csrf_token %}
       <div class="row">
+          {% if errors%}
+                {% for error in errors %}
+                <div>
+                  <a data-dismiss="alert">×</a>
+                  <strong>Error!</strong> {{error}}
+                </div>
+                {%endfor%}
+            {%endif%}
         <div class="input-field col s12">
-          <input id="Username" type="text" class="validate">
+          <input id="Username" name="username" type="text" class="validate">
           <label for="Username"> Username </label>
         </div>
       </div>
 
       <div class="row">
         <div class ="input-field col s12">
-          <input id="password" type="text" class="validate">
+          <input id="password" name="password" type="text" class="validate">
           <label for="password"> Password </label>
         </div>
 
