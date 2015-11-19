@@ -1,14 +1,6 @@
 {% load staticfiles %}
 <div class="outerscrollbox">
-  <div class="center-align">
-    <form action="/saveImg" method="get">
-        <input type="file" id='file' accept="image/*"style="visibility: hidden; width: 1px; height: 1px" multiple/>
-        <a class="btn-floating btn-large waves-effect waves-light teal" onclick="document.getElementById('file').click(); return false">
-          <i class="material-icons">add</i>
-        </a>
-        <button type="button" id="saveImg">submit</button>
-    </form>
-  </div>
+  {% include "search.html" %}
   <div id="vertscrollbox">
     <img class="scrollBoxImg" src="{% static "images/memory_objects/char1.png"%}" />
     <img class="scrollBoxImg" src="{% static "images/memory_objects/char2.png"%}" />
