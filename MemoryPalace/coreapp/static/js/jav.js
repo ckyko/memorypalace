@@ -97,6 +97,7 @@ $(function(){
 
 })
 
+/* KAYINGS
 $(document).ready(function(){
   $("#saveImg").click(function(){
     var img = $("#file").val();
@@ -104,7 +105,7 @@ $(document).ready(function(){
     $.get("/saveImg",{'img':img}, function(ret){
         $('#vertscrollbox').append(ret);
     })
-
+*/
 $(document).ready(function(){
     $('.scrollBoxImg').click(function(){
         $("<img class='draggable' src='"+$(this).attr('src')+"'/>").appendTo("#roombg");
