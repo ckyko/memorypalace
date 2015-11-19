@@ -78,17 +78,17 @@ interact('.draggable')
   $(document).ready(function(){
     $('.slider').slider();
   });
-  
+
 //*** FOR HTE ROOM UPLOAD IMAGES ***
 $(function(){
    $("#file").change(function(e){
 		 var file = e.target.files||e.dataTransfer.files;
-		 
+
 		 if(file){
 			 var reader = new FileReader();
 			 reader.onload=function(){
 					// append the "<img class='draggable' src=... />" to roombg
-					$("<img class='draggable' src='"+this.result+"'/>").appendTo("#roombg");
+					$("<img class='scrollBoxImg' src='"+this.result+"'/>").appendTo("#vertscrollbox");
 			 }
 			reader.readAsDataURL(file[0]);
 		}

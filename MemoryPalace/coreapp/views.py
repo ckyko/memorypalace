@@ -26,6 +26,7 @@ def contact(req):
 def login(req):
     return render_to_response('login.html',data)
 
+
 def register(req):
     if req.method == "POST":
         userForm = RegisterForm(req.POST, req.FILES)
@@ -42,4 +43,7 @@ def register(req):
     else:
         userForm = RegisterForm()
 
-    return render_to_response('register.html', {'userForm':userForm})
+    return render_to_response('register.html', {'userForm':userForm})=======
+
+def palace_library(req):
+    return render_to_response('palace_library.html',data)
