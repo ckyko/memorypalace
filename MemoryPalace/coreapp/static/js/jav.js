@@ -92,5 +92,17 @@ $(function(){
 			 }
 			reader.readAsDataURL(file[0]);
 		}
+//		sentImg();
   });
+
 })
+
+$(document).ready(function(){
+  $("#saveImg").click(function(){
+    var img = $("#file").val();
+
+    $.get("/saveImg",{'img':img}, function(ret){
+        $('#vertscrollbox').append(ret);
+    })
+  });
+});

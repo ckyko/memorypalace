@@ -34,6 +34,7 @@ def login(req):
         if user is not None:
             if user.is_active:
                 login(req, user)
+                req.session['username'] = name
                 return render_to_response('home.html',data)
             else:
                 errors.append('disabled account')
@@ -88,3 +89,7 @@ def register(req):
         return render_to_response('register.html', temp)
     else:
         return render_to_response('register.html', data)
+
+
+def saveImg(req):
+    pass
