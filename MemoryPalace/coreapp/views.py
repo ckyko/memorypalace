@@ -21,3 +21,7 @@ def login(req):
 
 def palace_library(req):
     return render_to_response('palace_library.html',data)
+
+def testing(req):
+    data["test"] = "char2.png"
+    return render_to_response('test.html',data)

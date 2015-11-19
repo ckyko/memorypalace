@@ -10,7 +10,7 @@ class UserPalaces(models.Model):
     PalaceName = models.CharField(max_length=200)
     BackgroundImage = models.CharField(max_length=200)
 
-class PalaceObjects(models.Model):
+class PalaceObject(models.Model):
     #Username = models.ForeignKey(Users)
     #  #PalaceName = models.ForeignKey(UserPalaces)
     ObjectName= models.CharField(max_length=200)

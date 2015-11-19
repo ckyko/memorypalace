@@ -24,5 +24,5 @@ urlpatterns = [
     url(r'^MemoryPalace/', 'coreapp.views.MemoryPalace'),
     url(r'^login/', 'coreapp.views.login'),
     url(r'^palace_library/', 'coreapp.views.palace_library'),
-
+    url(r'^testing','coreapp.views.testing')
 ]
