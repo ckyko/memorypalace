@@ -84,6 +84,7 @@ footer.page-footer {
   margin: auto;
   padding: 5px;
   width: 150px; height: auto;
+  cursor:crosshair;
 }
 
 .draggable {
