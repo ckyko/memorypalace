@@ -1,21 +1,25 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class Users(models.Model):
-    Username = models.CharField(max_length=20,primary_key=True)
-    Email = models.CharField(max_length=200)
-    #EncryptedPassword
+
 
 class UserPalaces(models.Model):
-    #Username = models.ForeignKey(Users)
-    PalaceName = models.CharField(max_length=200)
-    BackgroundImage = models.CharField(max_length=200)
+    palaceName = models.CharField(max_length=200)
+    # BackgroundImage = models.CharField(max_length=200)
+    backgroundImage = models.ImageField(upload_to='./upload/')
+    user = models.ForeignKey(User)
+
 
 class PalaceObjects(models.Model):
-    #Username = models.ForeignKey(Users)
-    #  #PalaceName = models.ForeignKey(UserPalaces)
-    ObjectName= models.CharField(max_length=200)
-    #FileLocation(Coordinates on page)
-    Description = models.CharField(max_length=200)
-    ObjectImage = models.CharField(max_length=200)
+
+    objectName= models.CharField(max_length=200)
+    description = models.CharField(max_length=200)
+    # ObjectImage = models.CharField(max_length=200)
+    objectImage = models.ImageField(upload_to='./upload/')
+
+
+    userPalaces = models.ForeignKey(UserPalaces)
+
+
     def __unicode__(self):
         return self.ObjectName
