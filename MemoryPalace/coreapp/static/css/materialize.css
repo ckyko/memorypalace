@@ -5736,7 +5736,7 @@ small {
     width: 15%; }
     .tabs .tab a {
       /*color: #ee6e73;*/
-       color: #fafafa;
+       color: #004d40;
       display: block;
       width: 100%;
       height: 100%;
@@ -5747,16 +5747,17 @@ small {
       transition: color .28s ease; }
       .tabs .tab a:hover {
       /*color: #f9c9cb;*/
-        color: #fafafa; }
+        color: #004d40; }
     .tabs .tab.disabled a {
     /*  color: #f9c9cb; */
-      color: #fafafa;
+      color: #004d40;
       cursor: default; }
   .tabs .indicator {
     position: absolute;
     bottom: 0;
-    height: 2px;
-    background-color: #ffc107;
+    /* height: 2px; */
+    height: 5px;
+    background-color: #004d40;
     will-change: left, right; }
 
 .tabs .tab {

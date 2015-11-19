@@ -94,3 +94,9 @@ $(function(){
 		}
   });
 })
+
+$(document).ready(function(){
+    $('.scrollBoxImg').click(function(){
+        $("<img class='draggable' src='"+$(this).attr('src')+"'/>").appendTo("#roombg");
+    });
+});

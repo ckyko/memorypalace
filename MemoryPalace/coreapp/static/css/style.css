@@ -5,7 +5,6 @@
  *
  * Made By MaterializeCSS.com
  */
-
 nav ul a,
 nav .brand-logo {
   color: #444;
@@ -58,23 +57,24 @@ footer.page-footer {
 
 #PalaceElementsContainer {
   position: relative; top: 10px; right: 150px;
-  height: 750px; width:1490px;
+  height: 768px; width:1360px;
 }
 
 #roombg {
   display: inline-block; *display: inline;
-  width: 1280px; height: 720px;
+  width: 1024px; height: 720px;
   vertical-align: top;
   border: 2px solid black;
+  background-repeat: no-repeat;
   background-image: url('../images/rooms/room2.jpg');
 }
 .outerscrollbox {
   display: inline-block; *display: inline;
-  width: 200px; height: 720px;
+  width: 276px; height: 720px;
   padding: 10px;
   position: relative; left: 10px;
   vertical-align: top;
-  background-color: #EFEFEF;
+  background-color: #e0f2f1;
   border: 2px solid black;
   overflow-y: auto;
   overflow-x: hidden;
@@ -122,4 +122,10 @@ img.draggable:hover {
   bottom: 60px;
   z-index: 100;
   /* text-align: left; */
+}
+
+#search {
+  height:60px;
+  font-size:18px;
+  color: #004d40;
 }
