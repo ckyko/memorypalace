@@ -1,0 +1,18 @@
+Users
+	Username(charset) Primary Key
+	Email(charset)
+	EncryptedPassword
+
+UserPalaces
+	Username(charset) Unique foreign Key
+	PalaceName(charset) Unique Key
+	BackgroundImage(Image)
+
+PalaceObjects
+	Username(charset) Unique foreign Key
+	PalaceName(charset) Unique Forign Key
+	ObjectName(charset) Unique key
+
+	ObjectImage(image)
+	FileLocation(Coordinates on page)
+	Description(charset)

@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+{% block body %}
+{% load staticfiles %}
+  <div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <br><br>
+        <h1 class="header center teal-text text-darken-4">Memory Palace</h1>
+          <div id="PalaceElementsContainer" class="valign-wrapper">
+            {% include "room.html" %}
+			      {% include "vertscrollbox.html" %}
+		      </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
