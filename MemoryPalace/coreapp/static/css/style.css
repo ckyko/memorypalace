@@ -130,3 +130,15 @@ img.draggable:hover {
   font-size:18px;
   color: #004d40;
 }
+
+/* palace_library Private */
+#palace_card {
+  width:240px;
+  height:290px;
+  position: relative;
+}
+
+#add_palace_card {
+    top: 120px; left: 90px;
+    position: absolute;
+}
