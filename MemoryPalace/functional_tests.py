@@ -11,7 +11,7 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
-    def test_hompage(self):
+    def test_1_hompage(self):
         # Amber needs to memorize som chemistry terms and goes to MemoryPalace
         # to check out its homepage
         self.browser.get('http://localhost:8000')
@@ -21,8 +21,7 @@ class NewVisitorTest(unittest.TestCase):
         header_text = self.browser.find_element_by_tag_name('h1').text
         self.assertIn('Welcome!', header_text)
 
-    def test_register(self):
-
+    def test_2_register(self):
         self.browser.get('http://localhost:8000/register')
         self.assertIn('MemoryPalace', self.browser.title)
         element = self.browser.find_element_by_id("id_username")
@@ -34,7 +33,18 @@ class NewVisitorTest(unittest.TestCase):
         element = self.browser.find_element_by_id("id_password2")
         element.send_keys("testuser")
         self.browser.find_element_by_id("register_submit").click()
-        self.assertIn('http://localhost:8000', self.browser.current_url)
+        self.assertEquals(self.browser.current_url, "http://localhost:8000/" );
+
+    def test_3_login(self):
+        self.browser.get('http://localhost:8000/login')
+        self.assertIn('MemoryPalace', self.browser.title)
+        element = self.browser.find_element_by_id("username")
+        element.send_keys("testuser")
+        element = self.browser.find_element_by_id("password")
+        element.send_keys("testuser")
+        self.browser.find_element_by_id("login_submit").click()
+        self.assertEquals(self.browser.current_url, "http://localhost:8000/" );
+
 
 if __name__ == '__main__':
     unittest.main()
