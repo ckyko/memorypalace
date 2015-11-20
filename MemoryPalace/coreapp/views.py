@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, HttpResponseRedirect
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -28,7 +28,7 @@ def contact(req):
     return render_to_response('contact.html', data)
 
 
-def login(req):
+def log_in(req):
     if req.method == "POST":
         errors = []
         name = req.POST.get('username', '')
@@ -38,9 +38,9 @@ def login(req):
         user = authenticate(username = name, password=password)
         if user is not None:
             if user.is_active:
-                login(user)
+                login(req,user)
                 req.session['username'] = name
-                return render_to_response('home.html',data)
+                return HttpResponseRedirect('/')
             else:
                 errors.append('disabled account')
                 temp = data
@@ -89,7 +89,7 @@ def register(req):
                     password=password1,
                     )
                 user.save()
-                return render_to_response('home.html', data)
+                return HttpResponseRedirect('/')
         temp['errors'] = errors
         return render_to_response('register.html', temp)
     else:
