@@ -65,6 +65,14 @@ def palace_library(req):
 
 
 def register(req):
+    ####This is for functionality test. Delete test user and register again
+    try:
+        u = User.objects.get(username='testuser')
+    except User.DoesNotExist:
+        pass
+    else:
+        u.delete()
+    ####
     errors = []
     temp = data
     if req.method == 'POST':
