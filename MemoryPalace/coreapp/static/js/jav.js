@@ -92,5 +92,22 @@ $(function(){
 			 }
 			reader.readAsDataURL(file[0]);
 		}
+//		sentImg();
   });
+
 })
+
+/* KAYINGS
+$(document).ready(function(){
+  $("#saveImg").click(function(){
+    var img = $("#file").val();
+
+    $.get("/saveImg",{'img':img}, function(ret){
+        $('#vertscrollbox').append(ret);
+    })
+*/
+$(document).ready(function(){
+    $('.scrollBoxImg').click(function(){
+        $("<img class='draggable' src='"+$(this).attr('src')+"'/>").appendTo("#roombg");
+    });
+});
