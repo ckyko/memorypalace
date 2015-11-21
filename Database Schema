@@ -1,18 +1,24 @@
 Users
-	Username(charset) Primary Key
-	Email(charset)
+	Username(CharField) Primary Key
+	Email(CharField)
 	EncryptedPassword
 
-UserPalaces
+UserPalace
 	Username(charset) Unique foreign Key
-	PalaceName(charset) Unique Key
+	PalaceName(CharField) Unique Key
+	Public(Boolean)
+	NumberOfRooms(int)
+
+PalaceRoom
+	Username(CharField) Unique Foreign Key
+	PalaceName(CharField) Unique Foreign Key
+	RoomName Unique(CharField) Unique Key
 	BackgroundImage(Image)
 
 PalaceObjects
-	Username(charset) Unique foreign Key
-	PalaceName(charset) Unique Forign Key
-	ObjectName(charset) Unique key
-
+	Username(CharField) Unique foreign Key
+	PalaceName(CharField) Unique Forign Key
+	ObjectName(CharField) Unique key
 	ObjectImage(image)
 	FileLocation(Coordinates on page)
-	Description(charset)
+	Description(CharField)
