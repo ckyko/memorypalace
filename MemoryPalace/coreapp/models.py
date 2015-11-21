@@ -10,7 +10,7 @@ class UserPalaces(models.Model):
     user = models.ForeignKey(User,null=True)
 
 
-class PalaceObjects(models.Model):
+class PalaceObject(models.Model):
 
     objectName= models.CharField(max_length=200)
     description = models.CharField(max_length=200)

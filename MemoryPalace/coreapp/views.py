@@ -63,6 +63,9 @@ def logout(req):
 def palace_library(req):
     return render_to_response('palace_library.html', data)
 
+def testing(req):
+    data['test'] = "images/memory_objects/char2.png"
+    return render_to_response('test.html',data)
 
 def register(req):
     errors = []
