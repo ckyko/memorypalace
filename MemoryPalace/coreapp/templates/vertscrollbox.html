@@ -1,5 +1,9 @@
 {% load staticfiles %}
 <div class="outerscrollbox">
+  <input type="file" id="file" accept="image/*" style="visibility: hidden; width: 1px; height: 1px" multiple/>
+  <a class="btn-floating btn-small waves-effect waves-light teal accent-4" onclick="document.getElementById('file').click(); return false">
+    <i class="material-icons">add</i>
+  </a>
   <div id="vertscrollbox">
     <img class="scrollBoxImg" src="{% static "images/memory_objects/char1.png"%}" />
     <img class="scrollBoxImg" src="{% static "images/memory_objects/char2.png"%}" />
