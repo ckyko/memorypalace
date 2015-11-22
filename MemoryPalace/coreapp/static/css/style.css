@@ -147,3 +147,8 @@ img.draggable:hover {
   overflow-x: hidden;
 
 }
+
+#modal_login{
+  height:350px;
+  width:350px;
+}

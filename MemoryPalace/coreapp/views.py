@@ -8,7 +8,7 @@ from django.contrib.auth.forms import forms
 data = {'title': 'MemoryPalace', 'char1': 'images/char1.png'}
 header = '''
       <li><a href="/register">Register</a></li>
-      <li><a href="/login">Login</a></li>
+      <li><a class="modal-trigger" href="#modal_login">Login</a></li>
         '''
 
 def index(req):
