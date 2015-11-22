@@ -1,43 +1,20 @@
 {% extends "index.html" %}
-{% load staticfiles %}
 {% block body %}
 <div class="container">
   <br></br>
+  <ul class="tabs">
+    <li class="tab col s6 teal lighten-5"><a class="active" href="#Public">Public</a></li>
+    <li class="tab col s6 teal lighten-5"><a href="#Private">Private</a></li>
+  </ul>
   <div class="row">
-   <div class="col s12">
-     <ul class="tabs">
-       <li class="tab col s6 teal lighten-5"><a class="active" href="#Public">Public</a></li>
-       <li class="tab col s6 teal lighten-5"><a href="#Private">Private</a></li>
-     </ul>
+    <div id="Public" class="col s12">
+      {% include "private_palace_card.html" %}
    </div>
-   <div id="Public" class="col s12">
-     <div class="col s12 m3">
-            <div class="card small">
-              <div class="card-image">
-                <img src="{% static "images/previews/pre2.jpg"%}">
-                <span class="card-title">Palace 1</span>
-              </div>
-              <div class="card-content">
-                <p>Palace quicknote</p>
-              </div>
-              <div class="card-action">
-                <a class="btn-floating btn-large teal accent-4">
-                    <i class="large material-icons">play_circle_filled</i>
-                </a>
-                <a class="btn-floating btn-large teal accent-4" href="/MemoryPalace">
-                    <i class="large material-icons">mode_edit</i>
-                </a>
-              </div>
-            </div>
-       </div>
-   </div>
-   <div id="Private" class="col s12">
-     <div class="card-panel col s12 m3 hoverable" id="palace_card" onclick="document.getElementById('file').click(); return false">
-       <a class="btn-floating btn-large waves-effect waves-light teal accent-4" id="add_palace_card">
-         <i class="material-icons">add</i>
-       </a>
-     </div>
-   </div>
- </div>
- </div>
+    <div id="Private" class="col s12">
+      <div class="card-panel col s12 m3 hoverable" id="private_palace_card">
+        <i class="large material-icons" id="private_add_palace_card">add</i>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
