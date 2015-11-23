@@ -71,8 +71,8 @@ footer.page-footer {
 .outerscrollbox {
   display: inline-block; *display: inline;
   width: 276px; height: 720px;
-  padding: 10px;
-  position: relative; left: 10px;
+  padding: 20px;
+  position: relative; right: 10px;
   vertical-align: top;
   background-color: #e0f2f1;
   border: 2px solid black;
