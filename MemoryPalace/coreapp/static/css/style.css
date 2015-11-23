@@ -131,12 +131,13 @@ img.draggable:hover {
   color: #004d40;
 }
 
-/* palace_library Private */
-#private_palace_card {
+/* palace_library Private and Public */
+#private_palace_card, #public_palace_card {
   width:240px;
   height:290px;
   position: relative;
 }
+
 
 #private_add_palace_card {
     top: 90px; left: 75px;
