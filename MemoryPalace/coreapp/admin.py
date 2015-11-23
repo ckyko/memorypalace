@@ -3,6 +3,7 @@ from .models import *
 
 # Register your models here.
 
+admin.site.register(User)
 admin.site.register(UserPalace)
 admin.site.register(PalaceRoom)
 admin.site.register(PalaceObject)
