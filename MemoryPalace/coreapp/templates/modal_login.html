@@ -1,31 +1,24 @@
-<!-- Modal Structure -->
-<div id="modal_login" class="modal modal-fixed-footer">
-  <div class="modal-content">
-    <div class = "row">
-      <form class = "col s12" method="post" enctype="multipart/form-data" action="">
-          <div class="row">
-            {% csrf_token %}
-              {% if errors%}
-                    {% for error in errors %}
-                    <div>
-                      <a data-dismiss="alert">×</a>
-                      <strong>Error!</strong> {{error}}
-                    </div>
-                    {%endfor%}
-                {%endif%}
-            <div class="input-field col s12">
-              <input id="username" name="username" type="text" class="validate">
-              <label for="username"> Username </label>
-            </div>
+<div class = "row" id=modal_login>
+  <form class = "col s12" method="post" enctype="multipart/form-data" action="">
+      {% csrf_token %}
+      {% if errors%}
+        {% for error in errors %}
+          <div>
+            <a data-dismiss="alert">×</a>
+            <strong>Error!</strong> {{error}}
           </div>
-          <div class ="input-field col s12">
-              <input id="password" name="password" type="password" class="validate">
-              <label for="password"> Password </label>
-            </div>
-          </div>
-      </form>
+          {%endfor%}
+        {%endif%}
+      <div class="input-field col s12">
+        <input id="username" name="username" type="text" class="validate">
+        <label for="username"> Username </label>
+      </div>
+    <div class ="input-field col s12">
+      <input id="password" name="password" type="password" class="validate">
+      <label for="password"> Password </label>
     </div>
-  <div class="modal-footer">
-    <button id="login_submit" class="btn waves-effect waves-light" type="submit" name="action">Login </button>
-  </div>
+    <div>
+        <button id="register_submit" class="btn waves-effect waves-light" type="submit" name="action">Login</button>
+    </div>
+  </form>
 </div>
