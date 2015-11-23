@@ -118,3 +118,26 @@ $(document).ready(function(){
       $().appendTo("#Private");
     });
 });
+
+var counter=0;
+function create_room(){
+  if(counter<7){
+    var create_room = document.createElement('div');
+    create_room.className = 'create_room';
+    create_room.className += " " + "hoverable" + " " + "card-panel";
+    create_room.id = 'id_create_room';
+    var cancel = document.createElement('div');
+    cancel.className = 'cancel';
+    cancel.innerHTML = 'close';
+    cancel.onclick = function (e) { create_room.parentNode.removeChild(create_room) };
+    var message = document.createElement('span');
+    message.innerHTML = "This is a test message";
+    create_room.appendChild(message);
+    create_room.appendChild(cancel);
+    $(create_room).appendTo(".room_store");
+    counter++;
+  }
+  else {
+    document.getElementById("background_card").disabled=true;
+  }
+};

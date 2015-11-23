@@ -56,14 +56,13 @@ footer.page-footer {
 }
 
 #PalaceElementsContainer {
-  position: relative; top: 10px; right: 150px;
+  position: relative; top: 10px; right: 5px;
   height: 768px; width:1360px;
 }
 
 #roombg {
   display: inline-block; *display: inline;
   width: 1024px; height: 720px;
-  vertical-align: top;
   border: 2px solid black;
   background-repeat: no-repeat;
   background-image: url('../images/rooms/room2.jpg');
@@ -72,8 +71,7 @@ footer.page-footer {
   display: inline-block; *display: inline;
   width: 276px; height: 720px;
   padding: 20px;
-  position: relative; right: 10px;
-  vertical-align: top;
+  position: relative; right: 5px;
   background-color: #e0f2f1;
   border: 2px solid black;
   overflow-y: auto;
@@ -84,7 +82,7 @@ footer.page-footer {
   margin: auto;
   padding: 5px;
   width: 150px; height: auto;
-  cursor:crosshair;
+  cursor:cell;
 }
 
 .draggable {
@@ -152,4 +150,39 @@ img.draggable:hover {
 #modal_register_login{
   height:520px;
   width:350px;
+}
+
+.horscrollbox {
+  position: relative; bottom: 30px; right: 10px;
+  width: 1310px; height: 200px;
+  padding: 20px;
+  background-color: #e0f2f1;
+  border: 2px solid black;
+  overflow-y: hidden;
+  overflow-x: auto;
+  display:table;
+}
+.roomstore {
+  display:table-row;
+}
+#background_card {
+  width:150px;
+  height:150px;
+  cursor:pointer;
+  position: relative;
+  display: table-cell;
+}
+#background_add {
+    top: 30px;
+    right: 30px;
+    cursor:inherit;
+    position: absolute;
+}
+#id_create_room{
+  background-color: #ffffff;
+  width:150px;
+  height:150px;
+  cursor:pointer;
+  position: relative; left:10px;
+  display: table-cell;
 }
