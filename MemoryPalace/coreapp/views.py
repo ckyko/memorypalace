@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, HttpResponseRedirect
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -8,7 +8,7 @@ from django.contrib.auth.forms import forms
 data = {'title': 'MemoryPalace', 'char1': 'images/char1.png'}
 header = '''
       <li><a href="/register">Register</a></li>
-      <li><a href="/login">Login</a></li>
+      <li><a class="modal-trigger" href="#modal_login">Login</a></li>
         '''
 
 def index(req):
@@ -28,7 +28,7 @@ def contact(req):
     return render_to_response('contact.html', data)
 
 
-def login(req):
+def log_in(req):
     if req.method == "POST":
         errors = []
         name = req.POST.get('username', '')
@@ -38,9 +38,9 @@ def login(req):
         user = authenticate(username = name, password=password)
         if user is not None:
             if user.is_active:
-                login(user)
+                login(req,user)
                 req.session['username'] = name
-                return render_to_response('home.html',data)
+                return HttpResponseRedirect('/')
             else:
                 errors.append('disabled account')
                 temp = data
@@ -68,6 +68,14 @@ def testing(req):
     return render_to_response('test.html',data)
 
 def register(req):
+    ####This is for functionality test. Delete test user and register again
+    try:
+        u = User.objects.get(username='testuser')
+    except User.DoesNotExist:
+        pass
+    else:
+        u.delete()
+    ####
     errors = []
     temp = data
     if req.method == 'POST':
@@ -92,7 +100,7 @@ def register(req):
                     password=password1,
                     )
                 user.save()
-                return render_to_response('home.html', data)
+                return HttpResponseRedirect('/')
         temp['errors'] = errors
         return render_to_response('register.html', temp)
     else:
