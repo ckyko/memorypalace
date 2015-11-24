@@ -71,8 +71,8 @@ footer.page-footer {
 .outerscrollbox {
   display: inline-block; *display: inline;
   width: 276px; height: 720px;
-  padding: 10px;
-  position: relative; left: 10px;
+  padding: 20px;
+  position: relative; right: 10px;
   vertical-align: top;
   background-color: #e0f2f1;
   border: 2px solid black;
@@ -129,4 +129,27 @@ img.draggable:hover {
   height:60px;
   font-size:18px;
   color: #004d40;
+}
+
+/* palace_library Private and Public */
+#private_palace_card, #public_palace_card {
+  width:240px;
+  height:290px;
+  position: relative;
+}
+
+
+#private_add_palace_card {
+    top: 90px; left: 75px;
+    position: absolute;
+}
+
+#modal1{
+  overflow-x: hidden;
+
+}
+
+#modal_register_login{
+  height:520px;
+  width:350px;
 }
