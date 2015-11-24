@@ -1,0 +1,155 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+nav ul a,
+nav .brand-logo {
+  color: #444;
+}
+
+p {
+  line-height: 2rem;
+}
+
+.button-collapse {
+  color: #26a69a;
+}
+
+.parallax-container {
+  min-height: 380px;
+  line-height: 0;
+  height: auto;
+  color: rgba(255,255,255,.9);
+}
+  .parallax-container .section {
+    width: 100%;
+  }
+
+@media only screen and (max-width : 992px) {
+  .parallax-container .section {
+    position: absolute;
+    top: 40%;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+}
+res
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+footer.page-footer {
+  margin: 0;
+}
+
+#PalaceElementsContainer {
+  position: relative; top: 10px; right: 150px;
+  height: 768px; width:1360px;
+}
+
+#roombg {
+  display: inline-block; *display: inline;
+  width: 1024px; height: 720px;
+  vertical-align: top;
+  border: 2px solid black;
+  background-repeat: no-repeat;
+  background-image: url('../images/rooms/room2.jpg');
+}
+.outerscrollbox {
+  display: inline-block; *display: inline;
+  width: 276px; height: 720px;
+  padding: 20px;
+  position: relative; right: 10px;
+  vertical-align: top;
+  background-color: #e0f2f1;
+  border: 2px solid black;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.scrollBoxImg {
+  display: block;
+  margin: auto;
+  padding: 5px;
+  width: 150px; height: auto;
+  cursor:crosshair;
+}
+
+.draggable {
+  position: absolute; z-index: 10;
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
+  width: 15%;
+  min-width: 50px; min-height: 50px;
+}
+
+img.draggable:hover {
+  border: 1px dashed black;
+  z-index: 11;
+}
+
+#drag-me::before {
+  content: "#" attr(id);
+  font-weight: bold;
+}
+
+.slider .indicators .indicator-item {
+  background-color: #666666;
+  border: 3px solid #ffffff;
+  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+.slider .indicators .indicator-item.active {
+  background-color: #ffffff;
+}
+.slider {
+  width: 900px;
+  margin: 0 auto;
+}
+.slider .indicators {
+  bottom: 60px;
+  z-index: 100;
+  /* text-align: left; */
+}
+
+#search {
+  height:60px;
+  font-size:18px;
+  color: #004d40;
+}
+
+/* palace_library Private and Public */
+#private_palace_card, #public_palace_card {
+  width:240px;
+  height:290px;
+  position: relative;
+}
+
+
+#private_add_palace_card {
+    top: 90px; left: 75px;
+    position: absolute;
+}
+
+#modal1{
+  overflow-x: hidden;
+
+}
+
+#modal_register_login{
+  height:520px;
+  width:350px;
+}
