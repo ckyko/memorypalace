@@ -130,16 +130,21 @@ img.draggable:hover {
 }
 
 /* palace_library Private and Public */
+
 #private_palace_card, #public_palace_card {
-  width:240px;
-  height:290px;
+  height:350px;
   position: relative;
+  cursor:pointer;
 }
 
-
 #private_add_palace_card {
-    top: 90px; left: 75px;
+    top: 125px; left: 115px;
     position: absolute;
+}
+
+.create_palace {
+  height:350px;
+  position: relative;
 }
 
 #modal1{
@@ -175,14 +180,14 @@ img.draggable:hover {
 #background_add {
     top: 30px;
     right: 30px;
-    cursor:inherit;
     position: absolute;
 }
-#id_create_room{
+
+.create_room{
   background-color: #ffffff;
   width:150px;
   height:150px;
   cursor:pointer;
-  position: relative; left:10px;
+  position: relative; left:10px; right:10px;
   display: table-cell;
 }
