@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^login/', 'coreapp.views.login'),
     url(r'^register/', 'coreapp.views.register'),
     url(r'^palace_library/', 'coreapp.views.palace_library'),
+    url(r'^logout/', 'coreapp.views.logout'),
 
 ]
