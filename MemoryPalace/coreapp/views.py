@@ -1,10 +1,10 @@
 
-from django.shortcuts import render, render_to_response, HttpResponseRedirect
-from django import forms
+from django.shortcuts import render, render_to_response, HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import PalaceRoom, PalaceObject
-from django.contrib.auth.forms import forms
+from .forms import CreatePalaceForm
+from .models import UserPalace, PalaceRoom, PalaceObject
+# from django.contrib.auth.forms import forms
 
 # Create your views here.
 
@@ -65,8 +65,9 @@ def log_in(req):
         return render_to_response('login.html', data)
 
 
-def logout(req):
+def log_out(req):
     del req.session['username']
+    # logout(req)
     data['header'] = 'Login | Register'
     data['headerLink'] = '#modal_register_login'
     return HttpResponseRedirect('/')
@@ -120,11 +121,34 @@ def register(req):
         return render_to_response('register.html', data)
 
 
-def createRoom(req):
-    # pass
+def createPalace(req):
     username = req.session.get('username', 'no')
-    if username != 'no':
+    if username == 'no':
         return HttpResponseRedirect('/')
     else:
-        pass
+        if req.method == "POST":
+            uf = CreatePalaceForm(req.POST)
+            if uf.is_valid():
+                palaceName = uf.cleaned_data['palaceName']
+                numOfRooms = uf.cleaned_data['numOfRooms']
+                public = uf.cleaned_data['public']
+                palace = UserPalace()
+                palace.palaceName = palaceName
+                palace.numOfRooms = numOfRooms
+                palace.public = public
+                palace.user = req.user
+                palace.save()
+                return HttpResponseRedirect('/palace_library')
+            else:
+                return HttpResponseRedirect('/createPalace')
+        else:
+            uf = CreatePalaceForm()
+            data['uf'] = uf
+            return render_to_response('createPalace.html', data)
+
+def createRoom(req):
+    pass
+
+
+
 

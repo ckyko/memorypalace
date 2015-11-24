@@ -28,4 +28,5 @@ urlpatterns = [
     url(r'^logout/', 'coreapp.views.logout'),
     url(r'^testing/', 'coreapp.views.testing'),
     url(r'^createRoom/', 'coreapp.views.createRoom'),
+    url(r'^createPalace/', 'coreapp.views.createPalace'),
 ]
