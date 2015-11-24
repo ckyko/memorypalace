@@ -111,3 +111,10 @@ $(document).ready(function(){
         $("<img class='draggable' src='"+$(this).attr('src')+"'/>").appendTo("#roombg");
     });
 });
+
+//Add New Palaces
+$(document).ready(function(){
+    $('#palace_card').click(function(){
+      $().appendTo("#Private");
+    });
+});

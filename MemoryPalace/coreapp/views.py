@@ -1,16 +1,24 @@
+
 from django.shortcuts import render, render_to_response, HttpResponseRedirect
-# from django import forms
+from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import UserPalaces, PalaceObjects
+from .models import PalaceRoom, PalaceObject
 from django.contrib.auth.forms import forms
 
 # Create your views here.
-data = {'title': 'MemoryPalace', 'char1': 'images/char1.png', 'header':'Login', 'headerLink':'/login'}
+
+data = {'title': 'MemoryPalace', 'char1': 'images/char1.png', 'header': 'Login | Register',
+        'headerLink': '#modal_register_login'}
+
+# header = '''
+#       <li><a href="/register">Register</a></li>
+#       <li><a class="modal-trigger" href="#modal_login">Login</a></li>
+#         '''
+
 def index(req):
     username = req.session.get('username', 'no')
     if username != 'no':
-        # temp = str(username)
         data['header'] = 'Log out'
         data['headerLink'] = '/logout/'
     return render_to_response('home.html', data)
@@ -28,17 +36,19 @@ def contact(req):
     return render_to_response('contact.html', data)
 
 
-def login(req):
+def log_in(req):
     if req.method == "POST":
         errors = []
         name = req.POST.get('username', '')
         password = req.POST.get('password', '')
         print(name)
         print(password)
-        user = authenticate(username = name, password=password)
+        user = authenticate(username=name, password=password)
         if user is not None:
             if user.is_active:
                 # login(user)
+                login(req,user)
+                print("login success")
                 req.session['username'] = name
                 return HttpResponseRedirect('/')
             else:
@@ -57,16 +67,28 @@ def login(req):
 
 def logout(req):
     del req.session['username']
-    data['header'] = 'Log in'
-    data['headerLink'] = '/login/'
-    return render_to_response('home.html', data)
+    data['header'] = 'Login | Register'
+    data['headerLink'] = '#modal_register_login'
+    return HttpResponseRedirect('/')
 
 
 def palace_library(req):
     return render_to_response('palace_library.html', data)
 
 
+def testing(req):
+    data['test'] = "images/memory_objects/char2.png"
+    return render_to_response('test.html',data)
+
 def register(req):
+    ####This is for functionality test. Delete test user and register again
+    # try:
+    #     u = User.objects.get(username='testuser')
+    # except User.DoesNotExist:
+    #     pass
+    # else:
+    #     u.delete()
+    # ####
     errors = []
     temp = data
     if req.method == 'POST':
@@ -91,12 +113,18 @@ def register(req):
                     password=password1,
                     )
                 user.save()
-                return render_to_response('home.html', data)
+                return HttpResponseRedirect('/')
         temp['errors'] = errors
         return render_to_response('register.html', temp)
     else:
         return render_to_response('register.html', data)
 
 
-def saveImg(req):
-    pass
+def createRoom(req):
+    # pass
+    username = req.session.get('username', 'no')
+    if username != 'no':
+        return HttpResponseRedirect('/')
+    else:
+        pass
+
