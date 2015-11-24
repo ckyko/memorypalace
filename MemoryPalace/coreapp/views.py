@@ -1,18 +1,18 @@
-from django.shortcuts import render, render_to_response
-from django import forms
+from django.shortcuts import render, render_to_response, HttpResponseRedirect
+# from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from .models import UserPalaces, PalaceObjects
 from django.contrib.auth.forms import forms
 
 # Create your views here.
-data = {'title': 'MemoryPalace', 'char1': 'images/char1.png'}
-header = '''
-      <li><a href="/register">Register</a></li>
-      <li><a href="/login">Login</a></li>
-        '''
-
+data = {'title': 'MemoryPalace', 'char1': 'images/char1.png', 'header':'Login', 'headerLink':'/login'}
 def index(req):
-
+    username = req.session.get('username', 'no')
+    if username != 'no':
+        # temp = str(username)
+        data['header'] = 'Log out'
+        data['headerLink'] = '/logout/'
     return render_to_response('home.html', data)
 
 
@@ -38,9 +38,9 @@ def login(req):
         user = authenticate(username = name, password=password)
         if user is not None:
             if user.is_active:
-                login(user)
+                # login(user)
                 req.session['username'] = name
-                return render_to_response('home.html',data)
+                return HttpResponseRedirect('/')
             else:
                 errors.append('disabled account')
                 temp = data
@@ -56,7 +56,9 @@ def login(req):
 
 
 def logout(req):
-    logout(req)
+    del req.session['username']
+    data['header'] = 'Log in'
+    data['headerLink'] = '/login/'
     return render_to_response('home.html', data)
 
 
@@ -72,10 +74,10 @@ def register(req):
         password1 = req.POST.get('password1', '')           # get password
         password2 = req.POST.get('password2', '')           # get conform password
         if len(name) < 5:                                    # check length of username
-            errors.append(u'user name at least 5 character')
+            errors.append(u'user name must at least 5 character')
         elif len(password1) < 6:                             # check length of pasword
-            errors.append(u'PassWord at least 6 character ')
-        elif password1 != password2:                        # conform password
+            errors.append(u'PassWord must at least 6 character ')
+        elif password1 != password2:                        # confirm password
             errors.append(u'Tow password is different')
         else:
             try:                                             # check if username was used
