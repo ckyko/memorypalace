@@ -9,7 +9,7 @@ from .models import UserPalace, PalaceRoom, PalaceObject
 # Create your views here.
 
 data = {'title': 'MemoryPalace', 'char1': 'images/char1.png', 'header': 'Login | Register',
-        'headerLink': '#modal_register_login'}
+        'headerLink': '#modal_register_login', 'MP_link': '#modal_register_login'}
 
 # header = '''
 #       <li><a href="/register">Register</a></li>
@@ -20,11 +20,15 @@ def index(req):
     username = req.session.get('username', 'no')
     if username != 'no':
         data['header'] = 'Log out'
-        data['headerLink'] = '/logout/'
+        data['headerLink'] = '/logout'
+        data['MP_link'] = '/MemoryPalace'
     return render_to_response('home.html', data)
 
 
 def MemoryPalace(req):
+    # username = req.session.get('username', 'no')
+    # if username != 'no':
+    #     data['MP_link'] = '/MemoryPalace'
     return render_to_response('memory_palace.html', data)
 
 
@@ -41,14 +45,10 @@ def log_in(req):
         errors = []
         name = req.POST.get('username', '')
         password = req.POST.get('password', '')
-        print(name)
-        print(password)
         user = authenticate(username=name, password=password)
         if user is not None:
             if user.is_active:
-                # login(user)
-                login(req,user)
-                print("login success")
+                login(req, user)
                 req.session['username'] = name
                 return HttpResponseRedirect('/')
             else:
@@ -66,10 +66,12 @@ def log_in(req):
 
 
 def log_out(req):
-    del req.session['username']
+    if req.session:
+        del req.session['username']
     # logout(req)
     data['header'] = 'Login | Register'
     data['headerLink'] = '#modal_register_login'
+    data['MP_link'] = '#modal_register_login'
     return HttpResponseRedirect('/')
 
 
@@ -142,7 +144,7 @@ def createPalace(req):
             else:
                 return HttpResponseRedirect('/createPalace')
         else:
-            uf = CreatePalaceForm()
+            uf = CreatePalaceForm(initial={'public': False})
             data['uf'] = uf
             return render_to_response('createPalace.html', data)
 
