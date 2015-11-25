@@ -1,0 +1,12 @@
+{% extends "index.html" %}
+{% block body %}
+<div class="container">
+<div class = "row">
+    <form method="post" enctype="multipart/form-data">
+        {{uf.as_p}}
+        <input type="submit" value="create">
+    </form>
+
+</div>
+</div>
+{% endblock %}
