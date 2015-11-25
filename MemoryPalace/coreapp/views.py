@@ -2,7 +2,7 @@
 from django.shortcuts import render, render_to_response, HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .forms import CreatePalaceForm
+from .forms import CreatePalaceForm, CreateRoomForm
 from .models import UserPalace, PalaceRoom, PalaceObject
 # from django.contrib.auth.forms import forms
 
@@ -81,7 +81,7 @@ def palace_library(req):
 
 def testing(req):
     data['test'] = "images/memory_objects/char2.png"
-    return render_to_response('test.html',data)
+    return render_to_response('test.html', data)
 
 def register(req):
     ####This is for functionality test. Delete test user and register again
@@ -100,7 +100,7 @@ def register(req):
         password2 = req.POST.get('password2', '')           # get conform password
         if len(name) < 5:                                    # check length of username
             errors.append(u'user name must at least 5 character')
-        elif len(password1) < 6:                             # check length of pasword
+        elif len(password1) < 6:                             # check length of password
             errors.append(u'PassWord must at least 6 character ')
         elif password1 != password2:                        # confirm password
             errors.append(u'Tow password is different')
@@ -144,12 +144,27 @@ def createPalace(req):
             else:
                 return HttpResponseRedirect('/createPalace')
         else:
-            uf = CreatePalaceForm(initial={'public': False})
+            uf = CreatePalaceForm()
             data['uf'] = uf
             return render_to_response('createPalace.html', data)
 
+
 def createRoom(req):
-    pass
+    username = req.session.get('username', 'no')
+    if username == 'no':
+        return HttpResponseRedirect('/')
+    else:
+        if req.method == "POST":
+            uf = CreateRoomForm(req.POST, req.FILES)
+            if uf.is_valid():
+                uf.save()
+                return HttpResponseRedirect('/palace_library')
+            else:
+                return HttpResponseRedirect('/createRoom')
+        else:
+            uf = CreateRoomForm()
+            data['uf'] = uf
+            return render_to_response('createRoom.html', data)
 
 
 
