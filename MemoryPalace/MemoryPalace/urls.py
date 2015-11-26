@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^$', 'coreapp.views.index'),
     url(r'^about/', 'coreapp.views.about'),
     url(r'^contact/', 'coreapp.views.contact'),
-    url(r'.*MemoryPalace/', 'coreapp.views.MemoryPalace'),
+    url(r'.*MemoryPalace', 'coreapp.views.MemoryPalace'),
     url(r'.*login/', 'coreapp.views.log_in'),
     url(r'.*register/', 'coreapp.views.register'),
     url(r'.*createPalace/', 'coreapp.views.createPalace'),
