@@ -76,8 +76,14 @@ def log_out(req):
 
 
 def palace_library(req):
-    return render_to_response('palace_library.html', data)
-
+    username = req.session.get('username', 'no')
+    if username == 'no':
+        return render_to_response('palace_library.html', data)
+    else:
+        input_user = req.user
+        user_palace = UserPalace.objects.filter(user=input_user)
+        data['user_palace'] = user_palace
+        return render(req, 'palace_library.html', data)
 
 def testing(req):
     data['test'] = "images/memory_objects/char2.png"
@@ -142,7 +148,7 @@ def createPalace(req):
                 palace.save()
                 return HttpResponseRedirect('/palace_library')
             else:
-                return HttpResponseRedirect('/createPalace')
+                return HttpResponseRedirect('/palace_library/createPalace')
         else:
             uf = CreatePalaceForm()
             data['uf'] = uf
