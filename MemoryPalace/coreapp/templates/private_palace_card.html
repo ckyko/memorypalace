@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
 {% for palace in user_palace%}
-<a href="/MemoryPalace" >
+<a href="/MemoryPalace?palaceName={{palace.palaceName}}" >
 <div class="card small hoverable col s12 m3" id="public_palace_card">
   <div class="card-image">
     <img src="{% static "images/previews/pre2.jpg"%}">

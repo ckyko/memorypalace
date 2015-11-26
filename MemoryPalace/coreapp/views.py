@@ -26,10 +26,29 @@ def index(req):
 
 
 def MemoryPalace(req):
-    # username = req.session.get('username', 'no')
-    # if username != 'no':
-    #     data['MP_link'] = '/MemoryPalace'
-    return render_to_response('memory_palace.html', data)
+    if req.user.is_authenticated():
+        if req.method == "GET":
+            palaceName = req.GET.get('palaceName','')
+            print(palaceName)
+            input_user = req.user
+            user_palace = UserPalace.objects.filter(user=input_user)
+            this_palace = None
+            print(user_palace)
+            for palace in user_palace:
+                print(palace.palaceName)
+                if palace.palaceName == palaceName:
+                    this_palace = palace
+                    print(this_palace)
+            user_room = PalaceRoom.objects.filter(userPalace=this_palace)
+            print(user_room)
+            data['user_room'] = user_room
+            return render_to_response('memory_palace.html', data)
+        else:
+            data['user_room'] = None
+            return render_to_response('memory_palace.html', data)
+    else:
+        data['user_room'] = None
+        return render_to_response('memory_palace.html', data)
 
 
 def about(req):
@@ -62,13 +81,15 @@ def log_in(req):
             temp['errors'] = errors
             return render_to_response('login.html', temp)
     else:
+        data['errors'] = None
         return render_to_response('login.html', data)
 
 
 def log_out(req):
     if req.session:
-        del req.session['username']
-    # logout(req)
+        if req.session['username']:
+            del req.session['username']
+        logout(req)
     data['header'] = 'Login | Register'
     data['headerLink'] = '#modal_register_login'
     data['MP_link'] = '#modal_register_login'
@@ -78,6 +99,7 @@ def log_out(req):
 def palace_library(req):
     username = req.session.get('username', 'no')
     if username == 'no':
+        data['user_palace'] = None
         return render_to_response('palace_library.html', data)
     else:
         input_user = req.user
@@ -171,7 +193,3 @@ def createRoom(req):
             uf = CreateRoomForm()
             data['uf'] = uf
             return render_to_response('createRoom.html', data)
-
-
-
-
