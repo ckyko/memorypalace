@@ -1,12 +1,8 @@
 {% load staticfiles %}
 <div class="outerscrollbox">
-    <div class="center-align">
+  <div class="center-align">
     <a class="modal-trigger btn-floating btn-large waves-effect waves-light teal accent-4" href="#modal_image_objects">
-        <i class="material-icons">aspect_ratio</i>
-    </a>
-    <input type="file" id="file" accept="image/*" style="visibility: hidden; width: 1px; height: 1px" multiple/>
-    <a class="btn-floating btn-large waves-effect waves-light teal accent-4" onclick="document.getElementById('file').click(); return false">
-      <i class="material-icons">library_add</i>
+      <i class="material-icons">aspect_ratio</i>
     </a>
   </div>
   <div id="vertscrollbox">
@@ -16,6 +12,12 @@
     <img class="scrollBoxImg" src="{% static "images/memory_objects/char4.png"%}" />
     <img class="scrollBoxImg" src="{% static "images/memory_objects/char5.png"%}" />
     <img class="scrollBoxImg" src="{% static "images/memory_objects/char6.png"%}" />
+  </div>
+  <div class="center-align">
+    <input type="file" id="file" accept="image/*" style="visibility: hidden; width: 1px; height: 1px" multiple/>
+    <a class="btn-floating btn-large waves-effect waves-light teal accent-4" onclick="document.getElementById('file').click(); return false">
+      <i class="material-icons">library_add</i>
+    </a>
   </div>
 </div>
 {% include "modal_image_objects.html" %}
