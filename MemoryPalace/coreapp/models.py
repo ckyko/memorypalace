@@ -56,12 +56,16 @@ class PalaceObject(models.Model):
     palaceRoom: The foriegn key that gives you the room the object belongs in.
     objectName: The name of the object unique to the room it is inside
     objectImage: The image used for the object
+    x: The x coordinate of the object in the room
+    y: The y coordinate of the object in the room
     """
     palaceRoom = models.ForeignKey('PalaceRoom', null=True)
     objectName = models.CharField(max_length=200, unique=True)
     description = models.CharField(max_length=200)
     objectImage = models.ImageField(upload_to='./coreapp/static/images',
                                     default='./coreapp/static/images/char2.png')
+    x = models.IntegerField(default=0)
+    y = models.IntegerField(default=0)
     def __unicode__(self):
         return self.objectName
     class Meta:
