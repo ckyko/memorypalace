@@ -17,38 +17,11 @@ data = {'title': 'MemoryPalace', 'char1': 'images/char1.png', 'header': 'Login |
 #         '''
 
 def index(req):
-    username = req.session.get('username', 'no')
-    if username != 'no':
+    if req.user.is_authenticated():
         data['header'] = 'Log out'
         data['headerLink'] = '/logout'
         data['MP_link'] = '/MemoryPalace'
     return render_to_response('home.html', data)
-
-
-def MemoryPalace(req):
-    if req.user.is_authenticated():
-        if req.method == "GET":
-            palaceName = req.GET.get('palaceName','')
-            print(palaceName)
-            input_user = req.user
-            user_palace = UserPalace.objects.filter(user=input_user)
-            this_palace = None
-            print(user_palace)
-            for palace in user_palace:
-                print(palace.palaceName)
-                if palace.palaceName == palaceName:
-                    this_palace = palace
-                    print(this_palace)
-            user_room = PalaceRoom.objects.filter(userPalace=this_palace)
-            print(user_room)
-            data['user_room'] = user_room
-            return render_to_response('memory_palace.html', data)
-        else:
-            data['user_room'] = None
-            return render_to_response('memory_palace.html', data)
-    else:
-        data['user_room'] = None
-        return render_to_response('memory_palace.html', data)
 
 
 def about(req):
@@ -68,7 +41,7 @@ def log_in(req):
         if user is not None:
             if user.is_active:
                 login(req, user)
-                req.session['username'] = name
+                # req.session['username'] = name
                 return HttpResponseRedirect('/')
             else:
                 errors.append('disabled account')
@@ -86,9 +59,10 @@ def log_in(req):
 
 
 def log_out(req):
-    if req.session:
-        if req.session['username']:
-            del req.session['username']
+    if req.user.is_authenticated():
+    # if req.session:
+    #     if req.session['username']:
+    #         del req.session['username']
         logout(req)
     data['header'] = 'Login | Register'
     data['headerLink'] = '#modal_register_login'
@@ -97,8 +71,7 @@ def log_out(req):
 
 
 def palace_library(req):
-    username = req.session.get('username', 'no')
-    if username == 'no':
+    if not req.user.is_authenticated():
         data['user_palace'] = None
         return render_to_response('palace_library.html', data)
     else:
@@ -151,9 +124,40 @@ def register(req):
         return render_to_response('register.html', data)
 
 
+def MemoryPalace(req):
+    if req.user.is_authenticated():
+        if req.method == "GET":
+            palaceName = req.GET.get('palaceName','')
+            # print(palaceName)
+            input_user = req.user
+            user_palace = UserPalace.objects.filter(user=input_user)
+            this_palace = None
+            # print(user_palace)
+            for palace in user_palace:
+                print(palace.palaceName)
+                if palace.palaceName == palaceName:
+                    this_palace = palace
+                    print(this_palace)
+            user_room = PalaceRoom.objects.filter(userPalace=this_palace)
+            # print(user_room)
+            data['user_palace'] = this_palace
+            data['user_room'] = user_room
+            return render_to_response('memory_palace.html', data)
+        else:
+            data['user_room'] = None
+            return render_to_response('memory_palace.html', data)
+    else:
+        data['user_room'] = None
+        return render_to_response('memory_palace.html', data)
+
+
+
 def createPalace(req):
-    username = req.session.get('username', 'no')
-    if username == 'no':
+    # username = req.session.get('username', 'no')
+    # if username == 'no':
+    #     return HttpResponseRedirect('/')
+    # else:
+    if not req.user.is_authenticated():
         return HttpResponseRedirect('/')
     else:
         if req.method == "POST":
@@ -178,17 +182,38 @@ def createPalace(req):
 
 
 def createRoom(req):
-    username = req.session.get('username', 'no')
-    if username == 'no':
+    if not req.user.is_authenticated():
         return HttpResponseRedirect('/')
     else:
+        palaceName = req.GET.get('palaceName','')
+        print("aaaaaaaa")
+        print(palaceName)
+
         if req.method == "POST":
+            input_user = req.user
+            user_palace = UserPalace.objects.filter(user=input_user)
+            this_palace = None
+            # print(user_palace)
+            for palace in user_palace:
+                print(palace.palaceName)
+                if palace.palaceName == palaceName:
+                    this_palace = palace
+                    print(this_palace)
+            # the_palace = PalaceRoom.objects.filter(userPalace=this_palace)
+
             uf = CreateRoomForm(req.POST, req.FILES)
             if uf.is_valid():
-                uf.save()
-                return HttpResponseRedirect('/palace_library')
+                roomName = uf.cleaned_data['roomName']
+                backgroundImage = uf.cleaned_data['backgroundImage']
+                room = PalaceRoom()
+                room.userPalace = this_palace
+                room.roomName = roomName
+                room.backgroundImage = backgroundImage
+
+                room.save()
+                return HttpResponseRedirect('/MemoryPalace?palaceName=' + palaceName + '&&roomName='+ roomName)
             else:
-                return HttpResponseRedirect('/createRoom')
+                return HttpResponseRedirect('/createRoom?palaceName='+ palaceName)
         else:
             uf = CreateRoomForm()
             data['uf'] = uf

@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-
 class UserPalace(models.Model):
     user = models.ForeignKey(User,null=True)
     palaceName = models.CharField(max_length=200, unique=True,null=True)
@@ -15,6 +14,7 @@ class UserPalace(models.Model):
 
     class Meta:
         unique_together = (("user", "palaceName"),)
+
 
 class PalaceRoom(models.Model):
     userPalace = models.ForeignKey('UserPalace', null=True)

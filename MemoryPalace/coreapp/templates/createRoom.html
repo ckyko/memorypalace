@@ -7,7 +7,15 @@
 <body>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{uf.as_p}}
+        <p>
+            {{ uf.roomName.label_tag }}
+            {{ uf.roomName }}
+        </p>
+        <P>
+            {{ uf.backgroundImage.label_tag }}
+            {{ uf.backgroundImage }}
+        </P>
+
         <input type="submit" value="create">
     </form>
 </body>

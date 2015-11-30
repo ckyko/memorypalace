@@ -19,4 +19,4 @@ class CreatePalaceForm(ModelForm):
 class CreateRoomForm(ModelForm):
     class Meta:
         model = PalaceRoom
-        fields = ['userPalace', 'roomName', 'backgroundImage']
+        fields = [ 'roomName', 'backgroundImage']
