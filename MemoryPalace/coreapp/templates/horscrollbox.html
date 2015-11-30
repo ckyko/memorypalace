@@ -1,12 +1,13 @@
 <div class="horscrollbox">
     <div class="room_store">
 
+        {% if user_palace %}
           <div class="card-panel col s12 m3 hoverable" id="background_card">
               <a href="/createRoom?palaceName={{user_palace.palaceName}}" >
             <i class="large material-icons"  id="background_add">add</i>
                 </a>
           </div>
-
+        {% endif %}
 
       {% for room in user_room %}
         <div id="id_create_room 1" class="create_room hoverable card-panel">

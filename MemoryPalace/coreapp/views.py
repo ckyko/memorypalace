@@ -128,26 +128,40 @@ def MemoryPalace(req):
     if req.user.is_authenticated():
         if req.method == "GET":
             palaceName = req.GET.get('palaceName','')
-            # print(palaceName)
             input_user = req.user
             user_palace = UserPalace.objects.filter(user=input_user)
             this_palace = None
-            # print(user_palace)
             for palace in user_palace:
-                print(palace.palaceName)
                 if palace.palaceName == palaceName:
                     this_palace = palace
-                    print(this_palace)
             user_room = PalaceRoom.objects.filter(userPalace=this_palace)
-            # print(user_room)
             data['user_palace'] = this_palace
             data['user_room'] = user_room
-            return render_to_response('memory_palace.html', data)
+
+            roomName = req.GET.get('roomName','')
+            if roomName:
+                room = None
+                for rooms in user_room:
+                    if rooms.roomName == roomName:
+                        room = rooms
+                data['bgImg'] = room.backgroundImage
+                print(room.backgroundImage)
+                roomObj = PalaceObject.objects.filter(palaceRoom=room)
+                print(roomObj)
+                data['roomObj'] = roomObj
+
+                return render_to_response('memory_palace.html', data)
+
+
+            else:
+                return render_to_response('memory_palace.html', data)
         else:
             data['user_room'] = None
+            data['user_palace'] = None
             return render_to_response('memory_palace.html', data)
     else:
         data['user_room'] = None
+        data['user_palace'] = None
         return render_to_response('memory_palace.html', data)
 
 
@@ -211,7 +225,7 @@ def createRoom(req):
                 room.backgroundImage = backgroundImage
 
                 room.save()
-                return HttpResponseRedirect('/MemoryPalace?palaceName=' + palaceName + '&&roomName='+ roomName)
+                return HttpResponseRedirect('/MemoryPalace?palaceName=' + palaceName + '&roomName='+ roomName)
             else:
                 return HttpResponseRedirect('/createRoom?palaceName='+ palaceName)
         else:
