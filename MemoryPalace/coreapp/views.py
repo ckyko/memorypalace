@@ -60,9 +60,6 @@ def log_in(req):
 
 def log_out(req):
     if req.user.is_authenticated():
-    # if req.session:
-    #     if req.session['username']:
-    #         del req.session['username']
         logout(req)
     data['header'] = 'Login | Register'
     data['headerLink'] = '#modal_register_login'
@@ -125,36 +122,41 @@ def register(req):
 
 
 def MemoryPalace(req):
-    if req.user.is_authenticated():
+    if req.user.is_authenticated():   # check login or not
+        data['room'] = None
+        data['user_room'] = None
         if req.method == "GET":
             palaceName = req.GET.get('palaceName','')
-            input_user = req.user
-            user_palace = UserPalace.objects.filter(user=input_user)
-            this_palace = None
-            for palace in user_palace:
-                if palace.palaceName == palaceName:
-                    this_palace = palace
-            user_room = PalaceRoom.objects.filter(userPalace=this_palace)
-            data['user_palace'] = this_palace
-            data['user_room'] = user_room
+            if palaceName:
+                input_user = req.user         # get user
+                user_palace = UserPalace.objects.filter(user=input_user)  # get all user's user palace
+                this_palace = None
+                for palace in user_palace:
+                    if palace.palaceName == palaceName:    # get user palace
+                        this_palace = palace
+                        break
+                user_room = PalaceRoom.objects.filter(userPalace=this_palace)
+                data['user_palace'] = this_palace      # put user palace on data
+                data['user_room'] = user_room          # put all palace room for palace which user choose on data
 
-            roomName = req.GET.get('roomName','')
+            roomName = req.GET.get('roomName','')  # get room name
             if roomName:
                 room = None
-                for rooms in user_room:
+                for rooms in user_room:            # get room object
                     if rooms.roomName == roomName:
                         room = rooms
-                data['bgImg'] = room.backgroundImage
+                        break
+                data['room'] = room
                 print(room.backgroundImage)
                 roomObj = PalaceObject.objects.filter(palaceRoom=room)
                 print(roomObj)
                 data['roomObj'] = roomObj
 
-                return render_to_response('memory_palace.html', data)
+            return render_to_response('memory_palace.html', data)
 
 
-            else:
-                return render_to_response('memory_palace.html', data)
+            # else:
+            #     return render_to_response('memory_palace.html', data)
         else:
             data['user_room'] = None
             data['user_palace'] = None
@@ -167,29 +169,25 @@ def MemoryPalace(req):
 
 
 def createPalace(req):
-    # username = req.session.get('username', 'no')
-    # if username == 'no':
-    #     return HttpResponseRedirect('/')
-    # else:
-    if not req.user.is_authenticated():
+    if not req.user.is_authenticated():    # check login or not
         return HttpResponseRedirect('/')
     else:
-        if req.method == "POST":
+        if req.method == "POST":      # if user submit the form
             uf = CreatePalaceForm(req.POST)
             if uf.is_valid():
-                palaceName = uf.cleaned_data['palaceName']
-                numOfRooms = uf.cleaned_data['numOfRooms']
-                public = uf.cleaned_data['public']
-                palace = UserPalace()
-                palace.palaceName = palaceName
+                palaceName = uf.cleaned_data['palaceName']  # get user name
+                numOfRooms = uf.cleaned_data['numOfRooms']  # get number of room
+                public = uf.cleaned_data['public']          # get public or not
+                palace = UserPalace()                     # create form instance
+                palace.palaceName = palaceName            # put user information
                 palace.numOfRooms = numOfRooms
                 palace.public = public
-                palace.user = req.user
-                palace.save()
-                return HttpResponseRedirect('/palace_library')
+                palace.user = req.user             # get user and put in form
+                palace.save()                      # save form to database
+                return HttpResponseRedirect('/palace_library')     # redirect to palace library page
             else:
-                return HttpResponseRedirect('/palace_library/createPalace')
-        else:
+                return HttpResponseRedirect('/palace_library/createPalace')  # if form is not valid, still in create palace page
+        else:             # if not submit, we sent the form
             uf = CreatePalaceForm()
             data['uf'] = uf
             return render_to_response('createPalace.html', data)

@@ -10,10 +10,12 @@
         {% endif %}
 
       {% for room in user_room %}
-        <div id="id_create_room 1" class="create_room hoverable card-panel">
+        <a class="create_room hoverable card-panel" href="/MemoryPalace?palaceName={{user_palace.palaceName}}&roomName={{room.roomName}}">
+        <div id="id_create_room 1">
         <span>{{room.roomName}}</span>
         <!--<div class="cancel">close</div>-->
         </div>
+        </a>
       {% endfor%}
     </div>
 </div>
