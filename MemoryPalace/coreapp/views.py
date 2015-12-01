@@ -6,18 +6,13 @@ from .forms import CreatePalaceForm, CreateRoomForm
 from .models import UserPalace, PalaceRoom, PalaceObject
 # from django.contrib.auth.forms import forms
 
-# Create your views here.
 
 data = {'title': 'MemoryPalace', 'char1': 'images/char1.png', 'header': 'Login | Register',
         'headerLink': '#modal_register_login', 'MP_link': '#modal_register_login'}
 
-# header = '''
-#       <li><a href="/register">Register</a></li>
-#       <li><a class="modal-trigger" href="#modal_login">Login</a></li>
-#         '''
 
 def index(req):
-    if req.user.is_authenticated():
+    if req.user.is_authenticated():         # check login already or not
         data['header'] = 'Log out'
         data['headerLink'] = '/logout'
         data['MP_link'] = '/MemoryPalace'
@@ -33,13 +28,13 @@ def contact(req):
 
 
 def log_in(req):
-    if req.method == "POST":
+    if req.method == "POST":      # check if user submit or not
         errors = []
-        name = req.POST.get('username', '')
+        name = req.POST.get('username', '')    # get username
         password = req.POST.get('password', '')
-        user = authenticate(username=name, password=password)
+        user = authenticate(username=name, password=password)    # check user name and password
         if user is not None:
-            if user.is_active:
+            if user.is_active:                        # check user is active or not
                 login(req, user)
                 # req.session['username'] = name
                 return HttpResponseRedirect('/')
@@ -48,7 +43,7 @@ def log_in(req):
                 temp = data
                 temp['errors'] = errors
                 return render_to_response('login.html', temp)
-        else:
+        else:                                                     # if username or password is invalid
             errors.append('invalid username or password')
             temp = data
             temp['errors'] = errors
@@ -59,8 +54,8 @@ def log_in(req):
 
 
 def log_out(req):
-    if req.user.is_authenticated():
-        logout(req)
+    if req.user.is_authenticated():        # check login already or not
+        logout(req)                        # log out user
     data['header'] = 'Login | Register'
     data['headerLink'] = '#modal_register_login'
     data['MP_link'] = '#modal_register_login'
@@ -68,12 +63,12 @@ def log_out(req):
 
 
 def palace_library(req):
-    if not req.user.is_authenticated():
+    if not req.user.is_authenticated():        # check login already or not
         data['user_palace'] = None
         return render_to_response('palace_library.html', data)
     else:
-        input_user = req.user
-        user_palace = UserPalace.objects.filter(user=input_user)
+        input_user = req.user          # get user
+        user_palace = UserPalace.objects.filter(user=input_user)  # get all user palaces for user
         data['user_palace'] = user_palace
         return render(req, 'palace_library.html', data)
 
@@ -122,7 +117,14 @@ def register(req):
 
 
 def MemoryPalace(req):
-    if req.user.is_authenticated():   # check login or not
+    '''
+        This function response Memory palace room page.
+        the url for this function is /MemoryPalace
+        function check user login or not, if not it will just dispaly a model of room.
+        if user is login and specify which room, it will open user's room. it means pass
+        all user's room information to page
+    '''
+    if req.user.is_authenticated():   # check login already or not
         data['room'] = None
         data['user_room'] = None
         if req.method == "GET":
@@ -137,7 +139,7 @@ def MemoryPalace(req):
                         break
                 user_room = PalaceRoom.objects.filter(userPalace=this_palace)
                 data['user_palace'] = this_palace      # put user palace on data
-                data['user_room'] = user_room          # put all palace room for palace which user choose on data
+                data['user_room'] = user_room          # put all palace room for palace which user choose in data
 
             roomName = req.GET.get('roomName','')  # get room name
             if roomName:
@@ -146,17 +148,13 @@ def MemoryPalace(req):
                     if rooms.roomName == roomName:
                         room = rooms
                         break
-                data['room'] = room
+                data['room'] = room              # put specify room on data
                 print(room.backgroundImage)
-                roomObj = PalaceObject.objects.filter(palaceRoom=room)
+                roomObj = PalaceObject.objects.filter(palaceRoom=room) # get all object in this room from database
                 print(roomObj)
-                data['roomObj'] = roomObj
+                data['roomObj'] = roomObj       # put all objects in data
 
             return render_to_response('memory_palace.html', data)
-
-
-            # else:
-            #     return render_to_response('memory_palace.html', data)
         else:
             data['user_room'] = None
             data['user_palace'] = None
@@ -169,7 +167,7 @@ def MemoryPalace(req):
 
 
 def createPalace(req):
-    if not req.user.is_authenticated():    # check login or not
+    if not req.user.is_authenticated():   # check login already or not
         return HttpResponseRedirect('/')
     else:
         if req.method == "POST":      # if user submit the form
@@ -194,35 +192,29 @@ def createPalace(req):
 
 
 def createRoom(req):
-    if not req.user.is_authenticated():
+    if not req.user.is_authenticated():        # check login already or not
         return HttpResponseRedirect('/')
     else:
         palaceName = req.GET.get('palaceName','')
-        print("aaaaaaaa")
-        print(palaceName)
 
-        if req.method == "POST":
-            input_user = req.user
-            user_palace = UserPalace.objects.filter(user=input_user)
+        if req.method == "POST":            # if user submit the form
+            input_user = req.user            # get user
+            user_palace = UserPalace.objects.filter(user=input_user)  # get all user palace
             this_palace = None
-            # print(user_palace)
-            for palace in user_palace:
-                print(palace.palaceName)
+            for palace in user_palace:          # get user palace
                 if palace.palaceName == palaceName:
                     this_palace = palace
-                    print(this_palace)
             # the_palace = PalaceRoom.objects.filter(userPalace=this_palace)
 
-            uf = CreateRoomForm(req.POST, req.FILES)
+            uf = CreateRoomForm(req.POST, req.FILES)     # pass information to form
             if uf.is_valid():
                 roomName = uf.cleaned_data['roomName']
                 backgroundImage = uf.cleaned_data['backgroundImage']
-                room = PalaceRoom()
+                room = PalaceRoom()              # create room object instance
                 room.userPalace = this_palace
                 room.roomName = roomName
                 room.backgroundImage = backgroundImage
-
-                room.save()
+                room.save()                  # save room to database
                 return HttpResponseRedirect('/MemoryPalace?palaceName=' + palaceName + '&roomName='+ roomName)
             else:
                 return HttpResponseRedirect('/createRoom?palaceName='+ palaceName)
