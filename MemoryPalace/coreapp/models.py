@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-
 class UserPalace(models.Model):
     user = models.ForeignKey(User,null=True)
     palaceName = models.CharField(max_length=200, unique=True,null=True)
@@ -16,11 +15,12 @@ class UserPalace(models.Model):
     class Meta:
         unique_together = (("user", "palaceName"),)
 
+
 class PalaceRoom(models.Model):
     userPalace = models.ForeignKey('UserPalace', null=True)
     # palaceName = models.ForeignKey(UserPalace.palaceName,null=True)
     roomName = models.CharField(max_length=200, unique=True)
-    backgroundImage = models.ImageField(upload_to='./coreapp/static/images', default='./coreapp/static/images/room.jpg')
+    backgroundImage = models.ImageField(upload_to='./static/images', default='./static/images/room.jpg')
 
     def __unicode__(self):
         return self.roomName
@@ -33,13 +33,17 @@ class PalaceObject(models.Model):
     palaceRoom = models.ForeignKey('PalaceRoom',null=True)
     # palaceName = models.ForeignKey(UserPalace.palaceName,null=True)
     # roomName = models.ForeignKey(PalaceRoom.roomName,null=True)
-    objectName= models.CharField(max_length=200, unique=True)
+    # objectName= models.CharField(max_length=200, unique=True)
     description = models.CharField(max_length=200)
     # ObjectImage = models.CharField(max_length=200)
-    objectImage = models.ImageField(upload_to='./coreapp/static/images', default='./coreapp/static/images/char2.png')
+    objectImage = models.ImageField(upload_to='./static/images/memory_objects', default='./static/images/char2.png')
+    width = models.IntegerField(default=50)
+    height = models.IntegerField(default=50)
+    position_x = models.IntegerField(default=0)
+    position_y = models.IntegerField(default=0)
 
     def __unicode__(self):
-        return self.objectName
+        return self.description
 
     class Meta:
-        unique_together = (("palaceRoom", "objectName"),)
+        unique_together = (("palaceRoom", "description"),)
