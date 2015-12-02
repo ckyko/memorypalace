@@ -1,11 +1,10 @@
 {% load staticfiles %}
 
 {% for palace in user_palace%}
-<a href="/MemoryPalace?palaceName={{palace.palaceName}}" >
 <div class="card small hoverable col s12 m3" id="public_palace_card">
   <div class="card-image">
     <img src="{% static "images/previews/pre2.jpg"%}">
-      <span class="card-title">Palace 1</span>
+      <span class="card-title">{{palace.palaceName}}</span>
   </div>
   <div class="card-content">
     <p>{{palace.palaceName}}</p>
@@ -19,7 +18,6 @@
     </a>
   </div>
 </div>
-</a>
 {% endfor %}
 
 
@@ -35,4 +33,3 @@
     <!--<i class="large material-icons" id="private_add_palace_card">add</i>-->
   <!--</div>-->
 <!--</a>-->
-
