@@ -11,12 +11,17 @@
 
       {% for room in user_room %}
         <a class="create_room hoverable card-panel" href="/MemoryPalace?palaceName={{user_palace.palaceName}}&roomName={{room.roomName}}">
-        <div id="id_create_room 1">
+        <div class="card-image">
+            <img class="roomImage" src="{{ room.backgroundImage }}">
         <span>{{room.roomName}}</span>
         <!--<div class="cancel">close</div>-->
         </div>
         </a>
       {% endfor%}
+
+
+
+
     </div>
 </div>
 

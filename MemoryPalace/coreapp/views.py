@@ -72,9 +72,11 @@ def palace_library(req):
         data['user_palace'] = user_palace
         return render(req, 'palace_library.html', data)
 
+
 def testing(req):
     data['test'] = "images/memory_objects/char2.png"
     return render_to_response('test.html', data)
+
 
 def register(req):
     ####This is for functionality test. Delete test user and register again
@@ -127,6 +129,7 @@ def MemoryPalace(req):
     if req.user.is_authenticated():   # check login already or not
         data['room'] = None
         data['user_room'] = None
+        data['roomObj'] = None
         if req.method == "GET":
             palaceName = req.GET.get('palaceName','')
             if palaceName:
@@ -171,7 +174,7 @@ def createPalace(req):
         return HttpResponseRedirect('/')
     else:
         if req.method == "POST":      # if user submit the form
-            uf = CreatePalaceForm(req.POST)
+            uf = CreatePalaceForm(req.POST)     # create palace form
             if uf.is_valid():
                 palaceName = uf.cleaned_data['palaceName']  # get user name
                 numOfRooms = uf.cleaned_data['numOfRooms']  # get number of room
