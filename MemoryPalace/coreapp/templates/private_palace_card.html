@@ -1,7 +1,6 @@
 {% load staticfiles %}
 
 {% for palace in user_palace%}
-<a href="/MemoryPalace?palaceName={{palace.palaceName}}" >
 <div class="card small hoverable col s12 m3" id="public_palace_card">
   <div class="card-image">
     <img src="{% static "images/previews/pre2.jpg"%}">
@@ -14,12 +13,11 @@
     <a class="btn-floating btn-large teal accent-4">
       <i class="large material-icons">play_circle_filled</i>
     </a>
-    <a class="btn-floating btn-large teal accent-4" href="/MemoryPalace">
+    <a class="btn-floating btn-large teal accent-4" href="/MemoryPalace?palaceName={{palace.palaceName}}" >
       <i class="large material-icons">mode_edit</i>
     </a>
   </div>
 </div>
-</a>
 {% endfor %}
 
 
@@ -35,4 +33,3 @@
     <!--<i class="large material-icons" id="private_add_palace_card">add</i>-->
   <!--</div>-->
 <!--</a>-->
-
