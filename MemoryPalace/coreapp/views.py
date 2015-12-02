@@ -1,10 +1,11 @@
 
-from django.shortcuts import render, render_to_response, HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .forms import CreatePalaceForm, CreateRoomForm
 from .models import UserPalace, PalaceRoom, PalaceObject
 # from django.contrib.auth.forms import forms
+from django.core.urlresolvers import reverse
 
 
 data = {'title': 'MemoryPalace', 'char1': 'images/char1.png', 'header': 'Login | Register',
@@ -13,18 +14,18 @@ data = {'title': 'MemoryPalace', 'char1': 'images/char1.png', 'header': 'Login |
 
 def index(req):
     if req.user.is_authenticated():         # check login already or not
-        data['header'] = 'Log out'
-        data['headerLink'] = '/logout'
-        data['MP_link'] = '/MemoryPalace'
-    return render_to_response('home.html', data)
+          data['header'] = 'Log out'
+          data['headerLink'] = '/logout'
+          data['MP_link'] = '/palace_library'
+    return render(req,'home.html', data)
 
 
 def about(req):
-    return render_to_response('about.html', data)
+    return render(req,'about.html', data)
 
 
 def contact(req):
-    return render_to_response('contact.html', data)
+    return render(req,'contact.html', data)
 
 
 def log_in(req):
@@ -42,15 +43,15 @@ def log_in(req):
                 errors.append('disabled account')
                 temp = data
                 temp['errors'] = errors
-                return render_to_response('login.html', temp)
+                return render(req,'login.html', temp)
         else:                                                     # if username or password is invalid
             errors.append('invalid username or password')
             temp = data
             temp['errors'] = errors
-            return render_to_response('login.html', temp)
+            return render(req,'login.html', temp)
     else:
         data['errors'] = None
-        return render_to_response('login.html', data)
+        return render(req,'login.html', data)
 
 
 def log_out(req):
@@ -65,7 +66,7 @@ def log_out(req):
 def palace_library(req):
     if not req.user.is_authenticated():        # check login already or not
         data['user_palace'] = None
-        return render_to_response('palace_library.html', data)
+        return render(req,'palace_library.html', data)
     else:
         input_user = req.user          # get user
         user_palace = UserPalace.objects.filter(user=input_user)  # get all user palaces for user
@@ -74,7 +75,7 @@ def palace_library(req):
 
 def testing(req):
     data['test'] = "images/memory_objects/char2.png"
-    return render_to_response('test.html', data)
+    return render(req,'test.html', data)
 
 def register(req):
     ####This is for functionality test. Delete test user and register again
@@ -102,7 +103,7 @@ def register(req):
                 user = User.objects.get(username=name)
                 errors.append(u'user name is used')
                 temp['errors'] = errors
-                return render_to_response('register.html', temp)
+                return render(req,'register.html', temp)
             except User.DoesNotExist:
                 user = User.objects.create_user(             # create a user
                     username=name,
@@ -111,9 +112,9 @@ def register(req):
                 user.save()
                 return HttpResponseRedirect('/')
         temp['errors'] = errors
-        return render_to_response('register.html', temp)
+        return render(req,'register.html', temp)
     else:
-        return render_to_response('register.html', data)
+        return render(req,'register.html', data)
 
 
 def MemoryPalace(req):
@@ -154,15 +155,15 @@ def MemoryPalace(req):
                 print(roomObj)
                 data['roomObj'] = roomObj       # put all objects in data
 
-            return render_to_response('memory_palace.html', data)
+            return render(req,'memory_palace.html', data)
         else:
             data['user_room'] = None
             data['user_palace'] = None
-            return render_to_response('memory_palace.html', data)
+            return render(req,'memory_palace.html', data)
     else:
         data['user_room'] = None
         data['user_palace'] = None
-        return render_to_response('memory_palace.html', data)
+        return render(req,'memory_palace.html', data)
 
 
 
@@ -188,7 +189,7 @@ def createPalace(req):
         else:             # if not submit, we sent the form
             uf = CreatePalaceForm()
             data['uf'] = uf
-            return render_to_response('createPalace.html', data)
+            return render(req,'createPalace.html', data)
 
 
 def createRoom(req):
@@ -221,4 +222,4 @@ def createRoom(req):
         else:
             uf = CreateRoomForm()
             data['uf'] = uf
-            return render_to_response('createRoom.html', data)
+            return render(req,'createRoom.html', data)
