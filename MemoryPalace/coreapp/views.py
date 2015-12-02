@@ -16,7 +16,7 @@ def index(req):
     if req.user.is_authenticated():         # check login already or not
           data['header'] = 'Log out'
           data['headerLink'] = '/logout'
-          data['MP_link'] = '/palace_library'
+          #data['MP_link'] = '/palace_library'
     return render(req,'home.html', data)
 
 
