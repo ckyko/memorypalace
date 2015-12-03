@@ -22,7 +22,7 @@ import shlex
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('.'))
 
-sys.path.insert(0, '/MemoryPalace/SRC')
+sys.path.insert(0, 'C:\Users\Hensly\Documents\MEMORYPALACE\memorypalacegui\MemoryPalace\Docs\SRC')
 
 #This will include the necessary source files folder in the PATH to be able to
 #generate the documentation from.
