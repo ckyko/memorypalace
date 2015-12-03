@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+{% block body %}
+<div class="container">
+  <br></br>
+  <ul class="tabs">
+    <li class="tab col s6 teal lighten-5"><a href="#Public">Public</a></li>
+    {% if user.is_authenticated %}
+    <li class="tab col s6 teal lighten-5"><a href="#Private">Private</a></li>
+    {% else %}
+    <!-- data-position can be : bottom, top, left, or right -->
+    <!-- data-delay controls delay before tooltip shows (in milliseconds)-->
+    <li class="tab col s6 blue-grey lighten-5 disabled"><a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Login Required!" href="#Private">Private</a></li>
+    {% endif %}
+  </ul>
+  <div class="row">
+    <div id="Public" class="col s12">
+      {% include "public_palace_card.html" %}
+   </div>
+    <div id="Private" class="col s12">
+      {% include "private_palace_card.html" %}
+    </div>
+  </div>
+</div>
+{% endblock %}
