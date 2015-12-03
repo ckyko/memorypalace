@@ -9,14 +9,20 @@ from django.core.urlresolvers import reverse
 
 
 data = {'title': 'MemoryPalace', 'char1': 'images/char1.png', 'header': 'Login | Register',
-        'headerLink': '#modal_register_login', 'MP_link': '#modal_register_login'}
+        'headerLink': '#modal_register_login'}
 
 
 def index(req):
+    '''
+    This is index page function.
+    This function will check user login already or not first.
+    if yes, it will change "login|register" to "log out", it will change link for that also.
+    :param req:
+    :return: index page
+    '''
     if req.user.is_authenticated():         # check login already or not
           data['header'] = 'Log out'
           data['headerLink'] = '/logout'
-          #data['MP_link'] = '/palace_library'
     return render(req,'home.html', data)
 
 
@@ -32,7 +38,8 @@ def log_in(req):
     '''
     This is login function.
     this function will return the login form if user didn't click submit.
-    if user fill in all information correct and click submit, it will log in user and redirect to index page.
+    if user fill in all information correct and click submit, it will log in
+    user and redirect to index page.
 
     '''
     if req.method == "POST":      # check if user submit or not
@@ -74,6 +81,11 @@ def log_out(req):
 
 
 def palace_library(req):
+    '''
+    This function give palace library function.
+    This function will first check user login or not, if not it will library page without user information.
+    if user is login, it will give library page with user information.
+    '''
     if not req.user.is_authenticated():        # check login already or not
         data['user_palace'] = None
         return render(req,'palace_library.html', data)
@@ -90,14 +102,11 @@ def testing(req):
 
 
 def register(req):
-    ####This is for functionality test. Delete test user and register again
-    # try:
-    #     u = User.objects.get(username='testuser')
-    # except User.DoesNotExist:
-    #     pass
-    # else:
-    #     u.delete()
-    # ####
+    '''
+    This is register function. This function will give a register form first,
+    once user input the correct information, it will save user information to
+    database and redirect to index page.
+    '''
     errors = []
     temp = data
     if req.method == 'POST':
@@ -244,8 +253,8 @@ def createRoom(req):
                 room.save()                  # save room to database
                 return HttpResponseRedirect('/MemoryPalace?palaceName=' + palaceName + '&roomName='+ roomName)
             else:
-                return HttpResponseRedirect('/createRoom?palaceName='+ palaceName)
+                return HttpResponseRedirect('/createRoom?palaceName='+palaceName)
         else:
             uf = CreateRoomForm()
             data['uf'] = uf
-            return render(req,'createRoom.html', data)
+            return render(req, 'createRoom.html', data)
