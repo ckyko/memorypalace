@@ -9,8 +9,13 @@ Welcome to Memory Palace's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 5
 
+   coreapp.migrations.rst
+   coreapp.rst
+   createfontdatachunk.rst
+   django-admin.rst
+   enhancer.rst
 
 
 Indices and tables
@@ -19,4 +24,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-

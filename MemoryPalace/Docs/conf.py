@@ -22,16 +22,10 @@ import shlex
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('.'))
 
-sys.path.insert(0, devdir = '/')
+sys.path.insert(0, '/MemoryPalace/SRC')
 
 #This will include the necessary source files folder in the PATH to be able to
 #generate the documentation from.
-
-if os.enviorn['DEVDIR']:
-    devdir = os.environ['DEVDIR']
-except KeyError:
-    print 'unable to obtain $DEVDIR from the enviornment.'
-    exit(-1)
 
 # -- General configuration ------------------------------------------------
 
