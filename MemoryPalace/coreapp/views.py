@@ -29,6 +29,12 @@ def contact(req):
 
 
 def log_in(req):
+    '''
+    This is login function.
+    this function will return the login form if user didn't click submit.
+    if user fill in all information correct and click submit, it will log in user and redirect to index page.
+
+    '''
     if req.method == "POST":      # check if user submit or not
         errors = []
         name = req.POST.get('username', '')    # get username
@@ -55,6 +61,10 @@ def log_in(req):
 
 
 def log_out(req):
+    '''
+    This is log out function.
+
+    '''
     if req.user.is_authenticated():        # check login already or not
         logout(req)                        # log out user
     data['header'] = 'Login | Register'
@@ -171,6 +181,14 @@ def MemoryPalace(req):
 
 
 def createPalace(req):
+    '''
+    This function response create palace form page.
+    the url for this is /createPalace/
+    function check user login or not, if not it will redirect to room.
+    if user is login already, it will return create palace form.
+    :param req:
+    :return:
+    '''
     if not req.user.is_authenticated():   # check login already or not
         return HttpResponseRedirect('/')
     else:
@@ -196,6 +214,11 @@ def createPalace(req):
 
 
 def createRoom(req):
+    '''
+    This function give create room form page.
+    the url for this function is ../createRoom
+
+    '''
     if not req.user.is_authenticated():        # check login already or not
         return HttpResponseRedirect('/')
     else:
