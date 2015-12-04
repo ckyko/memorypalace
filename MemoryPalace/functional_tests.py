@@ -15,7 +15,6 @@ class NewVisitorTest(unittest.TestCase):
         # Amber needs to memorize som chemistry terms and goes to MemoryPalace
         # to check out its homepage
         self.browser.get('http://localhost:8000')
-
         # She notices the page title and header mention MemoryPalace
         self.assertIn('MemoryPalace', self.browser.title)
         header_text = self.browser.find_element_by_tag_name('h1').text
@@ -24,7 +23,7 @@ class NewVisitorTest(unittest.TestCase):
     def test_2_register(self):
         self.browser.get('http://localhost:8000')
         self.assertIn('MemoryPalace', self.browser.title)
-        element = self.browser.find_element_by_id("header_modal_L|R")
+        element = self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[3]/a[@href='#modal_register_login']")
         element.click()
         element = self.browser.find_element_by_id("tab_modal_register")
         element.click()
@@ -37,12 +36,12 @@ class NewVisitorTest(unittest.TestCase):
         element = self.browser.find_element_by_id("id_password2")
         element.send_keys("testuser")
         self.browser.find_element_by_id("register_submit").submit()
-        self.assertEquals(self.browser.current_url, "http://localhost:8000/" );
+        self.assertEquals(self.browser.current_url, "http://localhost:8000/" )
 
     def test_3_login(self):
         self.browser.get('http://localhost:8000')
         self.assertIn('MemoryPalace', self.browser.title)
-        element = self.browser.find_element_by_id("header_modal_L|R")
+        element = self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[3]/a[@href='#modal_register_login']")
         element.click()
         element = self.browser.find_element_by_id("tab_modal_login")
         element.click()
@@ -51,7 +50,8 @@ class NewVisitorTest(unittest.TestCase):
         element = self.browser.find_element_by_id("password")
         element.send_keys("testuser")
         self.browser.find_element_by_id("login_submit").submit()
-        self.assertEquals(self.browser.current_url, "http://localhost:8000/" );
-
+        self.assertEquals(self.browser.current_url, "http://localhost:8000/" )
+        if self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[3]/a[@href='/logout']"):
+            self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[3]/a[@href='/logout']").click()
 if __name__ == '__main__':
     unittest.main()
