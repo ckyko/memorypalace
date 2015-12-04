@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>coreapp.views &mdash; MemoryPalace  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="MemoryPalace  documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for coreapp.views</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">HttpResponseRedirect</span><span class="p">,</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">authenticate</span><span class="p">,</span> <span class="n">login</span><span class="p">,</span> <span class="n">logout</span>
+<span class="kn">from</span> <span class="nn">.forms</span> <span class="kn">import</span> <span class="n">CreatePalaceForm</span><span class="p">,</span> <span class="n">CreateRoomForm</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">UserPalace</span><span class="p">,</span> <span class="n">PalaceRoom</span><span class="p">,</span> <span class="n">PalaceObject</span>
+<span class="c"># from django.contrib.auth.forms import forms</span>
+<span class="kn">from</span> <span class="nn">django.core.urlresolvers</span> <span class="kn">import</span> <span class="n">reverse</span>
+
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;MemoryPalace&#39;</span><span class="p">,</span> <span class="s">&#39;char1&#39;</span><span class="p">:</span> <span class="s">&#39;images/char1.png&#39;</span><span class="p">,</span> <span class="s">&#39;header&#39;</span><span class="p">:</span> <span class="s">&#39;Login | Register&#39;</span><span class="p">,</span>
+        <span class="s">&#39;headerLink&#39;</span><span class="p">:</span> <span class="s">&#39;#modal_register_login&#39;</span><span class="p">,</span> <span class="s">&#39;MP_link&#39;</span><span class="p">:</span> <span class="s">&#39;#modal_register_login&#39;</span><span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+<div class="viewcode-block" id="index"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.index">[docs]</a>    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>         <span class="c"># check login already or not</span>
+          <span class="n">data</span><span class="p">[</span><span class="s">&#39;header&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;Log out&#39;</span>
+          <span class="n">data</span><span class="p">[</span><span class="s">&#39;headerLink&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;/logout&#39;</span>
+          <span class="c">#data[&#39;MP_link&#39;] = &#39;/palace_library&#39;</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;home.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">about</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
+<div class="viewcode-block" id="about"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.about">[docs]</a>    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;about.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">contact</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
+<div class="viewcode-block" id="contact"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.contact">[docs]</a>    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;contact.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">log_in</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
+<div class="viewcode-block" id="log_in"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.log_in">[docs]</a>    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;POST&quot;</span><span class="p">:</span>      <span class="c"># check if user submit or not</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;username&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>    <span class="c"># get username</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;password&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>    <span class="c"># check user name and password</span>
+        <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">is_active</span><span class="p">:</span>                        <span class="c"># check user is active or not</span>
+                <span class="n">login</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+                <span class="c"># req.session[&#39;username&#39;] = name</span>
+                <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;disabled account&#39;</span><span class="p">)</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">data</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s">&#39;errors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">errors</span>
+                <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;login.html&#39;</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>                                                     <span class="c"># if username or password is invalid</span>
+            <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;invalid username or password&#39;</span><span class="p">)</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">data</span>
+            <span class="n">temp</span><span class="p">[</span><span class="s">&#39;errors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">errors</span>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;login.html&#39;</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&#39;errors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;login.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">log_out</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
+<div class="viewcode-block" id="log_out"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.log_out">[docs]</a>    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>        <span class="c"># check login already or not</span>
+        <span class="n">logout</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>                        <span class="c"># log out user</span>
+    <span class="n">data</span><span class="p">[</span><span class="s">&#39;header&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;Login | Register&#39;</span>
+    <span class="n">data</span><span class="p">[</span><span class="s">&#39;headerLink&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;#modal_register_login&#39;</span>
+    <span class="n">data</span><span class="p">[</span><span class="s">&#39;MP_link&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;#modal_register_login&#39;</span>
+    <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">palace_library</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
+<div class="viewcode-block" id="palace_library"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.palace_library">[docs]</a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>        <span class="c"># check login already or not</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&#39;user_palace&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;palace_library.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">input_user</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span>          <span class="c"># get user</span>
+        <span class="n">user_palace</span> <span class="o">=</span> <span class="n">UserPalace</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">input_user</span><span class="p">)</span>  <span class="c"># get all user palaces for user</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&#39;user_palace&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_palace</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s">&#39;palace_library.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">testing</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
+<div class="viewcode-block" id="testing"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.testing">[docs]</a>    <span class="n">data</span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;images/memory_objects/char2.png&quot;</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;test.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
+<div class="viewcode-block" id="register"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.register">[docs]</a>    <span class="c">####This is for functionality test. Delete test user and register again</span>
+    <span class="c"># try:</span>
+    <span class="c">#     u = User.objects.get(username=&#39;testuser&#39;)</span>
+    <span class="c"># except User.DoesNotExist:</span>
+    <span class="c">#     pass</span>
+    <span class="c"># else:</span>
+    <span class="c">#     u.delete()</span>
+    <span class="c"># ####</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">data</span>
+    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;username&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>                 <span class="c"># get username</span>
+        <span class="n">password1</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;password1&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>           <span class="c"># get password</span>
+        <span class="n">password2</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;password2&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>           <span class="c"># get conform password</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>                                    <span class="c"># check length of username</span>
+            <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">u&#39;user name must at least 5 character&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">password1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">:</span>                             <span class="c"># check length of password</span>
+            <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">u&#39;PassWord must at least 6 character &#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">password1</span> <span class="o">!=</span> <span class="n">password2</span><span class="p">:</span>                        <span class="c"># confirm password</span>
+            <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">u&#39;Tow password is different&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>                                             <span class="c"># check if username was used</span>
+                <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">u&#39;user name is used&#39;</span><span class="p">)</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s">&#39;errors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">errors</span>
+                <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;register.html&#39;</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">User</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+                <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span>             <span class="c"># create a user</span>
+                    <span class="n">username</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                    <span class="n">password</span><span class="o">=</span><span class="n">password1</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+        <span class="n">temp</span><span class="p">[</span><span class="s">&#39;errors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">errors</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;register.html&#39;</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;register.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">MemoryPalace</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
+<div class="viewcode-block" id="MemoryPalace"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.MemoryPalace">[docs]</a>    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        This function response Memory palace room page.</span>
+<span class="sd">        the url for this function is /MemoryPalace</span>
+<span class="sd">        function check user login or not, if not it will just dispaly a model of room.</span>
+<span class="sd">        if user is login and specify which room, it will open user&#39;s room. it means pass</span>
+<span class="sd">        all user&#39;s room information to page</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>   <span class="c"># check login already or not</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&#39;room&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&#39;user_room&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&#39;roomObj&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;GET&quot;</span><span class="p">:</span>
+            <span class="n">palaceName</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;palaceName&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">palaceName</span><span class="p">:</span>
+                <span class="n">input_user</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span>         <span class="c"># get user</span>
+                <span class="n">user_palace</span> <span class="o">=</span> <span class="n">UserPalace</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">input_user</span><span class="p">)</span>  <span class="c"># get all user&#39;s user palace</span>
+                <span class="n">this_palace</span> <span class="o">=</span> <span class="bp">None</span>
+                <span class="k">for</span> <span class="n">palace</span> <span class="ow">in</span> <span class="n">user_palace</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">palace</span><span class="o">.</span><span class="n">palaceName</span> <span class="o">==</span> <span class="n">palaceName</span><span class="p">:</span>    <span class="c"># get user palace</span>
+                        <span class="n">this_palace</span> <span class="o">=</span> <span class="n">palace</span>
+                        <span class="k">break</span>
+                <span class="n">user_room</span> <span class="o">=</span> <span class="n">PalaceRoom</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">userPalace</span><span class="o">=</span><span class="n">this_palace</span><span class="p">)</span>
+                <span class="n">data</span><span class="p">[</span><span class="s">&#39;user_palace&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">this_palace</span>      <span class="c"># put user palace on data</span>
+                <span class="n">data</span><span class="p">[</span><span class="s">&#39;user_room&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_room</span>          <span class="c"># put all palace room for palace which user choose in data</span>
+
+            <span class="n">roomName</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;roomName&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span>  <span class="c"># get room name</span>
+            <span class="k">if</span> <span class="n">roomName</span><span class="p">:</span>
+                <span class="n">room</span> <span class="o">=</span> <span class="bp">None</span>
+                <span class="k">for</span> <span class="n">rooms</span> <span class="ow">in</span> <span class="n">user_room</span><span class="p">:</span>            <span class="c"># get room object</span>
+                    <span class="k">if</span> <span class="n">rooms</span><span class="o">.</span><span class="n">roomName</span> <span class="o">==</span> <span class="n">roomName</span><span class="p">:</span>
+                        <span class="n">room</span> <span class="o">=</span> <span class="n">rooms</span>
+                        <span class="k">break</span>
+                <span class="n">data</span><span class="p">[</span><span class="s">&#39;room&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">room</span>              <span class="c"># put specify room on data</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">room</span><span class="o">.</span><span class="n">backgroundImage</span><span class="p">)</span>
+                <span class="n">roomObj</span> <span class="o">=</span> <span class="n">PalaceObject</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">palaceRoom</span><span class="o">=</span><span class="n">room</span><span class="p">)</span> <span class="c"># get all object in this room from database</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">roomObj</span><span class="p">)</span>
+                <span class="n">data</span><span class="p">[</span><span class="s">&#39;roomObj&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">roomObj</span>       <span class="c"># put all objects in data</span>
+
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;memory_palace.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s">&#39;user_room&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="n">data</span><span class="p">[</span><span class="s">&#39;user_palace&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&#39;user_room&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&#39;user_palace&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;memory_palace.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+
+
+<span class="k">def</span> <span class="nf">createPalace</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
+<div class="viewcode-block" id="createPalace"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.createPalace">[docs]</a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>   <span class="c"># check login already or not</span>
+        <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;POST&quot;</span><span class="p">:</span>      <span class="c"># if user submit the form</span>
+            <span class="n">uf</span> <span class="o">=</span> <span class="n">CreatePalaceForm</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>     <span class="c"># create palace form</span>
+            <span class="k">if</span> <span class="n">uf</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+                <span class="n">palaceName</span> <span class="o">=</span> <span class="n">uf</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;palaceName&#39;</span><span class="p">]</span>  <span class="c"># get user name</span>
+                <span class="n">numOfRooms</span> <span class="o">=</span> <span class="n">uf</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;numOfRooms&#39;</span><span class="p">]</span>  <span class="c"># get number of room</span>
+                <span class="n">public</span> <span class="o">=</span> <span class="n">uf</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;public&#39;</span><span class="p">]</span>          <span class="c"># get public or not</span>
+                <span class="n">palace</span> <span class="o">=</span> <span class="n">UserPalace</span><span class="p">()</span>                     <span class="c"># create form instance</span>
+                <span class="n">palace</span><span class="o">.</span><span class="n">palaceName</span> <span class="o">=</span> <span class="n">palaceName</span>            <span class="c"># put user information</span>
+                <span class="n">palace</span><span class="o">.</span><span class="n">numOfRooms</span> <span class="o">=</span> <span class="n">numOfRooms</span>
+                <span class="n">palace</span><span class="o">.</span><span class="n">public</span> <span class="o">=</span> <span class="n">public</span>
+                <span class="n">palace</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span>             <span class="c"># get user and put in form</span>
+                <span class="n">palace</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>                      <span class="c"># save form to database</span>
+                <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/palace_library&#39;</span><span class="p">)</span>     <span class="c"># redirect to palace library page</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/palace_library/createPalace&#39;</span><span class="p">)</span>  <span class="c"># if form is not valid, still in create palace page</span>
+        <span class="k">else</span><span class="p">:</span>             <span class="c"># if not submit, we sent the form</span>
+            <span class="n">uf</span> <span class="o">=</span> <span class="n">CreatePalaceForm</span><span class="p">()</span>
+            <span class="n">data</span><span class="p">[</span><span class="s">&#39;uf&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uf</span>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;createPalace.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">createRoom</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
+<div class="viewcode-block" id="createRoom"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.createRoom">[docs]</a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>        <span class="c"># check login already or not</span>
+        <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">palaceName</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;palaceName&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;POST&quot;</span><span class="p">:</span>            <span class="c"># if user submit the form</span>
+            <span class="n">input_user</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span>            <span class="c"># get user</span>
+            <span class="n">user_palace</span> <span class="o">=</span> <span class="n">UserPalace</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">input_user</span><span class="p">)</span>  <span class="c"># get all user palace</span>
+            <span class="n">this_palace</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">for</span> <span class="n">palace</span> <span class="ow">in</span> <span class="n">user_palace</span><span class="p">:</span>          <span class="c"># get user palace</span>
+                <span class="k">if</span> <span class="n">palace</span><span class="o">.</span><span class="n">palaceName</span> <span class="o">==</span> <span class="n">palaceName</span><span class="p">:</span>
+                    <span class="n">this_palace</span> <span class="o">=</span> <span class="n">palace</span>
+            <span class="c"># the_palace = PalaceRoom.objects.filter(userPalace=this_palace)</span>
+
+            <span class="n">uf</span> <span class="o">=</span> <span class="n">CreateRoomForm</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="n">req</span><span class="o">.</span><span class="n">FILES</span><span class="p">)</span>     <span class="c"># pass information to form</span>
+            <span class="k">if</span> <span class="n">uf</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+                <span class="n">roomName</span> <span class="o">=</span> <span class="n">uf</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;roomName&#39;</span><span class="p">]</span>
+                <span class="n">backgroundImage</span> <span class="o">=</span> <span class="n">uf</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;backgroundImage&#39;</span><span class="p">]</span>
+                <span class="n">room</span> <span class="o">=</span> <span class="n">PalaceRoom</span><span class="p">()</span>              <span class="c"># create room object instance</span>
+                <span class="n">room</span><span class="o">.</span><span class="n">userPalace</span> <span class="o">=</span> <span class="n">this_palace</span>
+                <span class="n">room</span><span class="o">.</span><span class="n">roomName</span> <span class="o">=</span> <span class="n">roomName</span>
+                <span class="n">room</span><span class="o">.</span><span class="n">backgroundImage</span> <span class="o">=</span> <span class="n">backgroundImage</span>
+                <span class="n">room</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>                  <span class="c"># save room to database</span>
+                <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/MemoryPalace?palaceName=&#39;</span> <span class="o">+</span> <span class="n">palaceName</span> <span class="o">+</span> <span class="s">&#39;&amp;roomName=&#39;</span><span class="o">+</span> <span class="n">roomName</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/createRoom?palaceName=&#39;</span><span class="o">+</span> <span class="n">palaceName</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">uf</span> <span class="o">=</span> <span class="n">CreateRoomForm</span><span class="p">()</span>
+            <span class="n">data</span><span class="p">[</span><span class="s">&#39;uf&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uf</span>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;createRoom.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Satya Gupta, Enan Rahman, Hensly Taveras, Imer Jance, Kaiying Chen.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

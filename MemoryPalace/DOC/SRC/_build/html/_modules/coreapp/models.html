@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>coreapp.models &mdash; MemoryPalace  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="MemoryPalace  documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for coreapp.models</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+
+
+<div class="viewcode-block" id="UserPalace"><a class="viewcode-back" href="../../coreapp.html#coreapp.forms.UserPalace">[docs]</a><span class="k">class</span> <span class="nc">UserPalace</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">,</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">palaceName</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="c"># BackgroundImage = models.CharField(max_length=200)</span>
+    <span class="n">numOfRooms</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">public</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">palaceName</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">unique_together</span> <span class="o">=</span> <span class="p">((</span><span class="s">&quot;user&quot;</span><span class="p">,</span> <span class="s">&quot;palaceName&quot;</span><span class="p">),)</span>
+
+</div>
+<div class="viewcode-block" id="PalaceRoom"><a class="viewcode-back" href="../../coreapp.html#coreapp.forms.PalaceRoom">[docs]</a><span class="k">class</span> <span class="nc">PalaceRoom</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">userPalace</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;UserPalace&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="c"># palaceName = models.ForeignKey(UserPalace.palaceName,null=True)</span>
+    <span class="n">roomName</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">backgroundImage</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s">&#39;./static/images&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;./static/images/room.jpg&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">roomName</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">unique_together</span> <span class="o">=</span> <span class="p">((</span><span class="s">&quot;userPalace&quot;</span><span class="p">,</span> <span class="s">&quot;roomName&quot;</span><span class="p">),)</span>
+
+</div>
+<div class="viewcode-block" id="PalaceObject"><a class="viewcode-back" href="../../coreapp.html#coreapp.forms.PalaceObject">[docs]</a><span class="k">class</span> <span class="nc">PalaceObject</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">palaceRoom</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;PalaceRoom&#39;</span><span class="p">,</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="c"># palaceName = models.ForeignKey(UserPalace.palaceName,null=True)</span>
+    <span class="c"># roomName = models.ForeignKey(PalaceRoom.roomName,null=True)</span>
+    <span class="c"># objectName= models.CharField(max_length=200, unique=True)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="c"># ObjectImage = models.CharField(max_length=200)</span>
+    <span class="n">objectImage</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s">&#39;./static/images/memory_objects&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;./static/images/char2.png&#39;</span><span class="p">)</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">position_x</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">position_y</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">unique_together</span> <span class="o">=</span> <span class="p">((</span><span class="s">&quot;palaceRoom&quot;</span><span class="p">,</span> <span class="s">&quot;description&quot;</span><span class="p">),)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Satya Gupta, Enan Rahman, Hensly Taveras, Imer Jance, Kaiying Chen.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
