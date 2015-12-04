@@ -42,16 +42,16 @@
 <span class="kn">from</span> <span class="nn">selenium.webdriver.common.keys</span> <span class="kn">import</span> <span class="n">Keys</span>
 <span class="kn">import</span> <span class="nn">unittest</span>
 
-<div class="viewcode-block" id="NewVisitorTest"><a class="viewcode-back" href="../functional_tests.html#functional_tests.NewVisitorTest">[docs]</a><span class="k">class</span> <span class="nc">NewVisitorTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="NewVisitorTest"><a class="viewcode-back" href="../functional_tests.html#functional_tests.NewVisitorTest">[docs]</a><span class="k">class</span> <span class="nc">NewVisitorTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span></div>
 
-<div class="viewcode-block" id="NewVisitorTest.setUp"><a class="viewcode-back" href="../functional_tests.html#functional_tests.NewVisitorTest.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">browser</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">implicitly_wait</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="NewVisitorTest.tearDown"><a class="viewcode-back" href="../functional_tests.html#functional_tests.NewVisitorTest.tearDown">[docs]</a>    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
-</div>
-<div class="viewcode-block" id="NewVisitorTest.test_1_hompage"><a class="viewcode-back" href="../functional_tests.html#functional_tests.NewVisitorTest.test_1_hompage">[docs]</a>    <span class="k">def</span> <span class="nf">test_1_hompage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_1_hompage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c"># Amber needs to memorize som chemistry terms and goes to MemoryPalace</span>
         <span class="c"># to check out its homepage</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;http://localhost:8000&#39;</span><span class="p">)</span>
@@ -60,8 +60,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s">&#39;MemoryPalace&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
         <span class="n">header_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">find_element_by_tag_name</span><span class="p">(</span><span class="s">&#39;h1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s">&#39;Welcome!&#39;</span><span class="p">,</span> <span class="n">header_text</span><span class="p">)</span>
-</div>
-<div class="viewcode-block" id="NewVisitorTest.test_2_register"><a class="viewcode-back" href="../functional_tests.html#functional_tests.NewVisitorTest.test_2_register">[docs]</a>    <span class="k">def</span> <span class="nf">test_2_register</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_2_register</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;http://localhost:8000/register&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s">&#39;MemoryPalace&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
         <span class="n">element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&quot;id_username&quot;</span><span class="p">)</span>
@@ -74,8 +74,8 @@
         <span class="n">element</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s">&quot;testuser&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&quot;register_submit&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">current_url</span><span class="p">,</span> <span class="s">&quot;http://localhost:8000/&quot;</span> <span class="p">);</span>
-</div>
-<div class="viewcode-block" id="NewVisitorTest.test_3_login"><a class="viewcode-back" href="../functional_tests.html#functional_tests.NewVisitorTest.test_3_login">[docs]</a>    <span class="k">def</span> <span class="nf">test_3_login</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_3_login</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;http://localhost:8000/login&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s">&#39;MemoryPalace&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
         <span class="n">element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&quot;username&quot;</span><span class="p">)</span>
@@ -85,7 +85,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&quot;login_submit&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEquals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="o">.</span><span class="n">current_url</span><span class="p">,</span> <span class="s">&quot;http://localhost:8000/&quot;</span> <span class="p">);</span>
 
-</div></div>
+
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
 </pre></div>
@@ -124,7 +124,7 @@
       &copy;2015, Satya Gupta, Enan Rahman, Hensly Taveras, Imer Jance, Kaiying Chen.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
       
     </div>
