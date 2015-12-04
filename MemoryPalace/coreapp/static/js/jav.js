@@ -107,8 +107,23 @@ $(document).ready(function(){
     })
 */
 $(document).ready(function(){
+    //Click on image from the vertical box to add it to the room.
     $('.scrollBoxImg').click(function(){
         $("<img class='draggable' src='"+$(this).attr('src')+"'/>").appendTo("#roombg");
+    });
+
+    //Add a caption to the image.
+    $(document).on('dblclick', '.draggable', function() {
+	var caption = prompt("Enter a caption for this image.");
+	$(this).attr('title', caption);
+	
+	/*Materialize tooltip. Having some trouble with this still.
+
+	$(this).attr('class', 'btn tooltipped');
+	$(this).attr('data-position', 'bottom');
+	$(this).attr('data-delay', '50');
+	$(this).attr('data-tooltip', caption);
+	*/
     });
 });
 
