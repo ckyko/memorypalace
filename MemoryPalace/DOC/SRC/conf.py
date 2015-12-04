@@ -52,8 +52,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'MemoryPalace'
-copyright = '2015, Author'
-author = 'Author'
+copyright = '2015, Satya Gupta, Enan Rahman, Hensly Taveras, Imer Jance, Kaiying Chen'
+author = 'Hensly Taveras'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
