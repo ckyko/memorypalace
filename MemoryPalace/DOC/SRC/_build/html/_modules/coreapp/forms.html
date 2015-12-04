@@ -8,7 +8,7 @@
     
     <title>coreapp.forms &mdash; MemoryPalace  documentation</title>
     
-    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -24,27 +24,18 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="MemoryPalace  documentation" href="../../index.html" />
-    <link rel="up" title="Module code" href="../index.html" /> 
+    <link rel="up" title="Module code" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
   </head>
-  <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">MemoryPalace  documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body role="document">  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for coreapp.forms</h1><div class="highlight"><pre>
 <span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
@@ -60,11 +51,11 @@
 <div class="viewcode-block" id="CreatePalaceForm"><a class="viewcode-back" href="../../coreapp.html#coreapp.forms.CreatePalaceForm">[docs]</a><span class="k">class</span> <span class="nc">CreatePalaceForm</span><span class="p">(</span><span class="n">ModelForm</span><span class="p">):</span>
 <div class="viewcode-block" id="CreatePalaceForm.Meta"><a class="viewcode-back" href="../../coreapp.html#coreapp.forms.CreatePalaceForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">UserPalace</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;palaceName&#39;</span><span class="p">,</span> <span class="s">&#39;numOfRooms&#39;</span><span class="p">,</span> <span class="s">&#39;public&#39;</span><span class="p">]</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;palaceName&#39;</span><span class="p">,</span> <span class="s">&#39;numOfRooms&#39;</span><span class="p">,</span> <span class="s">&#39;public&#39;</span><span class="p">]</span></div></div>
 
 <span class="c"># class CreateRoomForm(forms.Form):</span>
 <span class="c">#     roomName = forms.CharField()</span>
-<span class="c">#     backgroundImage = forms.ImageField()</span></div></div>
+<span class="c">#     backgroundImage = forms.ImageField()</span>
 <div class="viewcode-block" id="CreateRoomForm"><a class="viewcode-back" href="../../coreapp.html#coreapp.forms.CreateRoomForm">[docs]</a><span class="k">class</span> <span class="nc">CreateRoomForm</span><span class="p">(</span><span class="n">ModelForm</span><span class="p">):</span>
 <div class="viewcode-block" id="CreateRoomForm.Meta"><a class="viewcode-back" href="../../coreapp.html#coreapp.forms.CreateRoomForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">PalaceRoom</span>
@@ -74,9 +65,17 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -93,22 +92,17 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">MemoryPalace  documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li> 
-      </ul>
-    </div>
     <div class="footer">
-        &copy; Copyright 2015, Satya Gupta, Enan Rahman, Hensly Taveras, Imer Jance, Kaiying Chen.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      &copy;2015, Satya Gupta, Enan Rahman, Hensly Taveras, Imer Jance, Kaiying Chen.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
     </div>
+
+    
+
+    
   </body>
 </html>

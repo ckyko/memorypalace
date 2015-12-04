@@ -8,7 +8,7 @@
     
     <title>coreapp.views &mdash; MemoryPalace  documentation</title>
     
-    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -24,29 +24,21 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="MemoryPalace  documentation" href="../../index.html" />
-    <link rel="up" title="Module code" href="../index.html" /> 
+    <link rel="up" title="Module code" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
   </head>
-  <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">MemoryPalace  documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body role="document">  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for coreapp.views</h1><div class="highlight"><pre>
+
 <span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span><span class="p">,</span> <span class="n">HttpResponseRedirect</span><span class="p">,</span> <span class="n">HttpResponse</span>
 <span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
 <span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">authenticate</span><span class="p">,</span> <span class="n">login</span><span class="p">,</span> <span class="n">logout</span>
@@ -60,24 +52,24 @@
         <span class="s">&#39;headerLink&#39;</span><span class="p">:</span> <span class="s">&#39;#modal_register_login&#39;</span><span class="p">,</span> <span class="s">&#39;MP_link&#39;</span><span class="p">:</span> <span class="s">&#39;#modal_register_login&#39;</span><span class="p">}</span>
 
 
-<span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
-<div class="viewcode-block" id="index"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.index">[docs]</a>    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>         <span class="c"># check login already or not</span>
+<div class="viewcode-block" id="index"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.index">[docs]</a><span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>         <span class="c"># check login already or not</span>
           <span class="n">data</span><span class="p">[</span><span class="s">&#39;header&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;Log out&#39;</span>
           <span class="n">data</span><span class="p">[</span><span class="s">&#39;headerLink&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;/logout&#39;</span>
           <span class="c">#data[&#39;MP_link&#39;] = &#39;/palace_library&#39;</span>
-    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;home.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;home.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">about</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
-<div class="viewcode-block" id="about"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.about">[docs]</a>    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;about.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<div class="viewcode-block" id="about"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.about">[docs]</a><span class="k">def</span> <span class="nf">about</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;about.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">contact</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
-<div class="viewcode-block" id="contact"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.contact">[docs]</a>    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;contact.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<div class="viewcode-block" id="contact"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.contact">[docs]</a><span class="k">def</span> <span class="nf">contact</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;contact.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">log_in</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
-<div class="viewcode-block" id="log_in"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.log_in">[docs]</a>    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;POST&quot;</span><span class="p">:</span>      <span class="c"># check if user submit or not</span>
+<div class="viewcode-block" id="log_in"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.log_in">[docs]</a><span class="k">def</span> <span class="nf">log_in</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;POST&quot;</span><span class="p">:</span>      <span class="c"># check if user submit or not</span>
         <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;username&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>    <span class="c"># get username</span>
         <span class="n">password</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;password&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
@@ -99,36 +91,36 @@
             <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;login.html&#39;</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">data</span><span class="p">[</span><span class="s">&#39;errors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;login.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;login.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">log_out</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
-<div class="viewcode-block" id="log_out"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.log_out">[docs]</a>    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>        <span class="c"># check login already or not</span>
+<div class="viewcode-block" id="log_out"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.log_out">[docs]</a><span class="k">def</span> <span class="nf">log_out</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>        <span class="c"># check login already or not</span>
         <span class="n">logout</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>                        <span class="c"># log out user</span>
     <span class="n">data</span><span class="p">[</span><span class="s">&#39;header&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;Login | Register&#39;</span>
     <span class="n">data</span><span class="p">[</span><span class="s">&#39;headerLink&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;#modal_register_login&#39;</span>
     <span class="n">data</span><span class="p">[</span><span class="s">&#39;MP_link&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;#modal_register_login&#39;</span>
-    <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">palace_library</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
-<div class="viewcode-block" id="palace_library"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.palace_library">[docs]</a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>        <span class="c"># check login already or not</span>
+<div class="viewcode-block" id="palace_library"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.palace_library">[docs]</a><span class="k">def</span> <span class="nf">palace_library</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>        <span class="c"># check login already or not</span>
         <span class="n">data</span><span class="p">[</span><span class="s">&#39;user_palace&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;palace_library.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">input_user</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span>          <span class="c"># get user</span>
         <span class="n">user_palace</span> <span class="o">=</span> <span class="n">UserPalace</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">input_user</span><span class="p">)</span>  <span class="c"># get all user palaces for user</span>
         <span class="n">data</span><span class="p">[</span><span class="s">&#39;user_palace&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_palace</span>
-        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s">&#39;palace_library.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s">&#39;palace_library.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">testing</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
-<div class="viewcode-block" id="testing"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.testing">[docs]</a>    <span class="n">data</span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;images/memory_objects/char2.png&quot;</span>
-    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;test.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<div class="viewcode-block" id="testing"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.testing">[docs]</a><span class="k">def</span> <span class="nf">testing</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="n">data</span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;images/memory_objects/char2.png&quot;</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;test.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
-<div class="viewcode-block" id="register"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.register">[docs]</a>    <span class="c">####This is for functionality test. Delete test user and register again</span>
+<div class="viewcode-block" id="register"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.register">[docs]</a><span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
+    <span class="c">####This is for functionality test. Delete test user and register again</span>
     <span class="c"># try:</span>
     <span class="c">#     u = User.objects.get(username=&#39;testuser&#39;)</span>
     <span class="c"># except User.DoesNotExist:</span>
@@ -167,8 +159,8 @@
         <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;register.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">MemoryPalace</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
-<div class="viewcode-block" id="MemoryPalace"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.MemoryPalace">[docs]</a>    <span class="sd">&#39;&#39;&#39;</span>
+<div class="viewcode-block" id="MemoryPalace"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.MemoryPalace">[docs]</a><span class="k">def</span> <span class="nf">MemoryPalace</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        This function response Memory palace room page.</span>
 <span class="sd">        the url for this function is /MemoryPalace</span>
 <span class="sd">        function check user login or not, if not it will just dispaly a model of room.</span>
@@ -214,12 +206,12 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">data</span><span class="p">[</span><span class="s">&#39;user_room&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="n">data</span><span class="p">[</span><span class="s">&#39;user_palace&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;memory_palace.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;memory_palace.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
 
 
 
-<span class="k">def</span> <span class="nf">createPalace</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
-<div class="viewcode-block" id="createPalace"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.createPalace">[docs]</a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>   <span class="c"># check login already or not</span>
+<div class="viewcode-block" id="createPalace"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.createPalace">[docs]</a><span class="k">def</span> <span class="nf">createPalace</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>   <span class="c"># check login already or not</span>
         <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;POST&quot;</span><span class="p">:</span>      <span class="c"># if user submit the form</span>
@@ -240,11 +232,11 @@
         <span class="k">else</span><span class="p">:</span>             <span class="c"># if not submit, we sent the form</span>
             <span class="n">uf</span> <span class="o">=</span> <span class="n">CreatePalaceForm</span><span class="p">()</span>
             <span class="n">data</span><span class="p">[</span><span class="s">&#39;uf&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uf</span>
-            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;createPalace.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;createPalace.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">createRoom</span><span class="p">(</span><span class="n">req</span><span class="p">):</span></div>
-<div class="viewcode-block" id="createRoom"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.createRoom">[docs]</a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>        <span class="c"># check login already or not</span>
+<div class="viewcode-block" id="createRoom"><a class="viewcode-back" href="../../coreapp.html#coreapp.views.createRoom">[docs]</a><span class="k">def</span> <span class="nf">createRoom</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>        <span class="c"># check login already or not</span>
         <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">palaceName</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;palaceName&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span>
@@ -273,15 +265,23 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">uf</span> <span class="o">=</span> <span class="n">CreateRoomForm</span><span class="p">()</span>
             <span class="n">data</span><span class="p">[</span><span class="s">&#39;uf&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uf</span>
-            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;createRoom.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-</pre></div></div>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span><span class="s">&#39;createRoom.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
+</pre></div>
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -298,22 +298,17 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">MemoryPalace  documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li> 
-      </ul>
-    </div>
     <div class="footer">
-        &copy; Copyright 2015, Satya Gupta, Enan Rahman, Hensly Taveras, Imer Jance, Kaiying Chen.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      &copy;2015, Satya Gupta, Enan Rahman, Hensly Taveras, Imer Jance, Kaiying Chen.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
     </div>
+
+    
+
+    
   </body>
 </html>

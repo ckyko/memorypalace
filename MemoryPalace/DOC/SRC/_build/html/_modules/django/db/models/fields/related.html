@@ -1563,6 +1563,9 @@
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[]</span>
 
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">foreign_related_fields</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
         <span class="n">has_unique_field</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">rel_field</span><span class="o">.</span><span class="n">unique</span>
             <span class="k">for</span> <span class="n">rel_field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">foreign_related_fields</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">has_unique_field</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">foreign_related_fields</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -1662,7 +1665,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">foreign_related_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">rhs_field</span> <span class="k">for</span> <span class="n">lhs_field</span><span class="p">,</span> <span class="n">rhs_field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">related_fields</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">rhs_field</span> <span class="k">for</span> <span class="n">lhs_field</span><span class="p">,</span> <span class="n">rhs_field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">related_fields</span> <span class="k">if</span> <span class="n">rhs_field</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">get_local_related_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_instance_value_for_fields</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_related_fields</span><span class="p">)</span>
@@ -2577,7 +2580,7 @@
             <span class="c"># related_name with one generated from the m2m field name. Django</span>
             <span class="c"># still uses backwards relations internally and we need to avoid</span>
             <span class="c"># clashes between multiple m2m fields with related_name == &#39;+&#39;.</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">rel</span><span class="o">.</span><span class="n">related_name</span> <span class="o">=</span> <span class="s">&quot;_</span><span class="si">%s</span><span class="s">_+&quot;</span> <span class="o">%</span> <span class="n">name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rel</span><span class="o">.</span><span class="n">related_name</span> <span class="o">=</span> <span class="s">&quot;_</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">_+&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">name</span><span class="p">)</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">ManyToManyField</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">contribute_to_class</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
@@ -2688,7 +2691,7 @@
       &copy;2015, Satya Gupta, Enan Rahman, Hensly Taveras, Imer Jance, Kaiying Chen.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
       
     </div>
