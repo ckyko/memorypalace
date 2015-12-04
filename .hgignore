@@ -9,4 +9,4 @@ syntax: glob
 *Procfile
 *.idea/*
 *db.sqlite3
-0002_auto_*
+000*
