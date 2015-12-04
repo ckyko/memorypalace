@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
 {% for palace in user_palace%}
-<div class="card small hoverable col s12 m3" id="public_palace_card">
+<div class="card small hoverable col s3 private_palace_card">
   <div class="card-image">
     <img src="{% static "images/previews/pre2.jpg"%}">
       <span class="card-title">{{palace.palaceName}}</span>
@@ -21,11 +21,11 @@
 {% endfor %}
 
 
-<a href=createPalace/ >
-    <div class="card-panel col s12 m3 hoverable" id="private_palace_card">
+    <div class="card small hoverable private_palace_card col s3">
+      <a href=createPalace/ >
         <i class="large material-icons" id="private_add_palace_card">add</i>
+      </a>
     </div>
-</a>
 
 
 <!--<a a class="modal-trigger" href=‘#modal_createRoom’>-->

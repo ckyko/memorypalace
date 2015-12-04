@@ -186,7 +186,7 @@ def createPalace(req):
                 palace.public = public
                 palace.user = req.user             # get user and put in form
                 palace.save()                      # save form to database
-                return HttpResponseRedirect('/palace_library')     # redirect to palace library page
+                return HttpResponseRedirect('/palace_library/#Private')     # redirect to palace library page
             else:
                 return HttpResponseRedirect('/palace_library/createPalace')  # if form is not valid, still in create palace page
         else:             # if not submit, we sent the form
