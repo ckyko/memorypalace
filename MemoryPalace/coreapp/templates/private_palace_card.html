@@ -1,0 +1,35 @@
+{% load staticfiles %}
+
+{% for palace in user_palace%}
+<div class="card small hoverable col s3 private_palace_card">
+  <div class="card-image">
+    <img src="{% static "images/previews/pre2.jpg"%}">
+      <span class="card-title">{{palace.palaceName}}</span>
+  </div>
+  <div class="card-content">
+    <p>{{palace.palaceName}}</p>
+  </div>
+  <div class="card-action">
+    <a class="btn-floating btn-large teal accent-4">
+      <i class="large material-icons">play_circle_filled</i>
+    </a>
+    <a class="btn-floating btn-large teal accent-4" href="/MemoryPalace?palaceName={{palace.palaceName}}">
+      <i class="large material-icons">mode_edit</i>
+    </a>
+  </div>
+</div>
+{% endfor %}
+
+
+    <div class="card small hoverable private_palace_card col s3">
+      <a href=createPalace/ >
+        <i class="large material-icons" id="private_add_palace_card">add</i>
+      </a>
+    </div>
+
+
+<!--<a a class="modal-trigger" href=‘#modal_createRoom’>-->
+  <!--<div class="card-panel col s3 hoverable" id="private_palace_card" onclick="create_palace()">-->
+    <!--<i class="large material-icons" id="private_add_palace_card">add</i>-->
+  <!--</div>-->
+<!--</a>-->
