@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import  ModelForm
+from django.forms import ModelForm
 from .models import PalaceRoom, UserPalace
 # from django.contrib.auth.models import User
 
