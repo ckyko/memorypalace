@@ -7,14 +7,18 @@ class UserPalaceSerializer(serializers.ModelSerializer):
         fields=('user', 'palaceName', 'numOfRooms', 'public')
 
 class PalaceRoomSerializer(serializers.ModelSerializer):
+    user = UserPalaceSerializer()
+
     class Meta:
         model = PalaceRoom
-        fields = ('UserPalace', 'roomName', 'backgroundImage')
+        fields = ('user', 'userPalace', 'roomName', 'backgroundImage')
 
 class PalaceObjectSerializer(serializers.ModelSerializer):
+    user = UserPalaceSerializer()
+    palaceRoom = PalaceRoomSerializer()
     class Meta:
         model = PalaceObject
-        fields = ('palaceRoom', 'description', 'objectImage', 'width', 'height', 'position_X', 'position_Y')
+        fields = ('user', 'userPalace', 'palaceRoom', 'description', 'objectImage', 'width', 'height', 'position_X', 'position_Y')
 
 
 

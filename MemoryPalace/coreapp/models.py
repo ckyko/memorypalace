@@ -40,6 +40,7 @@ class PalaceRoom(models.Model):
     named uniqely for their palace
     backgroundImage: The background Image of the room
     """
+    user = models.ForeignKey(User, null=True)
     userPalace = models.ForeignKey('UserPalace', null=True)
     roomName = models.CharField(max_length=200, unique=True)
     backgroundImage = models.ImageField(upload_to='./static/images', default='./static/images/room.jpg')
@@ -62,6 +63,8 @@ class PalaceObject(models.Model):
     x: The x coordinate of the object in the room
     y: The y coordinate of the object in the room
     """
+    user = models.ForeignKey(User, null=True)
+    userPalace = models.ForeignKey('UserPalace', null=True)
     palaceRoom = models.ForeignKey('PalaceRoom', null=True)
     # objectName= models.CharField(max_length=200, unique=True)
     description = models.CharField(max_length=200)
