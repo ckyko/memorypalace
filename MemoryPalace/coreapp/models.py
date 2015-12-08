@@ -68,10 +68,9 @@ class PalaceObject(models.Model):
     """
     user = models.ForeignKey(User, null=True)
     userPalace = models.ForeignKey('UserPalace', null=True)
-    roomName = models.ForeignKey('PalaceRoom', null=True)
-    # objectName= models.CharField(max_length=200, unique=True)
+    palaceRoom = models.ForeignKey('PalaceRoom', null=True)
+     objectName= models.CharField(max_length=200, unique=True)
     description = models.CharField(max_length=200)
-    objectImage = models.ImageField(upload_to='./coreapp/static/images'),
     objectImage = models.ImageField(upload_to='./static/images/memory_objects', default='./static/images/char2.png')
     width = models.IntegerField(default=50)
     height = models.IntegerField(default=50)
@@ -82,4 +81,4 @@ class PalaceObject(models.Model):
         return self.description
 
     class Meta:
-        unique_together = (("user", "userPalace", "roomName", "description"),)
+        unique_together = (("user", "userPalace", "palaceRoom", "objectName" ),)
