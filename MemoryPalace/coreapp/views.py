@@ -287,5 +287,19 @@ def upload_image(req):
         print("ajax")
         form = UploadImageForm(data = req.POST, files = req.FILES)
         print(req.FILES)
+        if form.is_valid():
+            print('valid form')
+            roomName = req.GET.get('roomName', '')  # get room name
+            print(roomName)
+            user_room = PalaceRoom.objects.filter(roomName=roomName)
+            if user_room:
+                print("user_room get")
+                image_file = form.cleaned_data['objectImage']
+                object = PalaceObject()
+            else:
+                print("room not fond")
 
+        else:
+            print('invalid')
+            print(form.errors)
     return HttpResponseRedirect('/')
