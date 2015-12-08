@@ -9,14 +9,13 @@ from django.core.urlresolvers import reverse
 
 
 data = {'title': 'MemoryPalace', 'char1': 'images/char1.png', 'header': 'Login|Register',
-        'headerLink': '#modal_register_login', 'MP_link': '#modal_register_login'}
+        'headerLink': '#modal_register_login'}
 
 
 def index(req):
     if req.user.is_authenticated():         # check login already or not
           data['header'] = 'Logout'
           data['headerLink'] = '/logout'
-          #data['MP_link'] = '/palace_library'
     return render(req,'home.html', data)
 
 
@@ -29,9 +28,9 @@ def contact(req):
 
 
 def log_in(req):
+    errors = []
+    temp = data
     if req.method == "POST":      # check if user submit or not
-        errors = []
-        temp = data
         name = req.POST.get('username', '')    # get username
         password = req.POST.get('password', '')
         user = authenticate(username=name, password=password)    # check user name and password
@@ -61,7 +60,6 @@ def log_out(req):
         logout(req)                        # log out user
     data['header'] = 'Login | Register'
     data['headerLink'] = '#modal_register_login'
-    data['MP_link'] = '#modal_register_login'
     return HttpResponseRedirect('/')
 
 
@@ -82,6 +80,8 @@ def testing(req):
 
 
 def register(req):
+    errors = []
+    temp = data
     ####This is for functionality test. Delete test user and register again
     try:
         u = User.objects.get(username='testuser')
@@ -90,8 +90,6 @@ def register(req):
     else:
         u.delete()
 
-    errors = []
-    temp = data
     if req.method == 'POST':
         name = req.POST.get('username', '')                 # get username
         password1 = req.POST.get('password1', '')           # get password
@@ -119,6 +117,7 @@ def register(req):
         temp['errors'] = errors
         #return render(req,'register.html', temp)
         return redirect('/#modal_register')
+        del errors[:] #reset errors
     else:
         #return render(req,'register.html', data)
         return redirect('/#modal_register')
