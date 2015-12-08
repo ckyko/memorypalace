@@ -242,12 +242,12 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, **kwargs)
 
 @csrf_exempt
-def snippet_detail(request):
+def snippet_detail(request,pk):
 
     #Retrieve, update or delete a code snippet.
 
     try:
-        pObj = PalaceObject.objects.get(user=request.user)
+        pObj = PalaceObject.objects.get(roomName= pk)
     except PalaceObject.DoesNotExist:
         return HttpResponse(status=404)
 
