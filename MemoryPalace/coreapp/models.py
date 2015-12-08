@@ -69,7 +69,7 @@ class PalaceObject(models.Model):
     user = models.ForeignKey(User, null=True)
     userPalace = models.ForeignKey('UserPalace', null=True)
     palaceRoom = models.ForeignKey('PalaceRoom', null=True)
-     objectName= models.CharField(max_length=200, unique=True)
+    objectName= models.CharField(max_length=200, unique=True)
     description = models.CharField(max_length=200)
     objectImage = models.ImageField(upload_to='./static/images/memory_objects', default='./static/images/char2.png')
     width = models.IntegerField(default=50)
