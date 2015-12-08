@@ -96,6 +96,7 @@ $(function(){
 //		sentImg();
 
     var data = new FormData($('form').get(2));
+    alert("aaa")
     $.ajax({
         url: $(upload_image).attr('action'),
         method: $(upload_image).attr('method'),
@@ -103,6 +104,9 @@ $(function(){
         cache: false,
         processData: false,
         contentType: false,
+        success: function(data) {
+            alert('success');
+        }
     });
 
 
