@@ -282,3 +282,10 @@ def createRoom(req):
             return render(req, 'createRoom.html', data)
 
 
+def upload_image(req):
+    if req.is_ajax():
+        print("ajax")
+        form = UploadImageForm(data = req.POST, files = req.FILES)
+        print(req.FILES)
+
+    return HttpResponseRedirect('/')

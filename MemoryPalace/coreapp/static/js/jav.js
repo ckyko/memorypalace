@@ -95,14 +95,14 @@ $(function(){
 //		}
 //		sentImg();
 
-    var data = new FormData($('form').get(1));
+    var data = new FormData($('form').get(2));
     $.ajax({
         url: $(upload_image).attr('action'),
         method: $(upload_image).attr('method'),
         data: data,
+        cache: false,
         processData: false,
         contentType: false,
-
     });
 
 
