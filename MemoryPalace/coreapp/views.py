@@ -4,6 +4,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .forms import CreatePalaceForm, CreateRoomForm
 from .models import UserPalace, PalaceRoom, PalaceObject
+from serializers import PalaceObjectSerializer
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+from django.views.decorators.csrf import csrf_exempt
 # from django.contrib.auth.forms import forms
 from django.core.urlresolvers import reverse
 
@@ -226,3 +230,58 @@ def createRoom(req):
             uf = CreateRoomForm()
             data['uf'] = uf
             return render(req,'createRoom.html', data)
+
+
+class JSONResponse(HttpResponse):
+
+    #An HttpResponse that renders its content into JSON.
+
+    def __init__(self, data, **kwargs):
+        content = JSONRenderer().render(data)
+        kwargs['content_type'] = 'application/json'
+        super(JSONResponse, self).__init__(content, **kwargs)
+
+@csrf_exempt
+def snippet_detail(request):
+
+    #Retrieve, update or delete a code snippet.
+
+    try:
+        pObj = PalaceObject.objects.get(user=request.user)
+    except PalaceObject.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        serializer = PalaceObjectSerializer(pObj)
+        return JSONResponse(serializer.data)
+
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request)
+        serializer = PalaceObjectSerializer(pObj, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JSONResponse(serializer.data)
+        return JSONResponse(serializer.errors, status=400)
+
+    elif request.method == 'DELETE':
+        pObj.delete()
+        return HttpResponse(status=204)
+
+@csrf_exempt
+def snippet_list(request):
+
+    #List all code snippets, or create a new snippet.
+
+    if request.method == 'GET':
+        snippets = PalaceObject.objects.all()
+        serializer = PalaceObjectSerializer(snippets, many=True)
+        return JSONResponse(serializer.data)
+
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = PalaceObjectSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JSONResponse(serializer.data, status=201)
+        return JSONResponse(serializer.errors, status=400)
+

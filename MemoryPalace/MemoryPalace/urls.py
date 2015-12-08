@@ -56,8 +56,8 @@ urlpatterns = [
     url(r'^testing/', 'coreapp.views.testing'),
     url(r'^createRoom/', 'coreapp.views.createRoom'),
     #url(r'^api', include(router.urls)),
-    url(r'^snippets/$', 'test_app.views.snippet_list'),
-    url(r'^snippets/(?P<pk>[0-9]+)/$', 'test_app.views.snippet_detail'),
+    url(r'^snippets/$', 'coreapp.views.snippet_list'),
+    url(r'^snippets/(?P<pk>[0-9]+)/$', 'coreapp.views.snippet_detail'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^some', include('test_app.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
