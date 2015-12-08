@@ -2,14 +2,14 @@
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .forms import CreatePalaceForm, CreateRoomForm
+from .forms import CreatePalaceForm, CreateRoomForm, UploadImageForm
 from .models import UserPalace, PalaceRoom, PalaceObject
 from django.core.urlresolvers import reverse
 
 
 
-data = {'title': 'MemoryPalace', 'char1': 'images/char1.png', 'header': 'Login | Register',
-        'headerLink': '#modal_register_login'}
+data = {'title': 'MemoryPalace', 'header': 'Login | Register',
+        'headerLink': '#modal_register_login', 'objectForm': UploadImageForm()}
 
 
 def index(req):
@@ -21,9 +21,11 @@ def index(req):
     :return: index page
     '''
     if req.user.is_authenticated():         # check login already or not
-
-          data['header'] = 'Logout'
-          data['headerLink'] = '/logout'
+        data['header'] = 'Logout'
+        data['headerLink'] = '/logout'
+    else:
+        data['header'] = 'Login | Register'
+        data['headerLink'] = '#modal_register_login'
     return render(req, 'home.html', data)
 
 
@@ -82,7 +84,6 @@ def log_out(req):
         logout(req)                        # log out user
     data['header'] = 'Login | Register'
     data['headerLink'] = '#modal_register_login'
-    data['MP_link'] = '#modal_register_login'
     return HttpResponseRedirect('/')
 
 
@@ -165,6 +166,8 @@ def MemoryPalace(req):
         all user's room information to page
     '''
     if req.user.is_authenticated():   # check login already or not
+        data['header'] = 'Logout'
+        data['headerLink'] = '/logout'
         data['room'] = None
         data['user_room'] = None
         data['roomObj'] = None
@@ -277,3 +280,5 @@ def createRoom(req):
             user_form = CreateRoomForm()
             data['uf'] = user_form
             return render(req, 'createRoom.html', data)
+
+
