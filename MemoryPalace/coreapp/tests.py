@@ -40,3 +40,31 @@ class ViewsTestCase(TestCase):
         response = self.client.get(reverse('about'))
         self.assertEqual(response.status_code, 200)
 
+    def test_contact_page(self):
+        response = self.client.get(reverse('contact'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_memory_palace_page(self):
+        response = self.client.get(reverse('MemoryPalace'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_palace_library_page(self):
+        response = self.client.get(reverse('palace_library'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_register(self):
+        response = self.client.get(reverse('register'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_login(self):
+        response = self.client.get(reverse('login'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_createPalace(self):
+        response = self.client.get(reverse('createPalace'))
+        self.assertEqual(response.status_code, 302)
+
+    def test_createRoom(self):
+        response = self.client.get(reverse('createRoom'))
+        self.assertEqual(response.status_code, 302)
+
