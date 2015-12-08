@@ -12,13 +12,13 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.urlresolvers import reverse
 
 
-data = {'title': 'MemoryPalace', 'char1': 'images/char1.png', 'header': 'Login | Register',
+data = {'title': 'MemoryPalace', 'char1': 'images/char1.png', 'header': 'Login|Register',
         'headerLink': '#modal_register_login', 'MP_link': '#modal_register_login'}
 
 
 def index(req):
     if req.user.is_authenticated():         # check login already or not
-          data['header'] = 'Log out'
+          data['header'] = 'Logout'
           data['headerLink'] = '/logout'
           #data['MP_link'] = '/palace_library'
     return render(req,'home.html', data)
@@ -85,13 +85,13 @@ def testing(req):
 
 def register(req):
     ####This is for functionality test. Delete test user and register again
-    # try:
-    #     u = User.objects.get(username='testuser')
-    # except User.DoesNotExist:
-    #     pass
-    # else:
-    #     u.delete()
-    # ####
+    try:
+        u = User.objects.get(username='testuser')
+    except User.DoesNotExist:
+        pass
+    else:
+        u.delete()
+
     errors = []
     temp = data
     if req.method == 'POST':
