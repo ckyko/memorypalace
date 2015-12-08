@@ -18,6 +18,7 @@ interact('.draggable')
     // call this function on every dragend event
     onend: function (event) {
       var textEl = event.target.querySelector('p');
+      alert(event.target)
 
       textEl && (textEl.textContent =
         'moved a distance of '
@@ -81,18 +82,30 @@ interact('.draggable')
 
 //*** FOR HTE ROOM UPLOAD IMAGES ***
 $(function(){
-   $("#file").change(function(e){
-		 var file = e.target.files||e.dataTransfer.files;
-
-		 if(file){
-			 var reader = new FileReader();
-			 reader.onload=function(){
-					// append the "<img class='draggable' src=... />" to roombg
-					$("<img class='scrollBoxImg' src='"+this.result+"'/>").appendTo("#vertscrollbox");
-			 }
-			reader.readAsDataURL(file[0]);
-		}
+   $("#id_objectImage").change(function(e){
+//		 var file = e.target.files||e.dataTransfer.files;
+//
+//		 if(file){
+//			 var reader = new FileReader();
+//			 reader.onload=function(){
+//					// append the "<img class='draggable' src=... />" to roombg
+//					$("<img class='scrollBoxImg' src='"+this.result+"'/>").appendTo("#vertscrollbox");
+//			 }
+//			reader.readAsDataURL(file[0]);
+//		}
 //		sentImg();
+
+    var data = new FormData($('form').get(1));
+    $.ajax({
+        url: $(upload_image).attr('action'),
+        method: $(upload_image).attr('method'),
+        data: data,
+        processData: false,
+        contentType: false,
+
+    });
+
+
   });
 
 })
