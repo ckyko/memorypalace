@@ -1,5 +1,5 @@
 
-from django.shortcuts import render, HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, HttpResponseRedirect, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .forms import CreatePalaceForm, CreateRoomForm
@@ -31,6 +31,7 @@ def contact(req):
 def log_in(req):
     if req.method == "POST":      # check if user submit or not
         errors = []
+        temp = data
         name = req.POST.get('username', '')    # get username
         password = req.POST.get('password', '')
         user = authenticate(username=name, password=password)    # check user name and password
@@ -40,18 +41,19 @@ def log_in(req):
                 # req.session['username'] = name
                 return HttpResponseRedirect('/')
             else:
-                errors.append('disabled account')
-                temp = data
+                errors.append('Disabled account')
                 temp['errors'] = errors
-                return render(req,'login.html', temp)
+                #return render(req,'login.html', temp)
+                return redirect('/#modal_login',temp)
         else:                                                     # if username or password is invalid
-            errors.append('invalid username or password')
-            temp = data
+            errors.append('Invalid Username or Password')
             temp['errors'] = errors
-            return render(req,'login.html', temp)
+            #return render(req,'login.html', temp)
+            return redirect('/#modal_login')
     else:
         data['errors'] = None
-        return render(req,'login.html', data)
+        #return render(req,'login.html', data)
+        return redirect('/#modal_login')
 
 
 def log_out(req):
@@ -95,17 +97,18 @@ def register(req):
         password1 = req.POST.get('password1', '')           # get password
         password2 = req.POST.get('password2', '')           # get conform password
         if len(name) < 5:                                    # check length of username
-            errors.append(u'user name must at least 5 character')
+            errors.append(u'Username must be at least 5 character')
         elif len(password1) < 6:                             # check length of password
-            errors.append(u'PassWord must at least 6 character ')
+            errors.append(u'Password must be at least 6 character ')
         elif password1 != password2:                        # confirm password
-            errors.append(u'Tow password is different')
+            errors.append(u"Password doesn't match")
         else:
             try:                                             # check if username was used
                 user = User.objects.get(username=name)
                 errors.append(u'user name is used')
                 temp['errors'] = errors
-                return render(req,'register.html', temp)
+                #return render(req,'register.html', temp)
+                return redirect('/#modal_register/')
             except User.DoesNotExist:
                 user = User.objects.create_user(             # create a user
                     username=name,
@@ -114,9 +117,11 @@ def register(req):
                 user.save()
                 return HttpResponseRedirect('/')
         temp['errors'] = errors
-        return render(req,'register.html', temp)
+        #return render(req,'register.html', temp)
+        return redirect('/#modal_register')
     else:
-        return render(req,'register.html', data)
+        #return render(req,'register.html', data)
+        return redirect('/#modal_register')
 
 
 def MemoryPalace(req):

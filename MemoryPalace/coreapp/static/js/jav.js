@@ -118,3 +118,17 @@ $(document).ready(function(){
       $().appendTo("#Private");
     });
 });
+
+$(function(){
+
+   if (window.location.hash){
+      var hash = window.location.hash.substring(1);
+      if (hash == "modal_register"){
+         $('#modal_register_login').openModal();
+      }
+      if (hash == "modal_login"){
+         $('#modal_register_login').openModal();
+      }
+   }
+
+});
