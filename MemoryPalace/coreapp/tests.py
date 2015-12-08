@@ -68,3 +68,19 @@ class ViewsTestCase(TestCase):
         response = self.client.get(reverse('createRoom'))
         self.assertEqual(response.status_code, 302)
 
+    def test_register_with_new_user(self):
+        response = self.client.post(reverse('register'), {'username': 'newUserName',
+                                                           'password1': 'password',
+                                                           'password2': 'password'})
+        new_user = User.objects.get(username='newUserName')
+        self.assertTrue(new_user is not None, msg="user not create.")
+
+    def test_login_with_a_user(self):
+        user = User.objects.create_user(username="testing", password="password")
+        self.assertTrue(user is not None, msg="user not create.")
+        response = self.client.post(reverse('login'), {'username': 'testing',
+                                                         'password': 'password'})
+
+        print(response)
+
+
