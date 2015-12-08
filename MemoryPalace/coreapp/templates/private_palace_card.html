@@ -1,5 +1,5 @@
 {% load staticfiles %}
-
+{% include "modal_createPalace.html" %}
 {% for palace in user_palace%}
 <div class="card small hoverable col s3 private_palace_card">
   <div class="card-image">
@@ -23,13 +23,10 @@
 
     <div class="card small hoverable private_palace_card col s3">
       <!--<a href=createPalace/ >-->
-      {% include "modal_createPalace.html" %}
-      <a class="modal-trigger" href=#modal_createPalace>
+      <a class="modal-trigger" href=createPalace/>
         <i class="large material-icons" id="private_add_palace_card">add</i>
       </a>
     </div>
-
-
 <!--<a a class="modal-trigger" href=‘#modal_createRoom’>-->
   <!--<div class="card-panel col s3 hoverable" id="private_palace_card" onclick="create_palace()">-->
     <!--<i class="large material-icons" id="private_add_palace_card">add</i>-->

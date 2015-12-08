@@ -129,6 +129,10 @@ $(function(){
       if (hash == "modal_login"){
          $('#modal_register_login').openModal();
       }
+      if (hash == "modal_createPalace"){
+         $('ul.tabs').tabs('select_tab', 'Private');
+         $('#modal_createPalace').openModal();
+      }
    }
 
 });

@@ -192,11 +192,13 @@ def createPalace(req):
                 palace.save()                      # save form to database
                 return HttpResponseRedirect('/palace_library/#Private')     # redirect to palace library page
             else:
-                return HttpResponseRedirect('/palace_library/createPalace')  # if form is not valid, still in create palace page
+                return redirect('/palace_library/#modal_createPalace')
+                #return HttpResponseRedirect('/palace_library/createPalace')  # if form is not valid, still in create palace page
         else:             # if not submit, we sent the form
             uf = CreatePalaceForm()
             data['uf'] = uf
-            return render(req,'createPalace.html', data)
+            #return render(req,'createPalace.html', data)
+            return redirect('/palace_library/#modal_createPalace')
 
 
 def createRoom(req):
