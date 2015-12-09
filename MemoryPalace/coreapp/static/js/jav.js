@@ -18,7 +18,7 @@ interact('.draggable')
     // call this function on every dragend event
     onend: function (event) {
       var textEl = event.target.querySelector('p');
-      alert(event.target)
+//      alert(event.target)
 
       textEl && (textEl.textContent =
         'moved a distance of '
@@ -96,11 +96,13 @@ $(function(){
 //		sentImg();
 
     var data = new FormData($('form').get(2));
+    var test = "test";
+    var temp = [data,test];
     alert("aaa")
     $.ajax({
         url: $(upload_image).attr('action'),
         method: $(upload_image).attr('method'),
-        data: data,
+        data: temp,
         cache: false,
         processData: false,
         contentType: false,
@@ -113,7 +115,13 @@ $(function(){
   });
 
 })
+//$(document).ready(function(){
+//    var get_json = {{json_room|safe}};
+//    alert(get_json);
+//    var romename = get_json.roomName;
+//    alert(romename);
 
+});
 /* KAYINGS
 $(document).ready(function(){
   $("#saveImg").click(function(){
