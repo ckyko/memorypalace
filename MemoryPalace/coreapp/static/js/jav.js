@@ -83,26 +83,28 @@ interact('.draggable')
 //*** FOR HTE ROOM UPLOAD IMAGES ***
 $(function(){
    $("#id_objectImage").change(function(e){
-		 var file = e.target.files||e.dataTransfer.files;
-
-		 if(file){
-			 var reader = new FileReader();
-			 reader.onload=function(){
-					// append the "<img class='draggable' src=... />" to roombg
-					$("<img class='scrollBoxImg' src='"+this.result+"'/>").appendTo("#vertscrollbox");
-			 }
-			reader.readAsDataURL(file[0]);
-		}
+//		 var file = e.target.files||e.dataTransfer.files;
+//
+//		 if(file){
+//			 var reader = new FileReader();
+//			 reader.onload=function(){
+//					// append the "<img class='draggable' src=... />" to roombg
+//					$("<img class='scrollBoxImg' src='"+this.result+"'/>").appendTo("#vertscrollbox");
+//			 }
+//			reader.readAsDataURL(file[0]);
+//		}
 //		sentImg();
 
     var data = new FormData($('form').get(2));
-    var test = "test";
-    var temp = [data,test];
-    alert("aaa")
+    var room_name = $("#room_name").text();
+    alert(room_name);
+    alert(typeof(room_name));
+    data.append('room_name',room_name);
+    alert("aaa");
     $.ajax({
         url: $(upload_image).attr('action'),
         method: $(upload_image).attr('method'),
-        data: temp,
+        data: data,
         cache: false,
         processData: false,
         contentType: false,
@@ -111,17 +113,21 @@ $(function(){
         }
     });
 
-
   });
 
 })
 //$(document).ready(function(){
-//    var get_json = {{json_room|safe}};
-//    alert(get_json);
-//    var romename = get_json.roomName;
-//    alert(romename);
-
+//    alert("aaaaa");
+//    var room_name = $("#room_name").text()
+//    alert(room_name)
+//
+//
+////    var get_json = {{ json_roomName|safe }};
+////    alert(get_json);
+////    var romename = get_json.roomName;
+////    alert(romename);
 //});
+
 /* KAYINGS
 $(document).ready(function(){
   $("#saveImg").click(function(){

@@ -42,7 +42,7 @@ class PalaceRoom(models.Model):
     backgroundImage: The background Image of the room
     """
     user = models.ForeignKey(User, null=True)
-    userPalace = models.ForeignKey(UserPalace, null=True)
+    userPalace = models.ForeignKey('UserPalace', null=True)
     roomName = models.CharField(max_length=200, unique=True)
     backgroundImage = models.ImageField(upload_to='./static/images', default='./static/images/room.jpg')
 
@@ -66,12 +66,12 @@ class PalaceObject(models.Model):
     position_x: The x coordinate of the object in the room
     position_y: The y coordinate of the object in the room
     """
-    user = models.ForeignKey(User, null=True)
-    userPalace = models.ForeignKey('UserPalace', null=True)
+    # user = models.ForeignKey(User, null=True)
+    # userPalace = models.ForeignKey('UserPalace', null=True)
     palaceRoom = models.ForeignKey('PalaceRoom', null=True)
-    description = models.CharField(max_length=200, default="")
+    description = models.CharField(max_length=200, default=" ")
     # objectImage = models.ImageField(upload_to='./coreapp/static/images')
-    objectName= models.CharField(max_length=200,default="", unique=True)
+    objectName= models.CharField(max_length=200,default=" ", unique=True)
     objectImage = models.ImageField(upload_to='./static/images/memory_objects', default='./static/images/char2.png')
     width = models.IntegerField(default=50)
     height = models.IntegerField(default=50)
@@ -81,7 +81,7 @@ class PalaceObject(models.Model):
     hide = models.BooleanField(default=True)
 
     def __unicode__(self):
-        return self.description
-
+        return self.objectName
+    #
     class Meta:
-        unique_together = (("user", "userPalace", "palaceRoom", "objectName" ),)
+        unique_together = (("palaceRoom", "objectName" ),)

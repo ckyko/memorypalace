@@ -10,6 +10,7 @@ from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 # from django.contrib.auth.forms import forms
 from django.core.urlresolvers import reverse
+import json
 
 
 
@@ -200,8 +201,12 @@ def MemoryPalace(req):
                         break
                 data['room'] = room              # put specify room on data
                 # get all object in this room from database
-                img_url = room.backgroundImage
-                print(img_url)
+                # img_url = room.backgroundImage
+                # print(img_url)
+                # print(type(img_url))
+                # print("aaaaa")
+                # data['json_roomName'] = json.dumps([room.roomName])
+                # print(data['json_roomName'])
                 roomObj = PalaceObject.objects.filter(palaceRoom=room)
                 data['roomObj'] = roomObj       # put all objects in data
 
@@ -289,21 +294,35 @@ def createRoom(req):
             data['uf'] = user_form
             return render(req, 'createRoom.html', data)
 
-
+@csrf_exempt
 def upload_image(req):
     if req.is_ajax():
         print("ajax")
+        room_name = req.POST.get("room_name")
+        print(room_name)
         form = UploadImageForm(data = req.POST, files = req.FILES)
         print(req.FILES)
         if form.is_valid():
             print('valid form')
-            roomName = req.GET.get('roomName', '')  # get room name
-            print(roomName)
-            user_room = PalaceRoom.objects.filter(roomName=roomName)
+            user_room = PalaceRoom.objects.filter(roomName=room_name)
+            # print(user_room.roomName)
             if user_room:
                 print("user_room get")
+                print(type(user_room))
+                print(user_room)
                 image_file = form.cleaned_data['objectImage']
                 object = PalaceObject()
+                print(type(object))
+                object.objectImage = image_file
+                print(type(object.objectImage))
+                print("====")
+                print(image_file)
+                print(type(object.palaceRoom))
+                print(type(user_room))
+                object.palaceRoom = user_room
+                print("----")
+                object.objectName = str(image_file)
+                object.save()
             else:
                 print("room not fond")
 
