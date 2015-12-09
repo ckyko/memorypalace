@@ -2,7 +2,7 @@
   <form method="post" enctype="multipart/form-data" action="createPalace/">
     <div class="modal-content">
       {% csrf_token %}
-      {{uf.as_p}}
+      {{CreatePalaceForm.as_p}}
     </div>
     <div class="modal-footer">
       <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>

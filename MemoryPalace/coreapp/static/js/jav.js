@@ -112,12 +112,6 @@ $(document).ready(function(){
     });
 });
 
-//Add New Palaces
-$(document).ready(function(){
-    $('#palace_card').click(function(){
-      $().appendTo("#Private");
-    });
-});
 
 $(function(){
 
@@ -134,5 +128,10 @@ $(function(){
          $('#modal_createPalace').openModal();
       }
    }
-
+   var url = document.URL;
+   shortUrl=url.substring(0,url.lastIndexOf("="));
+   var root = location.protocol + '//' + location.host;
+   if (shortUrl == root + "/MemoryPalace/createRoom?palaceName"){
+     $('#modal_createRoom').openModal();
+   }
 });
