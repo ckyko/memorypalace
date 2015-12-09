@@ -101,7 +101,13 @@ class UserPalaceDataBaseTestCase(TestCase):
         palace_object = PalaceObject.objects.get(palaceRoom=user_room)
         self.assertTrue(palace_object is not None, msg="palace_object not create.")
 
+    def test_palaceName(self):
+        user_palace = UserPalace.objects.get(palaceName='testing palace')
+        self.assertTrue(user_palace is not None, msg="palace name is create not correct")
 
+    def test_roomName(self):
+        palace_room = PalaceRoom.objects.get(roomName="testing room")
+        self.assertTrue(palace_room is not None, msg="room name is create not correct")
 
     def tearDown(self):
         del self
