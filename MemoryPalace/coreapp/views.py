@@ -197,13 +197,13 @@ def createPalace(req):
         else:             # if not submit, we sent the form
             data['CreatePalaceForm'] = CreatePalaceForm()
             return redirect('/palace_library/#modal_createPalace')
-            
+
+
 def createRoom(req):
     if not req.user.is_authenticated():        # check login already or not
         return HttpResponseRedirect('/')
     else:
         palaceName = req.GET.get('palaceName','')
-
         if req.method == "POST":            # if user submit the form
             input_user = req.user            # get user
             user_palace = UserPalace.objects.filter(user=input_user)  # get all user palace
@@ -213,19 +213,18 @@ def createRoom(req):
                     this_palace = palace
             # the_palace = PalaceRoom.objects.filter(userPalace=this_palace)
 
-            uf = CreateRoomForm(req.POST, req.FILES)     # pass information to form
-            if uf.is_valid():
-                roomName = uf.cleaned_data['roomName']
-                backgroundImage = uf.cleaned_data['backgroundImage']
+            data['CreateRoomForm'] = CreateRoomForm(req.POST, req.FILES)     # pass information to form
+            if data['CreateRoomForm'].is_valid():
+                roomName = data['CreateRoomForm'].cleaned_data['roomName']
+                backgroundImage = data['CreateRoomForm'].cleaned_data['backgroundImage']
                 room = PalaceRoom()              # create room object instance
                 room.userPalace = this_palace
                 room.roomName = roomName
                 room.backgroundImage = backgroundImage
                 room.save()                  # save room to database
-                return HttpResponseRedirect('/MemoryPalace?palaceName=' + palaceName + '&roomName='+ roomName)
+                return redirect('/MemoryPalace?palaceName=' + palaceName + '&roomName='+ roomName)
             else:
-                return HttpResponseRedirect('/createRoom?palaceName='+ palaceName)
+                return redirect('/MemoryPalace/createRoom?palaceName='+ palaceName)
         else:
-            uf = CreateRoomForm()
-            data['uf'] = uf
-            return render(req,'createRoom.html', data)
+            data['CreateRoomForm'] = CreateRoomForm()
+            return redirect('/MemoryPalace/createRoom?palaceName='+ palaceName)
