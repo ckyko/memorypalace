@@ -81,6 +81,32 @@ class ViewsTestCase(TestCase):
         response = self.client.post(reverse('login'), {'username': 'testing',
                                                          'password': 'password'})
 
-        print(response)
 
 
+
+class UserPalaceDataBaseTestCase(TestCase):
+    def setUp(self):
+        user = User.objects.create_user(username="testing", password="password")
+        user_palace = UserPalace.objects.create(user=user, palaceName='testing palace')
+        palace_room = PalaceRoom.objects.create(userPalace=user_palace, roomName="testing room")
+        PalaceObject.objects.create(palaceRoom=palace_room, description="testing palace object")
+
+    def test_palace_room_object_create_in_database_or_not(self):
+        user = User.objects.get(username="testing")
+        self.assertTrue(user is not None, msg="user not create.")
+        user_palace = UserPalace.objects.get(user=user)
+        self.assertTrue(user_palace is not None, msg="user_palace not create.")
+        user_room = PalaceRoom.objects.get(userPalace=user_palace)
+        self.assertTrue(user_room is not None, msg="user_room not create.")
+        palace_object = PalaceObject.objects.get(palaceRoom=user_room)
+        self.assertTrue(palace_object is not None, msg="palace_object not create.")
+
+
+
+    def tearDown(self):
+        del self
+
+
+# class RegisterTestCase(TestCase):
+#     @patch.object(views, 'request')
+#     def test_register_username_with_testing(self):
