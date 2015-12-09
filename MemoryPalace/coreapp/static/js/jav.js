@@ -18,6 +18,7 @@ interact('.draggable')
     // call this function on every dragend event
     onend: function (event) {
       var textEl = event.target.querySelector('p');
+//      alert(event.target)
 
       textEl && (textEl.textContent =
         'moved a distance of '
@@ -81,7 +82,7 @@ interact('.draggable')
 
 //*** FOR HTE ROOM UPLOAD IMAGES ***
 $(function(){
-   $("#file").change(function(e){
+   $("#id_objectImage").change(function(e){
 		 var file = e.target.files||e.dataTransfer.files;
 
 		 if(file){
@@ -93,10 +94,34 @@ $(function(){
 			reader.readAsDataURL(file[0]);
 		}
 //		sentImg();
+
+    var data = new FormData($('form').get(2));
+    var test = "test";
+    var temp = [data,test];
+    alert("aaa")
+    $.ajax({
+        url: $(upload_image).attr('action'),
+        method: $(upload_image).attr('method'),
+        data: temp,
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            alert('success');
+        }
+    });
+
+
   });
 
 })
+//$(document).ready(function(){
+//    var get_json = {{json_room|safe}};
+//    alert(get_json);
+//    var romename = get_json.roomName;
+//    alert(romename);
 
+//});
 /* KAYINGS
 $(document).ready(function(){
   $("#saveImg").click(function(){

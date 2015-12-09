@@ -69,13 +69,16 @@ class PalaceObject(models.Model):
     user = models.ForeignKey(User, null=True)
     userPalace = models.ForeignKey('UserPalace', null=True)
     palaceRoom = models.ForeignKey('PalaceRoom', null=True)
-    objectName= models.CharField(max_length=200, unique=True)
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=200, default="")
+    # objectImage = models.ImageField(upload_to='./coreapp/static/images')
+    objectName= models.CharField(max_length=200,default="", unique=True)
     objectImage = models.ImageField(upload_to='./static/images/memory_objects', default='./static/images/char2.png')
     width = models.IntegerField(default=50)
     height = models.IntegerField(default=50)
     position_x = models.IntegerField(default=0)
     position_y = models.IntegerField(default=0)
+    public = models.BooleanField(default=False)
+    hide = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.description
