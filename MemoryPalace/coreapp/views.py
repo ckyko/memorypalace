@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 
 
 data = {'title': 'MemoryPalace', 'char1': 'images/char1.png', 'header': 'Login|Register',
-        'headerLink': '#modal_register_login'}
+        'headerLink': '#modal_register_login', 'CreatePalaceForm':CreatePalaceForm(), 'CreateRoomForm':CreateRoomForm()}
 
 
 def index(req):
@@ -179,28 +179,25 @@ def createPalace(req):
         return HttpResponseRedirect('/')
     else:
         if req.method == "POST":      # if user submit the form
-            uf = CreatePalaceForm(req.POST)     # create palace form
-            if uf.is_valid():
-                palaceName = uf.cleaned_data['palaceName']  # get user name
-                numOfRooms = uf.cleaned_data['numOfRooms']  # get number of room
-                public = uf.cleaned_data['public']          # get public or not
+            data['CreatePalaceForm'] = CreatePalaceForm(req.POST)     # create palace form
+            if data['CreatePalaceForm'].is_valid():
+                palaceName = data['CreatePalaceForm'].cleaned_data['palaceName']  # get user name
+                numOfRooms = data['CreatePalaceForm'].cleaned_data['numOfRooms']  # get number of room
+                public = data['CreatePalaceForm'].cleaned_data['public']          # get public or not
                 palace = UserPalace()                     # create form instance
                 palace.palaceName = palaceName            # put user information
                 palace.numOfRooms = numOfRooms
                 palace.public = public
                 palace.user = req.user             # get user and put in form
                 palace.save()                      # save form to database
-                return HttpResponseRedirect('/palace_library/#Private')     # redirect to palace library page
+                return redirect('/palace_library/#Private')     # redirect to palace library page
             else:
                 return redirect('/palace_library/#modal_createPalace')
                 #return HttpResponseRedirect('/palace_library/createPalace')  # if form is not valid, still in create palace page
         else:             # if not submit, we sent the form
-            uf = CreatePalaceForm()
-            data['uf'] = uf
-            #return render(req,'createPalace.html', data)
+            data['CreatePalaceForm'] = CreatePalaceForm()
             return redirect('/palace_library/#modal_createPalace')
-
-
+            
 def createRoom(req):
     if not req.user.is_authenticated():        # check login already or not
         return HttpResponseRedirect('/')
