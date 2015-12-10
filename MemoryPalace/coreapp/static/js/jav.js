@@ -149,6 +149,20 @@ $(document).ready(function(){
 	$(this).attr('data-tooltip', caption);
 	*/
     });
+
+    $('#roombg').on('click', function(e) {
+        if($(e.target).hasClass('draggable')) {
+          if($('#delete-draggable').hasClass('disabled')) {
+            $('#delete-draggable').removeClass('disabled');
+          }
+        }
+        else if(!$(e.target).hasClass('draggable')){
+          $('.draggable').removeClass('permaBorder');
+          if(!$('#delete-draggable').hasClass('disabled')) {
+            $('#delete-draggable').addClass('disabled');
+          }
+        }
+    });
 });
 
 //This function is used to trigger Modals for particular id or query string
