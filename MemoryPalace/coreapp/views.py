@@ -168,7 +168,7 @@ def MemoryPalace(req):
     '''
         This function response Memory palace room page.
         the url for this function is /MemoryPalace
-        function check user login or not, if not it will just dispaly a model of room.
+        function check user login or not, if not it will just display a model of room.
         if user is login and specify which room, it will open user's room. it means pass
         all user's room information to page
     '''
