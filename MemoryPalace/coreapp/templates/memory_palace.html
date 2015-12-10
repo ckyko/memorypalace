@@ -2,7 +2,8 @@
 {% block body %}
 {% load staticfiles %}
   <div id="index-banner" class="container section no-pad-bot">
-        <h1 class="header center-align teal-text text-darken-4">Memory Palace</h1>
+        <h1 class="header center-align teal-text text-darken-4"
+            id="room_name">{{ room.roomName }}</h1>
           <div id="PalaceElementsContainer">
               {% include "vertscrollbox.html" %}
               {% include "room.html" %}
