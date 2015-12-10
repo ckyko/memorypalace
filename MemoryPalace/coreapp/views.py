@@ -210,7 +210,7 @@ def MemoryPalace(req):
                 # print(data['json_roomName'])
                 roomObj = PalaceObject.objects.filter(palaceRoom=room)
                 data['roomObj'] = roomObj       # put all objects in data
-
+                print("success")
             return render(req, 'memory_palace.html', data)
         else:
             data['user_room'] = None
@@ -238,11 +238,11 @@ def createPalace(req):
             user_form = CreatePalaceForm(req.POST)     # create palace form
             if user_form.is_valid():
                 palaceName = user_form.cleaned_data['palaceName']  # get user name
-                numOfRooms = user_form.cleaned_data['numOfRooms']  # get number of room
+                # numOfRooms = user_form.cleaned_data['numOfRooms']  # get number of room
                 public = user_form.cleaned_data['public']          # get public or not
                 palace = UserPalace()                     # create form instance
                 palace.palaceName = palaceName            # put user information
-                palace.numOfRooms = numOfRooms
+                # palace.numOfRooms = numOfRooms
                 palace.public = public
                 palace.user = req.user             # get user and put in form
                 palace.save()                      # save form to database
@@ -309,31 +309,74 @@ def upload_image(req):
             if user_room:
                 image_file = form.cleaned_data['objectImage']
                 object = PalaceObject()
-                print(type(object))
+                # print(type(object))
                 object.objectImage = image_file
                 for room in user_room:
                     object.palaceRoom = room
-                object.objectName = '2232222'
+                    # print("get room")
+                object.objectName = 'testing'
+                # print("sssave")
                 object.save()
-                print(object.id)
+                # print(object.id)
                 id = object.id
-                print(object.objectImage)
-                print(type(object.objectImage))
+                # print(object.objectImage)
+                # print(type(object.objectImage))
                 url = object.objectImage.url
-                print(url)
-                print(type(url))
-                name_dict = {'id': id, 'url': url}
+                # print(url)
+                # print(type(url))
+                object_name_list = url.split('/', 2)
+                # print(object_name_list)
+                object.objectName = object_name_list[2]
+                object.save()
+                print(object.objectName)
+                src = object.objectName
+                name_dict = {'id': id, 'url': src}
                 return JsonResponse(name_dict, safe=False)
-                # JsonResponse({'id':id})
-                # HttpResponse(object.id)
             else:
                 print("room not fond")
 
         else:
             print('invalid')
             print(form.errors)
-    return HttpResponseRedirect('/')
+    else:
+        return HttpResponseRedirect('/')
 
+@csrf_exempt
+def update(req):
+    if req.is_ajax():
+        print("something")
+        id = req.GET.get("id")
+        position_x = req.GET.get("position_x")
+        position_y = req.GET.get("position_y")
+        height = req.GET.get("height")
+        title = req.GET.get("title")
+        num_id = int(id)
+        num_position_x = int(position_x)
+        num_position_y = int(position_y)
+        num_height = int(height[:-2])
+        print(num_id)
+        print(type(num_id))
+        print(num_position_x)
+        print(num_position_y)
+        print(height)
+        print(num_height)
+        print(type(num_height))
+        # print(width)
+        objects = PalaceObject.objects.filter(id=num_id)
+        object = objects[0]
+        object.position_x = num_position_x
+        object.position_y = num_position_y
+        object.height = num_height
+        object.width = num_height
+        object.description = title
+        object.save()
+
+
+        print(object)
+        print(object.objectName)
+
+    else:
+        return HttpResponseRedirect('/')
 
 class JSONResponse(HttpResponse):
 
