@@ -158,3 +158,19 @@ $(document).ready(function(){
       $().appendTo("#Private");
     });
 });
+
+$(document).ready(function(){
+    var jsonOject = 
+     $.ajax({
+        url: $(upload_image).attr('action'),
+        method: $(upload_image).attr('method'),
+        data: temp,
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            alert('success');
+        }
+    });
+
+})

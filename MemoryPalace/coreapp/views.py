@@ -328,7 +328,7 @@ def snippet_detail(request,pk):
     #Retrieve, update or delete a code snippet.
 
     try:
-        pObj = PalaceObject.objects.get(roomName= pk)
+        pObj = PalaceObject.objects.get(palaceRoom= pk)
     except PalaceObject.DoesNotExist:
         return HttpResponse(status=404)
 
