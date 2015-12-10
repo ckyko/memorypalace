@@ -196,3 +196,24 @@ img.draggable:hover {
   width:100%;
   height:50%;
 }
+
+html,body{
+    height: 100%
+}
+
+#bodywrapper{
+    min-height: 100%;
+    position:relative;
+}
+
+#bodycontent{
+    padding-bottom: 190px;    /* height of footer */
+}
+
+footer{
+    height: 190px;
+    width:100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}

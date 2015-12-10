@@ -10,8 +10,5 @@ Serializer of the the Palace Objects
 class PalaceObjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = PalaceObject
-        fields = ('user', 'userPalace', 'roomName', 'description',
+        fields = ('user', 'userPalace', 'palaceRoom', 'description',
                   'objectImage','width', 'height', 'position_x', 'position_y')
-
-
-
