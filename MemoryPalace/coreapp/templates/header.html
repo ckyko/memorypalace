@@ -1,9 +1,10 @@
+{% load staticfiles %}
 <nav class="white" role="navigation">
   <div class="nav-wrapper container">
-    <a id="logo-container" href="/" class="brand-logo">Logo</a>
+    <img height="65px" src="{% static "images/logo.jpg"%}" />
     <ul class="right hide-on-med-and-down">
       <li><a href="/">Home</a></li>
-      <li><a href="/palace_library">Library</a></li>
+      <li><a href="/palace_library/">Library</a></li>
       <li><a class="modal-trigger" href={{headerLink}}>{{header}}</a></li>
     </ul>
 

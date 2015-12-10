@@ -18,7 +18,50 @@ interact('.draggable')
     // call this function on every dragend event
     onend: function (event) {
       var textEl = event.target.querySelector('p');
-//      alert(event.target)
+//      alert("get in");
+//      sentData(event);
+        var target = event.target,
+         id = target.getAttribute('id'),
+         position_x = target.getAttribute('data-x'),
+         position_y = target.getAttribute('data-y'),
+         title = target.getAttribute('title');
+
+         var height = $('#'+id).css('height');
+         var width = $('#'+id).css('width');
+//         height = target.css('height'),
+//         width = target.css('width');
+
+//         alert(id);
+//        console.log(id);
+//        console.log(position_x);
+//        console.log(position_y);
+//        console.log(height);
+//        console.log(width);
+//        console.log(title);
+//        console.log(typeof(id));
+//        console.log(typeof(position_x));
+//        console.log(typeof(position_y));
+//        console.log(typeof(height));
+//        console.log(typeof(width));
+
+      $.get("/update/",{'id': id, 'title': title, 'position_x': position_x,
+      'position_y':position_y, 'height':height, 'width':width }, function(ret){
+//            alert("success...");
+        })
+
+
+//        $.ajax({
+//            url:"/update/",
+//            type: "POST",
+//            data: {'id': id, 'position_x': position_x, 'position_y':position_y, 'height':height, 'width': 'width' },
+//            success:function(response){ alert("success..."); },
+//            complete:function(){},
+//            error:function (xhr, textStatus, thrownError){
+//                alert("error doing something");
+//            }
+//        });
+
+
 
       textEl && (textEl.textContent =
         'moved a distance of '
@@ -80,51 +123,62 @@ interact('.draggable')
     $('.slider').slider();
   });
 
+var object_id;
+var url;
+
 //*** FOR HTE ROOM UPLOAD IMAGES ***
 $(function(){
    $("#id_objectImage").change(function(e){
-		 var file = e.target.files||e.dataTransfer.files;
-
-		 if(file){
-			 var reader = new FileReader();
-			 reader.onload=function(){
-					// append the "<img class='draggable' src=... />" to roombg
-					$("<img class='scrollBoxImg' src='"+this.result+"'/>").appendTo("#vertscrollbox");
-			 }
-			reader.readAsDataURL(file[0]);
-		}
+//		 var file = e.target.files||e.dataTransfer.files;
+//
+//		 if(file){
+//			 var reader = new FileReader();
+//			 reader.onload=function(){
+//					// append the "<img class='draggable' src=... />" to roombg
+//					$("<img class='scrollBoxImg' src='"+this.result+"'/>").appendTo("#vertscrollbox");
+//			 }
+//			reader.readAsDataURL(file[0]);
+//		}
 //		sentImg();
 
     var data = new FormData($('form').get(2));
-    var test = "test";
-    var temp = [data,test];
-    alert("aaa")
+    var room_name = $("#room_name").text();
+//    alert(room_name);
+//    alert(typeof(room_name));
+    data.append('room_name',room_name);
     $.ajax({
         url: $(upload_image).attr('action'),
         method: $(upload_image).attr('method'),
-        data: temp,
+//        dataType: "json",
+        data: data,
         cache: false,
         processData: false,
         contentType: false,
-        success: function(data) {
-            alert('success');
-        },
-        error:function(){
-            alert("well at least its running");
+        success: function(msg) {
+//            alert(msg['id']);
+            object_id = msg['id']
+//            alert(msg['url'])
+            url = msg['url']
+            $("<img class='scrollBoxImg' id='"+object_id+"' src='/"+url+"'/>").appendTo("#vertscrollbox");
+            $("<img class='draggable' id='"+object_id+"' src='/"+url+"'/>").appendTo("#roombg");
         }
     });
-
 
   });
 
 })
 //$(document).ready(function(){
-//    var get_json = {{json_room|safe}};
-//    alert(get_json);
-//    var romename = get_json.roomName;
-//    alert(romename);
-
+//    alert("aaaaa");
+//    var room_name = $("#room_name").text()
+//    alert(room_name)
+//
+//
+////    var get_json = {{ json_roomName|safe }};
+////    alert(get_json);
+////    var romename = get_json.roomName;
+////    alert(romename);
 //});
+
 /* KAYINGS
 $(document).ready(function(){
   $("#saveImg").click(function(){
@@ -138,13 +192,19 @@ $(document).ready(function(){
     //Click on image from the vertical box to add it to the room.
     $('.scrollBoxImg').click(function(){
         $("<img class='draggable' src='"+$(this).attr('src')+"'/>").appendTo("#roombg");
+//        var room_name = $("#room_name").text();
+//        var target = $(e.target);
+//        alert(target);
+
+
+
     });
 
     //Add a caption to the image.
     $(document).on('dblclick', '.draggable', function() {
-	var caption = prompt("Enter a caption for this image.");
-	$(this).attr('title', caption);
-	
+        var caption = prompt("Enter a caption for this image.");
+	      $(this).attr('title', caption);
+
 	/*Materialize tooltip. Having some trouble with this still.
 
 	$(this).attr('class', 'btn tooltipped');
@@ -153,13 +213,56 @@ $(document).ready(function(){
 	$(this).attr('data-tooltip', caption);
 	*/
     });
+
+    $('#roombg').on('click', function(e) {
+        var $delTarget = $(e.target);
+
+        if($(e.target).hasClass('draggable')) {
+          $('.draggable').removeClass('permaBorder');
+          $(($delTarget).addClass('permaBorder'));
+          if($('#delete-draggable').hasClass('disabled')) {
+            $('#delete-draggable').removeClass('disabled');
+          }
+        }
+        else if(!$(e.target).hasClass('draggable')){
+          $('.draggable').removeClass('permaBorder');
+          if(!$('#delete-draggable').hasClass('disabled')) {
+            $('#delete-draggable').addClass('disabled');
+          }
+        }
+    });
+
+    /* Delete functionality. For Later.
+    $('#delete-draggable').click(function() {
+      alert("ready");
+      if($(myfunc).hasClass('draggable')) {
+        alert("DeleteMe");
+      }
+    });
+    */
 });
 
-//Add New Palaces
-$(document).ready(function(){
-    $('#palace_card').click(function(){
-      $().appendTo("#Private");
-    });
+//This function is used to trigger Modals for particular id or query string
+$(function(){
+   if (window.location.hash){
+      var hash = window.location.hash.substring(1);
+      if (hash == "modal_register"){//if id after current url is modal_register trigger modal
+         $('#modal_register_login').openModal();
+      }
+      if (hash == "modal_login"){//if id after current url is modal_register trigger modal
+         $('#modal_register_login').openModal();
+      }
+      if (hash == "modal_createPalace"){
+         $('ul.tabs').tabs('select_tab', 'Private');
+         $('#modal_createPalace').openModal();
+      }
+   }
+   var url = document.URL;//Gets the current URL
+   shortUrl=url.substring(0,url.lastIndexOf("="));//gets substring of current url until "="
+   var root = location.protocol + '//' + location.host;//homepage
+   if (shortUrl == root + "/MemoryPalace/createRoom?palaceName"){
+     $('#modal_createRoom').openModal();
+   }
 });
 
 $(document).ready(function(){
