@@ -11,7 +11,7 @@ from .models import PalaceRoom, UserPalace
 class CreatePalaceForm(ModelForm):
     class Meta:
         model = UserPalace
-        fields = ['palaceName', 'numOfRooms', 'public']
+        fields = ['palaceName', 'public']
 
 # class CreateRoomForm(forms.Form):
 #     roomName = forms.CharField()
