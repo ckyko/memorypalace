@@ -11,7 +11,7 @@ from .models import PalaceRoom, UserPalace
 class CreatePalaceForm(ModelForm):
     class Meta:
         model = UserPalace
-        fields = ['palaceName', 'numOfRooms', 'public']
+        fields = ['palaceName', 'public']
 
 # class CreateRoomForm(forms.Form):
 #     roomName = forms.CharField()
@@ -19,10 +19,9 @@ class CreatePalaceForm(ModelForm):
 class CreateRoomForm(ModelForm):
     class Meta:
         model = PalaceRoom
-        fields = [ 'roomName', 'backgroundImage']
+        fields = ['roomName', 'backgroundImage']
 
 class UploadImageForm(forms.Form):
-    objectImage = forms.ImageField(widget=forms.FileInput(attrs={'class':'upload_image_object',
-                                                                 'accept':'image/*',
-                                                                 'style': '  visibility: hidden; width: 1px; height: 1px;'
-                                                                 }))
+    objectImage = forms.ImageField(widget=forms.FileInput(attrs={
+                  'class':'upload_image_object', 'accept':'image/*',
+                  'style': '  visibility: hidden; width: 1px; height: 1px;'}))

@@ -7,7 +7,7 @@
   </div>
   <div id="vertscrollbox">
       {% for object in roomObj %}
-      <img class="scrollBoxImg" src="{{object.objectImage}}" />
+      <img class="scrollBoxImg" src="/{{object.objectImage}}" />
       {% endfor%}
 
     <img class="scrollBoxImg" src="{% static "images/memory_objects/char1.png"%}" />
@@ -24,6 +24,9 @@
           {{objectForm.objectImage}}
     <a class="btn-floating btn-large waves-effect waves-light teal accent-4" onclick="document.getElementById('id_objectImage').click(); return false">
       <i class="material-icons">library_add</i>
+    </a>&nbsp&nbsp
+    <a id="delete-draggable" class="btn-floating btn-large waves-effect waves-light teal accent-4 disabled">
+      <i class="material-icons">delete</i>
     </a>
       </form>
   </div>

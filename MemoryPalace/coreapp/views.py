@@ -1,5 +1,7 @@
 
-from django.shortcuts import render, HttpResponseRedirect, HttpResponse
+
+from django.http import JsonResponse
+from django.shortcuts import render, HttpResponseRedirect, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .forms import CreatePalaceForm, CreateRoomForm, UploadImageForm
@@ -10,18 +12,22 @@ from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 # from django.contrib.auth.forms import forms
 from django.core.urlresolvers import reverse
+import json
 
 
 
 data = {'title': 'MemoryPalace', 'header': 'Login | Register',
-        'headerLink': '#modal_register_login', 'objectForm': UploadImageForm()}
+        'headerLink': '#modal_register_login',
+        'CreatePalaceForm':CreatePalaceForm(),
+        'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
 
 
 def index(req):
     '''
     This is index page function.
     This function will check user login already or not first.
-    if yes, it will change "login|register" to "log out", it will change link for that also.
+    if yes, it will change "login|register" to "log out", it will change link
+    for that also.
     :param req:
     :return: index page
     '''
@@ -55,29 +61,29 @@ def log_in(req):
     if user fill in all information correct and click submit, it will log in
     user and redirect to index page.
     '''
+    errors = []
+    temp = data
     if req.method == "POST":      # check if user submit or not
-        errors = []
         name = req.POST.get('username', '')    # get username
         password = req.POST.get('password', '')
-        user = authenticate(username=name, password=password)  # check user name and password
+        user = authenticate(username=name, password=password)  # check username
+                                                               # and password
         if user is not None:
-            if user.is_active:                        # check user is active or not
+            if user.is_active:                    # check user is active or not
                 login(req, user)
                 # req.session['username'] = name
                 return HttpResponseRedirect('/')
             else:
-                errors.append('disabled account')
-                temp = data
+                errors.append('Disabled account')
                 temp['errors'] = errors
-                return render(req, 'login.html', temp)
-        else:                                      # if username or password is invalid
-            errors.append('invalid username or password')
-            temp = data
+                return redirect('/#modal_login')
+        else:                             # if username or password is invalid
+            errors.append('Invalid Username or Password')
             temp['errors'] = errors
-            return render(req, 'login.html', temp)
+            return redirect('/#modal_login')
     else:
         data['errors'] = None
-        return render(req, 'login.html', data)
+        return redirect('/#modal_login')
 
 
 def log_out(req):
@@ -104,7 +110,9 @@ def palace_library(req):
         return render(req, 'palace_library.html', data)
     else:
         input_user = req.user          # get user
-        user_palace = UserPalace.objects.filter(user=input_user)  # get all user palaces for user
+
+        # get all user palaces for user
+        user_palace = UserPalace.objects.filter(user=input_user)
         data['user_palace'] = user_palace
         return render(req, 'palace_library.html', data)
 
@@ -115,40 +123,39 @@ def testing(req):
 
 
 def register(req):
-
+    errors = []
+    temp = data
     '''
     This is register function. This function will give a register form first,
     once user input the correct information, it will save user information to
     database and redirect to index page.
     '''
 
-    ####This is for functionality test. Delete test user and register again
+    ##############################################################
+    #FOR FUNCTIONAILITY TESTS
     try:
         u = User.objects.get(username='testuser')
     except User.DoesNotExist:
         pass
     else:
         u.delete()
-
-
-    errors = []
-    temp = data
+    ##############################################################
     if req.method == 'POST':
-        name = req.POST.get('username', '')                 # get username
-        password1 = req.POST.get('password1', '')           # get password
-        password2 = req.POST.get('password2', '')           # get conform password
-        if len(name) < 5:                                    # check length of username
-            errors.append(u'user name must at least 5 character')
-        elif len(password1) < 6:                             # check length of password
-            errors.append(u'PassWord must at least 6 character ')
-        elif password1 != password2:                        # confirm password
-            errors.append(u'Tow password is different')
+        name = req.POST.get('username', '')          # get username
+        password1 = req.POST.get('password1', '')    # get password
+        password2 = req.POST.get('password2', '')    # get conform password
+        if len(name) < 5:                            # check length of username
+            errors.append(u'Username must be at least 5 character')
+        elif len(password1) < 6:                     # check length of password
+            errors.append(u'Password must be at least 6 character ')
+        elif password1 != password2:                 # confirm password
+            errors.append(u"Password doesn't match")
         else:
-            try:                                             # check if username was used
+            try:                                   # check if username was used
                 user = User.objects.get(username=name)
                 errors.append(u'user name is used')
                 temp['errors'] = errors
-                return render(req, 'register.html', temp)
+                return redirect('/#modal_register/')
             except User.DoesNotExist:
                 user = User.objects.create_user(             # create a user
                     username=name,
@@ -157,18 +164,19 @@ def register(req):
                 user.save()
                 return HttpResponseRedirect('/')
         temp['errors'] = errors
-        return render(req, 'register.html', temp)
+        return redirect('/#modal_register')
+        del errors[:] #reset errors
     else:
-        return render(req, 'register.html', data)
+        return redirect('/#modal_register')
 
 
 def MemoryPalace(req):
     '''
         This function response Memory palace room page.
         the url for this function is /MemoryPalace
-        function check user login or not, if not it will just dispaly a model of room.
-        if user is login and specify which room, it will open user's room. it means pass
-        all user's room information to page
+        function check user login or not, if not it will just dispaly a model
+        of room. if user is login and specify which room, it will open user's
+        room. it means pass all user's room information to page
     '''
     if req.user.is_authenticated():   # check login already or not
         data['header'] = 'Logout'
@@ -180,14 +188,16 @@ def MemoryPalace(req):
             palaceName = req.GET.get('palaceName', '')
             if palaceName:
                 input_user = req.user         # get user
-                user_palace = UserPalace.objects.filter(user=input_user)  # get all user's palace
+
+                # get all user's palace
+                user_palace = UserPalace.objects.filter(user=input_user)
                 this_palace = None
                 for palace in user_palace:
                     if palace.palaceName == palaceName:    # get user palace
                         this_palace = palace
                         break
                 user_room = PalaceRoom.objects.filter(userPalace=this_palace)
-                data['user_palace'] = this_palace      # put user palace on data
+                data['user_palace'] = this_palace     # put user palace on data
                 # put all palace room for palace which user choose in data
                 data['user_room'] = user_room
 
@@ -201,7 +211,6 @@ def MemoryPalace(req):
                 data['room'] = room              # put specify room on data
                 # get all object in this room from database
                 img_url = room.backgroundImage
-                print(img_url)
                 roomObj = PalaceObject.objects.filter(palaceRoom=room)
                 data['roomObj'] = roomObj       # put all objects in data
 
@@ -229,26 +238,49 @@ def createPalace(req):
         return HttpResponseRedirect('/')
     else:
         if req.method == "POST":      # if user submit the form
-            user_form = CreatePalaceForm(req.POST)     # create palace form
-            if user_form.is_valid():
-                palaceName = user_form.cleaned_data['palaceName']  # get user name
-                numOfRooms = user_form.cleaned_data['numOfRooms']  # get number of room
-                public = user_form.cleaned_data['public']          # get public or not
-                palace = UserPalace()                     # create form instance
-                palace.palaceName = palaceName            # put user information
-                palace.numOfRooms = numOfRooms
+
+            # create palace form
+            data['CreatePalaceForm'] = CreatePalaceForm(req.POST)
+            if data['CreatePalaceForm'].is_valid():
+                # get user name
+                palaceName = data['CreatePalaceForm'].cleaned_data['palaceName']
+                # get number of room
+                numOfRooms = data['CreatePalaceForm'].cleaned_data['numOfRooms']
+                # get public or not
+                public = data['CreatePalaceForm'].cleaned_data['public']
+                palace = UserPalace()                    # create form instance
+                palace.palaceName = palaceName           # put user information
+                # palace.numOfRooms = numOfRooms
                 palace.public = public
                 palace.user = req.user             # get user and put in form
                 palace.save()                      # save form to database
-                return HttpResponseRedirect('/palace_library')     # redirect to palace library page
-            else:
-                # if form is not valid, still in create palace page
-                return HttpResponseRedirect('/palace_library/createPalace')
+                data['CreatePalaceForm'] = CreatePalaceForm()# reset form avoid duplication
+                # redirect to palace library page
+                return redirect('/palace_library/#Private')
+            else:         # if form is not valid, still in create palace page
+                return redirect('/palace_library/#modal_createPalace')
         else:             # if not submit, we sent the form
-            user_form = CreatePalaceForm()
-            data['uf'] = user_form
-            return render(req, 'createPalace.html', data)
+            data['CreatePalaceForm'] = CreatePalaceForm()
+            return redirect('/palace_library/#modal_createPalace')
 
+def deletePalace(req):
+    try:
+        u = UserPalace.objects.filter(palaceName=req.GET.get('palaceName', ''))
+    except User.DoesNotExist:
+        pass
+    else:
+        u.delete()
+    return redirect('/palace_library/#Private')
+
+def deleteRoom(req):
+    try:
+        palaceName=req.GET.get('palaceName', '')
+        u = PalaceRoom.objects.filter(roomName=req.GET.get('roomName', ''))
+    except User.DoesNotExist:
+        pass
+    else:
+        u.delete()
+    return redirect('/MemoryPalace?palaceName='+ palaceName)
 
 def createRoom(req):
     '''
@@ -260,58 +292,103 @@ def createRoom(req):
         return HttpResponseRedirect('/')
     else:
         palaceName = req.GET.get('palaceName', '')
-
         if req.method == "POST":            # if user submit the form
             input_user = req.user            # get user
-            user_palace = UserPalace.objects.filter(user=input_user)  # get all user palace
+
+            # get all user palace
+            user_palace = UserPalace.objects.filter(user=input_user)
             this_palace = None
             for palace in user_palace:          # get user palace
                 if palace.palaceName == palaceName:
                     this_palace = palace
             # the_palace = PalaceRoom.objects.filter(userPalace=this_palace)
 
-            user_form = CreateRoomForm(req.POST, req.FILES)     # pass information to form
-            if user_form.is_valid():
-                roomName = user_form.cleaned_data['roomName']
-                background_image = user_form.cleaned_data['backgroundImage']
+            # pass information to form
+            data['CreateRoomForm'] = CreateRoomForm(req.POST, req.FILES)
+            if data['CreateRoomForm'].is_valid():
+                roomName = data['CreateRoomForm'].cleaned_data['roomName']
+                background_image = data['CreateRoomForm'].cleaned_data['backgroundImage']
                 room = PalaceRoom()              # create room object instance
                 room.user = input_user
                 room.userPalace = this_palace
                 room.roomName = roomName
                 room.backgroundImage = background_image
                 room.save()                  # save room to database
-                return HttpResponseRedirect('/MemoryPalace?palaceName=' + palaceName +
-                                            '&roomName='+roomName)
+                data['CreateRoomForm'] = CreateRoomForm()# reset form avoid duplication
+                return redirect('/MemoryPalace?palaceName=' + palaceName +
+                                '&roomName=' + roomName)
             else:
-                return HttpResponseRedirect('/createRoom?palaceName='+palaceName)
+                return redirect('/MemoryPalace/createRoom?palaceName=' +
+                                palaceName)
         else:
-            user_form = CreateRoomForm()
-            data['uf'] = user_form
-            return render(req, 'createRoom.html', data)
+            data['CreateRoomForm'] = CreateRoomForm()
+            return redirect('/MemoryPalace/createRoom?palaceName=' + palaceName)
 
-
+@csrf_exempt
 def upload_image(req):
+    '''
+    This function will called when upload image.
+    '''
     if req.is_ajax():
-        print("ajax")
-        form = UploadImageForm(data = req.POST, files = req.FILES)
-        print(req.FILES)
+        room_name = req.POST.get("room_name")
+        form = UploadImageForm(data=req.POST, files=req.FILES)
         if form.is_valid():
-            print('valid form')
-            roomName = req.GET.get('roomName', '')  # get room name
-            print(roomName)
-            user_room = PalaceRoom.objects.filter(roomName=roomName)
+            user_room = PalaceRoom.objects.filter(roomName=room_name)
+
             if user_room:
-                print("user_room get")
+                print "user_room get"
                 image_file = form.cleaned_data['objectImage']
                 object = PalaceObject()
+                object.objectImage = image_file
+                for room in user_room:
+                    object.palaceRoom = room
+                object.objectName = 'testing'
+                object.save()
+                id = object.id
+                url = object.objectImage.url
+                object_name_list = url.split('/', 2)
+                object.objectName = object_name_list[2]
+                object.save()
+                src = object.objectName
+                name_dict = {'id': id, 'url': src}
+                return JsonResponse(name_dict, safe=False)
             else:
-                print("room not fond")
+                print "room not fond"
 
         else:
-            print('invalid')
-            print(form.errors)
-    return HttpResponseRedirect('/')
+            print 'invalid'
+            print form.errors
+    else:
+        return HttpResponseRedirect('/')
 
+@csrf_exempt
+def update(req):
+    '''
+    This function is for updata room object information.
+    '''
+    if req.is_ajax():
+        id = req.GET.get("id")
+        position_x = req.GET.get("position_x")
+        position_y = req.GET.get("position_y")
+        height = req.GET.get("height")
+        width = req.GET.get("width")
+        title = req.GET.get("title")
+        num_id = int(id)
+        num_position_x = int(position_x)
+        num_position_y = int(position_y)
+        num_height = int(height[:-2])
+        num_width = int(width[:-2])
+        objects = PalaceObject.objects.filter(id=num_id)
+        object = objects[0]
+        object.position_x = num_position_x
+        object.position_y = num_position_y
+        object.height = num_height
+        object.width = num_width
+        object.description = title
+        object.save()
+
+    else:
+        return HttpResponseRedirect('/')
 
 class JSONResponse(HttpResponse):
 
@@ -323,12 +400,12 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, **kwargs)
 
 @csrf_exempt
-def snippet_detail(request,pk):
+def snippet_detail(request, pk):
 
     #Retrieve, update or delete a code snippet.
 
     try:
-        pObj = PalaceObject.objects.get(palaceRoom= pk)
+        pObj = PalaceObject.objects.get(roomName=pk)
     except PalaceObject.DoesNotExist:
         return HttpResponse(status=404)
 
@@ -365,5 +442,3 @@ def snippet_list(request):
             serializer.save()
             return JSONResponse(serializer.data, status=201)
         return JSONResponse(serializer.errors, status=400)
-
-

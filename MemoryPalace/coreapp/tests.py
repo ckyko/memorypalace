@@ -10,11 +10,13 @@ from django.test import TestCase
 from django.http import HttpRequest
 from .models import UserPalace, PalaceRoom, PalaceObject
 from django.contrib.auth.models import User
+from coreapp import views
 from mock import patch
 
 # URL_Dict = {'/': views.index, '/MemoryPalace/': views.MemoryPalace,
 # '/about/': views.about, '/contact/': views.contact, '/login/': views.log_in,
-#  '/register/': views.register}
+# '/register/': views.register}
+
 # #Dictionary to test multiple pages with same functionality
 # class MemoryPalaceTest(TestCase):
 #     #Test if the provided "value" is linked to the url
@@ -103,10 +105,12 @@ class ViewsTestCase(TestCase):
         """
         Test user Registration
         """
+
         response = self.client.post(reverse('register'),
-                                    {'username': 'newUserName',
-                                     'password1': 'password',
-                                     'password2': 'password'})
+                        {'username': 'newUserName', 'password1': 'password',
+     
+                         'password2': 'password'})
+
         new_user = User.objects.get(username='newUserName')
         self.assertTrue(new_user is not None, msg="user not create.")
 
@@ -114,10 +118,10 @@ class ViewsTestCase(TestCase):
         """
         Testing login
         """
-        user = User.objects.create_user(username="testing", password="password")
+        user=User.objects.create_user(username="testing", password="password")
         self.assertTrue(user is not None, msg="user not create.")
         response = self.client.post(reverse('login'), {'username': 'testing',
-                                                         'password': 'password'})
+                                                       'password': 'password'})
 
 
 
@@ -127,7 +131,7 @@ class UserPalaceDataBaseTestCase(TestCase):
     Tests wheather the dastabase adds the models as its supposed to
     """
     def setUp(self):
-        """
+    	 """
         Inputs tests data for the test
         :return:
         """
@@ -135,8 +139,7 @@ class UserPalaceDataBaseTestCase(TestCase):
                                         password="password")
         user_palace = UserPalace.objects.create(user=user,
                                                 palaceName='testing palace')
-        palace_room = PalaceRoom.objects.create(user=user,
-                                                userPalace=user_palace,
+        palace_room = PalaceRoom.objects.create(userPalace=user_palace,
                                                 roomName="testing room")
         PalaceObject.objects.create(palaceRoom=palace_room,
                                     description="testing palace object")
@@ -153,7 +156,8 @@ class UserPalaceDataBaseTestCase(TestCase):
         user_room = PalaceRoom.objects.get(userPalace=user_palace)
         self.assertTrue(user_room is not None, msg="user_room not create.")
         palace_object = PalaceObject.objects.get(palaceRoom=user_room)
-        self.assertTrue(palace_object is not None, msg="palace_object not create.")
+        self.assertTrue(palace_object is not None,
+                        msg="palace_object not create.")
 
     def test_palaceName(self):
         """
@@ -161,7 +165,8 @@ class UserPalaceDataBaseTestCase(TestCase):
         :return:
         """
         user_palace = UserPalace.objects.get(palaceName='testing palace')
-        self.assertTrue(user_palace is not None, msg="palace name is create not correct")
+        self.assertTrue(user_palace is not None,
+                        msg="palace name is create not correct")
 
     def test_roomName(self):
         """
@@ -169,7 +174,8 @@ class UserPalaceDataBaseTestCase(TestCase):
         :return:
         """
         palace_room = PalaceRoom.objects.get(roomName="testing room")
-        self.assertTrue(palace_room is not None, msg="room name is create not correct")
+        self.assertTrue(palace_room is not None,
+                        msg="room name is create not correct")
 
     def tearDown(self):
         """
@@ -177,7 +183,6 @@ class UserPalaceDataBaseTestCase(TestCase):
         :return:
         """
         del self
-
 
 # class RegisterTestCase(TestCase):
 #     @patch.object(views, 'request')

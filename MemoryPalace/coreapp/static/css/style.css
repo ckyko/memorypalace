@@ -131,14 +131,14 @@ img.draggable:hover {
 
 /* palace_library Private and Public */
 
-#private_palace_card, #public_palace_card {
+.private_palace_card .public_palace_card {
   height:350px;
   position: relative;
   cursor:pointer;
 }
 
 #private_add_palace_card {
-    top: 125px; left: 115px;
+    top: 100px; left: 115px;
     position: absolute;
 }
 
@@ -195,4 +195,38 @@ img.draggable:hover {
 .roomImage{
   width:100%;
   height:50%;
+}
+
+div.room_card:hover span:first-of-type a {
+    display: block;
+    }
+html,body{
+    height: 100%
+}
+
+div.room_card span:first-of-type a {
+    position:absolute;
+    display:none;
+    }
+#bodywrapper{
+    min-height: 100%;
+    position:relative;
+}
+
+#bodycontent{
+    padding-bottom: 190px;    /* height of footer */
+}
+
+footer{
+    height: 190px;
+    width:100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+#delete-draggable{}
+
+.permaBorder{
+  border: 1px solid black;
 }
