@@ -57,7 +57,7 @@ urlpatterns = [
     url(r'^upload_image/', 'coreapp.views.upload_image'),
     url(r'^update/', 'coreapp.views.update'),
     #url(r'^api', include(router.urls)),
-    url(r'^snippets/$', 'coreapp.views.snippet_list'),
-    url(r'^snippets/(?P<pk>[0-9]+)/$', 'coreapp.views.snippet_detail'),
+    #url(r'^snippets/$', 'coreapp.views.snippet_list'),
+    #url(r'^snippets/(?P<pk>[0-9]+)/$', 'coreapp.views.snippet_detail'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
