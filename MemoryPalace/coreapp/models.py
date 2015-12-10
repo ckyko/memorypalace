@@ -1,8 +1,8 @@
 # Models.py
 # This is where all the models of the database are contained
 
-This is where all the models of the database are contained
-"""
+#This is where all the models of the database are contained
+
 from django.db import models
 from django.contrib.auth.models import User
 
