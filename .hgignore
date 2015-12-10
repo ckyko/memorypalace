@@ -7,6 +7,6 @@ syntax: glob
 *.git/*
 *.gitignore*
 *Procfile
-*/.idea/*
+*.idea/*
 *db.sqlite3
 000*
