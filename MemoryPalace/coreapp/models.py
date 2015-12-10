@@ -44,7 +44,7 @@ class PalaceRoom(models.Model):
     user = models.ForeignKey(User, null=True)
     userPalace = models.ForeignKey(UserPalace, null=True)
     roomName = models.CharField(max_length=200, unique=True)
-    backgroundImage = models.ImageField(upload_to='./static/images', default='./static/images/room.jpg')
+    backgroundImage = models.ImageField(upload_to='static/images', default='static/images/room.jpg')
 
     def __unicode__(self):
         return self.roomName
