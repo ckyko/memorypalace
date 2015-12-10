@@ -81,7 +81,7 @@ class PalaceObject(models.Model):
     hide = models.BooleanField(default=True)
 
     def __unicode__(self):
-        return self.objectName
+        return self.objectImage.url
     #
     class Meta:
         unique_together = (("palaceRoom", "objectName" ),)

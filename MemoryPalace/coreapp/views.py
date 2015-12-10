@@ -1,5 +1,6 @@
 
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
+from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .forms import CreatePalaceForm, CreateRoomForm, UploadImageForm
@@ -265,7 +266,7 @@ def createRoom(req):
         return HttpResponseRedirect('/')
     else:
         palaceName = req.GET.get('palaceName', '')
-
+        print(palaceName)
         if req.method == "POST":            # if user submit the form
             input_user = req.user            # get user
             user_palace = UserPalace.objects.filter(user=input_user)  # get all user palace
@@ -297,32 +298,34 @@ def createRoom(req):
 @csrf_exempt
 def upload_image(req):
     if req.is_ajax():
-        print("ajax")
         room_name = req.POST.get("room_name")
         print(room_name)
-        form = UploadImageForm(data = req.POST, files = req.FILES)
+        form = UploadImageForm(data=req.POST, files=req.FILES)
         print(req.FILES)
         if form.is_valid():
             print('valid form')
             user_room = PalaceRoom.objects.filter(roomName=room_name)
             # print(user_room.roomName)
             if user_room:
-                print("user_room get")
-                print(type(user_room))
-                print(user_room)
                 image_file = form.cleaned_data['objectImage']
                 object = PalaceObject()
                 print(type(object))
                 object.objectImage = image_file
-                print(type(object.objectImage))
-                print("====")
-                print(image_file)
-                print(type(object.palaceRoom))
-                print(type(user_room))
-                object.palaceRoom = user_room
-                print("----")
-                object.objectName = str(image_file)
+                for room in user_room:
+                    object.palaceRoom = room
+                object.objectName = '2232222'
                 object.save()
+                print(object.id)
+                id = object.id
+                print(object.objectImage)
+                print(type(object.objectImage))
+                url = object.objectImage.url
+                print(url)
+                print(type(url))
+                name_dict = {'id': id, 'url': url}
+                return JsonResponse(name_dict, safe=False)
+                # JsonResponse({'id':id})
+                # HttpResponse(object.id)
             else:
                 print("room not fond")
 
