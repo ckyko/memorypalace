@@ -81,6 +81,26 @@ class NewVisitorTest(unittest.TestCase):
         self.assertEquals(self.browser.current_url, "http://localhost:8000/MemoryPalace/?palaceName=testuser_palace" )
         self.logout()
 
+    def test_4_Memory_Palace(self):
+        self.browser.get('http://localhost:8000')
+        self.login()
+        element = self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[2]/a[@href='/palace_library']")
+        element.click()
+        element = self.browser.find_element_by_xpath("//div/ul[@class='tabs']/li[2]/a[@href='#Private']")
+        element.click()
+        element = self.browser.find_element_by_id("private_palace_edit")
+        element.click()
+        self.assertEquals(self.browser.current_url, "http://localhost:8000/MemoryPalace/?palaceName=testuser_palace" )
+        element = self.browser.find_element_by_id("background_add")
+        element.click()
+        element = self.browser.find_element_by_id("id_roomName")
+        element.send_keys("testuser_palace_room")
+        element = self.browser.find_element_by_id("id_backgroundImage")
+        element.click()
+        element.send_keys("/home/satya/Pictures/Selection_006.png")
+        element.send_keys(Keys.RETURN)
+        self.browser.find_element_by_id("createRoom_submit").submit()
+        self.logout()
 
 if __name__ == '__main__':
     unittest.main()
