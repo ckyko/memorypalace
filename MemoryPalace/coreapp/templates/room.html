@@ -3,7 +3,7 @@
 
 {%for object in roomObj%}
 
-<img class="draggable" src="{{object.objectImage}}"
+<img class="draggable" id="{{object.id}}" src="{{object.objectImage}}"
         style="transform:translate({{object.position_x}}px,{{object.position_y}}px);width:{{object.width}}px;
     height:{{object.height}}px;" data-x="{{object.position_x}}" data-y="{{object.position_y}}" />
 

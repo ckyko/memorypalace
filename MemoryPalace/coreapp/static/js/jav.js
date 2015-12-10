@@ -80,6 +80,9 @@ interact('.draggable')
     $('.slider').slider();
   });
 
+var object_id;
+var url;
+
 //*** FOR HTE ROOM UPLOAD IMAGES ***
 $(function(){
    $("#id_objectImage").change(function(e){
@@ -104,12 +107,16 @@ $(function(){
     $.ajax({
         url: $(upload_image).attr('action'),
         method: $(upload_image).attr('method'),
+//        dataType: "json",
         data: data,
         cache: false,
         processData: false,
         contentType: false,
-        success: function(data) {
-            alert('success');
+        success: function(msg) {
+            alert(msg['id']);
+            object_id = msg['id']
+            alert(msg['url'])
+            url = msg['url']
         }
     });
 
