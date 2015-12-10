@@ -159,7 +159,7 @@ $(function(){
             object_id = msg['id']
 //            alert(msg['url'])
             url = msg['url']
-            $("<img class='scrollBoxImg' id='"+object_id+"' src='/"+url+"'/>").appendTo("#vertscrollbox");
+            //$("<img class='scrollBoxImg' id='"+object_id+"' src='/"+url+"'/>").appendTo("#vertscrollbox");
             $("<img class='draggable' id='"+object_id+"' src='/"+url+"'/>").appendTo("#roombg");
         }
     });
@@ -204,7 +204,7 @@ $(document).ready(function(){
     $(document).on('dblclick', '.draggable', function() {
 	var caption = prompt("Enter a caption for this image.");
 	$(this).attr('title', caption);
-	
+
 	/*Materialize tooltip. Having some trouble with this still.
 
 	$(this).attr('class', 'btn tooltipped');
