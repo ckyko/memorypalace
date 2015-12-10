@@ -112,15 +112,14 @@ $(document).ready(function(){
     });
 });
 
-
+//This function is used to trigger Modals for particular id or query string
 $(function(){
-
    if (window.location.hash){
       var hash = window.location.hash.substring(1);
-      if (hash == "modal_register"){
+      if (hash == "modal_register"){//if id after current url is modal_register trigger modal
          $('#modal_register_login').openModal();
       }
-      if (hash == "modal_login"){
+      if (hash == "modal_login"){//if id after current url is modal_register trigger modal
          $('#modal_register_login').openModal();
       }
       if (hash == "modal_createPalace"){
@@ -128,9 +127,9 @@ $(function(){
          $('#modal_createPalace').openModal();
       }
    }
-   var url = document.URL;
-   shortUrl=url.substring(0,url.lastIndexOf("="));
-   var root = location.protocol + '//' + location.host;
+   var url = document.URL;//Gets the current URL
+   shortUrl=url.substring(0,url.lastIndexOf("="));//gets substring of current url until "="
+   var root = location.protocol + '//' + location.host;//homepage
    if (shortUrl == root + "/MemoryPalace/createRoom?palaceName"){
      $('#modal_createRoom').openModal();
    }
