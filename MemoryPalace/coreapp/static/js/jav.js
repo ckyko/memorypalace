@@ -18,7 +18,49 @@ interact('.draggable')
     // call this function on every dragend event
     onend: function (event) {
       var textEl = event.target.querySelector('p');
-//      alert(event.target)
+//      alert("get in");
+//      sentData(event);
+        var target = event.target,
+         id = target.getAttribute('id'),
+         position_x = target.getAttribute('data-x'),
+         position_y = target.getAttribute('data-y'),
+         title = target.getAttribute('title');
+
+         var height = $('#'+id).css('height');
+         var width = $('#'+id).css('width');
+//         height = target.css('height'),
+//         width = target.css('width');
+
+//         alert(id);
+//        console.log(id);
+//        console.log(position_x);
+//        console.log(position_y);
+//        console.log(height);
+//        console.log(width);
+//        console.log(title);
+//        console.log(typeof(id));
+//        console.log(typeof(position_x));
+//        console.log(typeof(position_y));
+//        console.log(typeof(height));
+//        console.log(typeof(width));
+
+      $.get("/update/",{'id': id, 'title': title, 'position_x': position_x, 'position_y':position_y, 'height':height }, function(ret){
+//            alert("success...");
+        })
+
+
+//        $.ajax({
+//            url:"/update/",
+//            type: "POST",
+//            data: {'id': id, 'position_x': position_x, 'position_y':position_y, 'height':height, 'width': 'width' },
+//            success:function(response){ alert("success..."); },
+//            complete:function(){},
+//            error:function (xhr, textStatus, thrownError){
+//                alert("error doing something");
+//            }
+//        });
+
+
 
       textEl && (textEl.textContent =
         'moved a distance of '
@@ -80,34 +122,44 @@ interact('.draggable')
     $('.slider').slider();
   });
 
+var object_id;
+var url;
+
 //*** FOR HTE ROOM UPLOAD IMAGES ***
 $(function(){
    $("#id_objectImage").change(function(e){
-		 var file = e.target.files||e.dataTransfer.files;
-
-		 if(file){
-			 var reader = new FileReader();
-			 reader.onload=function(){
-					// append the "<img class='draggable' src=... />" to roombg
-					$("<img class='scrollBoxImg' src='"+this.result+"'/>").appendTo("#vertscrollbox");
-			 }
-			reader.readAsDataURL(file[0]);
-		}
+//		 var file = e.target.files||e.dataTransfer.files;
+//
+//		 if(file){
+//			 var reader = new FileReader();
+//			 reader.onload=function(){
+//					// append the "<img class='draggable' src=... />" to roombg
+//					$("<img class='scrollBoxImg' src='"+this.result+"'/>").appendTo("#vertscrollbox");
+//			 }
+//			reader.readAsDataURL(file[0]);
+//		}
 //		sentImg();
 
     var data = new FormData($('form').get(2));
-    var test = "test";
-    var temp = [data,test];
-    alert("aaa")
+    var room_name = $("#room_name").text();
+    alert(room_name);
+    alert(typeof(room_name));
+    data.append('room_name',room_name);
     $.ajax({
         url: $(upload_image).attr('action'),
         method: $(upload_image).attr('method'),
-        data: temp,
+//        dataType: "json",
+        data: data,
         cache: false,
         processData: false,
         contentType: false,
-        success: function(data) {
-            alert('success');
+        success: function(msg) {
+            alert(msg['id']);
+            object_id = msg['id']
+            alert(msg['url'])
+            url = msg['url']
+            $("<img class='scrollBoxImg' id='"+object_id+"' src='/"+url+"'/>").appendTo("#vertscrollbox");
+            $("<img class='draggable' id='"+object_id+"' src='/"+url+"'/>").appendTo("#roombg");
         }
     });
 
@@ -115,12 +167,17 @@ $(function(){
 
 })
 //$(document).ready(function(){
-//    var get_json = {{json_room|safe}};
-//    alert(get_json);
-//    var romename = get_json.roomName;
-//    alert(romename);
-
+//    alert("aaaaa");
+//    var room_name = $("#room_name").text()
+//    alert(room_name)
+//
+//
+////    var get_json = {{ json_roomName|safe }};
+////    alert(get_json);
+////    var romename = get_json.roomName;
+////    alert(romename);
 //});
+
 /* KAYINGS
 $(document).ready(function(){
   $("#saveImg").click(function(){
@@ -134,6 +191,12 @@ $(document).ready(function(){
     //Click on image from the vertical box to add it to the room.
     $('.scrollBoxImg').click(function(){
         $("<img class='draggable' src='"+$(this).attr('src')+"'/>").appendTo("#roombg");
+//        var room_name = $("#room_name").text();
+//        var target = $(e.target);
+//        alert(target);
+
+
+
     });
 
     //Add a caption to the image.

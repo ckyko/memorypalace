@@ -23,19 +23,19 @@ from rest_framework import routers, serializers, viewsets
 from django.conf.urls import url
 
 # Serializers define the API representation.
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ('url', 'username', 'email', 'is_staff')
-
-# ViewSets define the view behavior.
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-# Routers provide an easy way of automatically determining the URL conf.
-router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
+# class UserSerializer(serializers.HyperlinkedModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ('url', 'username', 'email', 'is_staff')
+#
+# # ViewSets define the view behavior.
+# class UserViewSet(viewsets.ModelViewSet):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+#
+# # Routers provide an easy way of automatically determining the URL conf.
+# router = routers.DefaultRouter()
+# router.register(r'users', UserViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -49,14 +49,17 @@ urlpatterns = [
     url(r'.*login/', 'coreapp.views.log_in', name='login'),
     url(r'.*register/', 'coreapp.views.register', name='register'),
     url(r'.*createPalace/', 'coreapp.views.createPalace', name='createPalace'),
+    url(r'.*deletePalace/', 'coreapp.views.deletePalace', name='deletePalace'),
+    url(r'.*deleteRoom/', 'coreapp.views.deleteRoom', name='deleteRoom'),
     url(r'^palace_library/', 'coreapp.views.palace_library', name='palace_library'),
     url(r'.*createRoom/', 'coreapp.views.createRoom', name='createRoom'),
     url(r'^MemoryPalace/', 'coreapp.views.MemoryPalace', name='MemoryPalace'),
     url(r'^logout/', 'coreapp.views.log_out', name='logout'),
     url(r'^testing/', 'coreapp.views.testing'),
     url(r'^upload_image/', 'coreapp.views.upload_image'),
+    url(r'^update/', 'coreapp.views.update'),
     #url(r'^api', include(router.urls)),
-    url(r'^snippets/$', 'coreapp.views.snippet_list'),
-    url(r'^snippets/(?P<pk>[0-9]+)/$', 'coreapp.views.snippet_detail'),
+    #url(r'^snippets/$', 'coreapp.views.snippet_list'),
+    #url(r'^snippets/(?P<pk>[0-9]+)/$', 'coreapp.views.snippet_detail'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

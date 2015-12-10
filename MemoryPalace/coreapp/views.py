@@ -1,3 +1,6 @@
+
+
+from django.http import JsonResponse
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -9,6 +12,9 @@ from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 # from django.contrib.auth.forms import forms
 from django.core.urlresolvers import reverse
+import json
+
+
 
 data = {'title': 'MemoryPalace', 'header': 'Login | Register',
         'headerLink': '#modal_register_login',
@@ -125,15 +131,15 @@ def register(req):
     database and redirect to index page.
     '''
 
-    #This is for functionality test. Delete test user and register again
+    ##############################################################
+    #FOR FUNCTIONAILITY TESTS
     try:
         u = User.objects.get(username='testuser')
     except User.DoesNotExist:
         pass
     else:
         u.delete()
-
-
+    ##############################################################
     if req.method == 'POST':
         name = req.POST.get('username', '')          # get username
         password1 = req.POST.get('password1', '')    # get password
@@ -244,11 +250,11 @@ def createPalace(req):
                 public = data['CreatePalaceForm'].cleaned_data['public']
                 palace = UserPalace()                    # create form instance
                 palace.palaceName = palaceName           # put user information
-                palace.numOfRooms = numOfRooms
+                # palace.numOfRooms = numOfRooms
                 palace.public = public
                 palace.user = req.user             # get user and put in form
                 palace.save()                      # save form to database
-
+                data['CreatePalaceForm'] = CreatePalaceForm()# reset form avoid duplication
                 # redirect to palace library page
                 return redirect('/palace_library/#Private')
             else:         # if form is not valid, still in create palace page
@@ -257,6 +263,24 @@ def createPalace(req):
             data['CreatePalaceForm'] = CreatePalaceForm()
             return redirect('/palace_library/#modal_createPalace')
 
+def deletePalace(req):
+    try:
+        u = UserPalace.objects.filter(palaceName=req.GET.get('palaceName', ''))
+    except User.DoesNotExist:
+        pass
+    else:
+        u.delete()
+    return redirect('/palace_library/#Private')
+
+def deleteRoom(req):
+    try:
+        palaceName=req.GET.get('palaceName', '')
+        u = PalaceRoom.objects.filter(roomName=req.GET.get('roomName', ''))
+    except User.DoesNotExist:
+        pass
+    else:
+        u.delete()
+    return redirect('/MemoryPalace?palaceName='+ palaceName)
 
 def createRoom(req):
     '''
@@ -290,6 +314,7 @@ def createRoom(req):
                 room.roomName = roomName
                 room.backgroundImage = background_image
                 room.save()                  # save room to database
+                data['CreateRoomForm'] = CreateRoomForm()# reset form avoid duplication
                 return redirect('/MemoryPalace?palaceName=' + palaceName +
                                 '&roomName=' + roomName)
             else:
@@ -299,29 +324,84 @@ def createRoom(req):
             data['CreateRoomForm'] = CreateRoomForm()
             return redirect('/MemoryPalace/createRoom?palaceName=' + palaceName)
 
-
+@csrf_exempt
 def upload_image(req):
     if req.is_ajax():
-        print "ajax"
+        room_name = req.POST.get("room_name")
         form = UploadImageForm(data=req.POST, files=req.FILES)
         print(req.FILES)
         if form.is_valid():
             print 'valid form'
-            roomName = req.GET.get('roomName', '')  # get room name
-            print roomName
-            user_room = PalaceRoom.objects.filter(roomName=roomName)
+            user_room = PalaceRoom.objects.filter(roomName=room_name)
+            # print roomName
+
             if user_room:
                 print "user_room get"
                 image_file = form.cleaned_data['objectImage']
                 object = PalaceObject()
+                print(type(object))
+                object.objectImage = image_file
+                for room in user_room:
+                    object.palaceRoom = room
+                    print("get room")
+                object.objectName = 'testing'
+                print("sssave")
+                object.save()
+                # print(object.id)
+                id = object.id
+                # print(object.objectImage)
+                # print(type(object.objectImage))
+                url = object.objectImage.url
+                print(url)
+                print(type(url))
+                object_name_list = url.split('/', 2)
+                # print(object_name_list)
+                object.objectName = object_name_list[2]
+                object.save()
+                print(object.objectName)
+                src = object.objectName
+                name_dict = {'id': id, 'url': src}
+                return JsonResponse(name_dict, safe=False)
             else:
                 print "room not fond"
 
         else:
             print 'invalid'
             print form.errors
-    return HttpResponseRedirect('/')
+    else:
+        return HttpResponseRedirect('/')
 
+@csrf_exempt
+def update(req):
+    if req.is_ajax():
+        id = req.GET.get("id")
+        position_x = req.GET.get("position_x")
+        position_y = req.GET.get("position_y")
+        height = req.GET.get("height")
+        title = req.GET.get("title")
+        num_id = int(id)
+        num_position_x = int(position_x)
+        num_position_y = int(position_y)
+        num_height = int(height[:-2])
+        # print(num_id)
+        # print(type(num_id))
+        # print(num_position_x)
+        # print(num_position_y)
+        # print(height)
+        # print(num_height)
+        # print(type(num_height))
+        # print(width)
+        objects = PalaceObject.objects.filter(id=num_id)
+        object = objects[0]
+        object.position_x = num_position_x
+        object.position_y = num_position_y
+        object.height = num_height
+        object.width = num_height
+        object.description = title
+        object.save()
+
+    else:
+        return HttpResponseRedirect('/')
 
 class JSONResponse(HttpResponse):
 
