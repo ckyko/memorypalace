@@ -1,0 +1,31 @@
+{% load staticfiles %}
+<div class="outerscrollbox">
+  <div class="center-align">
+    <a class="modal-trigger btn-floating btn-large waves-effect waves-light teal accent-4" href="#modal_image_objects">
+      <i class="material-icons">aspect_ratio</i>
+    </a>
+  </div>
+  <div id="vertscrollbox">
+      {% for object in roomObj %}
+      <img class="scrollBoxImg" src="{{object.objectImage}}" />
+      {% endfor%}
+
+    <img class="scrollBoxImg" src="{% static "images/memory_objects/char1.png"%}" />
+    <img class="scrollBoxImg" src="{% static "images/memory_objects/char2.png"%}" />
+    <img class="scrollBoxImg" src="{% static "images/memory_objects/char3.png"%}" />
+    <img class="scrollBoxImg" src="{% static "images/memory_objects/char4.png"%}" />
+    <img class="scrollBoxImg" src="{% static "images/memory_objects/char5.png"%}" />
+    <img class="scrollBoxImg" src="{% static "images/memory_objects/char6.png"%}" />
+  </div>
+  <div class="center-align">
+      <form action="/upload_image/" method="post" id="upload_image" enctype="multipart/form-data">
+          {% csrf_token %}
+    <!--<input type="file" id="file" accept="image/*" style="visibility: hidden; width: 1px; height: 1px" multiple/>-->
+          {{objectForm.objectImage}}
+    <a class="btn-floating btn-large waves-effect waves-light teal accent-4" onclick="document.getElementById('id_objectImage').click(); return false">
+      <i class="material-icons">library_add</i>
+    </a>
+      </form>
+  </div>
+</div>
+{% include "modal_image_objects.html" %}
