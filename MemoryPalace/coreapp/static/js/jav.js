@@ -151,7 +151,11 @@ $(document).ready(function(){
     });
 
     $('#roombg').on('click', function(e) {
+        var $delTarget = $(e.target);
+
         if($(e.target).hasClass('draggable')) {
+          $('.draggable').removeClass('permaBorder');
+          $(($delTarget).addClass('permaBorder'));
           if($('#delete-draggable').hasClass('disabled')) {
             $('#delete-draggable').removeClass('disabled');
           }
