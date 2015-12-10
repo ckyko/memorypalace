@@ -18,7 +18,49 @@ interact('.draggable')
     // call this function on every dragend event
     onend: function (event) {
       var textEl = event.target.querySelector('p');
-//      alert(event.target)
+//      alert("get in");
+//      sentData(event);
+        var target = event.target,
+         id = target.getAttribute('id'),
+         position_x = target.getAttribute('data-x'),
+         position_y = target.getAttribute('data-y'),
+         title = target.getAttribute('title');
+
+         var height = $('#'+id).css('height');
+         var width = $('#'+id).css('width');
+//         height = target.css('height'),
+//         width = target.css('width');
+
+//         alert(id);
+        console.log(id);
+        console.log(position_x);
+        console.log(position_y);
+        console.log(height);
+        console.log(width);
+        console.log(title);
+        console.log(typeof(id));
+        console.log(typeof(position_x));
+        console.log(typeof(position_y));
+        console.log(typeof(height));
+        console.log(typeof(width));
+
+      $.get("/update/",{'id': id, 'title': title, 'position_x': position_x, 'position_y':position_y, 'height':height }, function(ret){
+            alert("success...");
+        })
+
+
+//        $.ajax({
+//            url:"/update/",
+//            type: "POST",
+//            data: {'id': id, 'position_x': position_x, 'position_y':position_y, 'height':height, 'width': 'width' },
+//            success:function(response){ alert("success..."); },
+//            complete:function(){},
+//            error:function (xhr, textStatus, thrownError){
+//                alert("error doing something");
+//            }
+//        });
+
+
 
       textEl && (textEl.textContent =
         'moved a distance of '
@@ -54,7 +96,14 @@ interact('.draggable')
 	    target.textContent = Math.round(event.rect.width) + '×' + Math.round(event.rect.height);
 	  });
 	//*** END RESIZING CODE ***
+  function sentData(event){
+    var target = event.target,
+         id = target.getAttribute('id');
 
+    alert(id);
+
+
+  }
 //*** CONTINUE DRAGGING CODE ***
   function dragMoveListener (event) {
     var target = event.target,
@@ -117,6 +166,8 @@ $(function(){
             object_id = msg['id']
             alert(msg['url'])
             url = msg['url']
+            $("<img class='scrollBoxImg' id='"+object_id+"' src='"+url+"'/>").appendTo("#vertscrollbox");
+            $("<img class='draggable' id='"+object_id+"' src='"+url+"'/>").appendTo("#roombg");
         }
     });
 
@@ -148,6 +199,12 @@ $(document).ready(function(){
     //Click on image from the vertical box to add it to the room.
     $('.scrollBoxImg').click(function(){
         $("<img class='draggable' src='"+$(this).attr('src')+"'/>").appendTo("#roombg");
+//        var room_name = $("#room_name").text();
+//        var target = $(e.target);
+//        alert(target);
+
+
+
     });
 
     //Add a caption to the image.
