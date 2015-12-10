@@ -38,15 +38,29 @@
           <div class="body" role="main">
             
   <h1>Source code for coreapp.models</h1><div class="highlight"><pre>
+<span class="c"># Models.py</span>
+<span class="c"># This is where all the models of the database are contained</span>
+
+<span class="c">#This is where all the models of the database are contained</span>
+
 <span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
 <span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
 
 
+<span class="c"># User Palace Table</span>
+<span class="c"># Contains the Memory Palaces for the user.</span>
+
 <div class="viewcode-block" id="UserPalace"><a class="viewcode-back" href="../../coreapp.html#coreapp.forms.UserPalace">[docs]</a><span class="k">class</span> <span class="nc">UserPalace</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">,</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">palaceName</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="c"># BackgroundImage = models.CharField(max_length=200)</span>
-    <span class="n">numOfRooms</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    user: The foreign key to connect it to a user</span>
+<span class="sd">    palaceName: The name of the Memory Palace and is Unique for each user</span>
+<span class="sd">    so a user can&#39;t have 2 palaces with the same name</span>
+<span class="sd">    numOfRooms: The number of rooms in the palace</span>
+<span class="sd">    public: Whether the Palace is public or not false by default</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">palaceName</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="c"># numOfRooms = models.IntegerField(default=0)</span>
     <span class="n">public</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -55,28 +69,69 @@
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">unique_together</span> <span class="o">=</span> <span class="p">((</span><span class="s">&quot;user&quot;</span><span class="p">,</span> <span class="s">&quot;palaceName&quot;</span><span class="p">),)</span></div>
 
-
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Palace Room Table</span>
+<span class="sd">Contains the rooms in the Palace</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <div class="viewcode-block" id="PalaceRoom"><a class="viewcode-back" href="../../coreapp.html#coreapp.forms.PalaceRoom">[docs]</a><span class="k">class</span> <span class="nc">PalaceRoom</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    user: The foreign key to connect it to a user</span>
+<span class="sd">    userPalace: The foriegn key to the Palace the room belongs in</span>
+<span class="sd">    roomName: The name of the room coupled with the Palace so that they are</span>
+<span class="sd">    named uniqely for their palace</span>
+<span class="sd">    backgroundImage: The background Image of the room</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">userPalace</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;UserPalace&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="c"># palaceName = models.ForeignKey(UserPalace.palaceName,null=True)</span>
     <span class="n">roomName</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">backgroundImage</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s">&#39;./static/images&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;./static/images/room.jpg&#39;</span><span class="p">)</span>
+    <span class="n">backgroundImage</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s">&#39;static/images&#39;</span><span class="p">,</span>
+                                        <span class="n">default</span><span class="o">=</span><span class="s">&#39;static/images/room.jpg&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">roomName</span>
 
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-        <span class="n">unique_together</span> <span class="o">=</span> <span class="p">((</span><span class="s">&quot;userPalace&quot;</span><span class="p">,</span> <span class="s">&quot;roomName&quot;</span><span class="p">),)</span></div>
+        <span class="n">unique_together</span> <span class="o">=</span> <span class="p">((</span><span class="s">&quot;user&quot;</span><span class="p">,</span> <span class="s">&quot;userPalace&quot;</span><span class="p">,</span> <span class="s">&quot;roomName&quot;</span><span class="p">),)</span></div>
 
+<span class="c"># Palace Object Table</span>
+<span class="c"># Contains the objects inside a room</span>
 
 <div class="viewcode-block" id="PalaceObject"><a class="viewcode-back" href="../../coreapp.html#coreapp.forms.PalaceObject">[docs]</a><span class="k">class</span> <span class="nc">PalaceObject</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">palaceRoom</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;PalaceRoom&#39;</span><span class="p">,</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="c"># palaceName = models.ForeignKey(UserPalace.palaceName,null=True)</span>
-    <span class="c"># roomName = models.ForeignKey(PalaceRoom.roomName,null=True)</span>
-    <span class="c"># objectName= models.CharField(max_length=200, unique=True)</span>
-    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-    <span class="c"># ObjectImage = models.CharField(max_length=200)</span>
-    <span class="n">objectImage</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s">&#39;./static/images/memory_objects&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;./static/images/char2.png&#39;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    user: The foreign key to connect it to a user</span>
+<span class="sd">    userPalace: The foriegn key to the Palace the room belongs in</span>
+<span class="sd">    palaceRoom: The foriegn key that gives you the room the object belongs in.</span>
+<span class="sd">    objectName: The name of the object unique to the room it is inside</span>
+<span class="sd">    objectImage: The image used for the object</span>
+<span class="sd">    position_x: The x coordinate of the object in the room</span>
+<span class="sd">    position_y: The y coordinate of the object in the room</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># user = models.ForeignKey(User, null=True)</span>
+    <span class="c"># userPalace = models.ForeignKey(&#39;UserPalace&#39;, null=True)</span>
+    <span class="n">palaceRoom</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;PalaceRoom&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&quot; &quot;</span><span class="p">)</span>
+    <span class="c"># objectImage = models.ImageField(upload_to=&#39;./coreapp/static/images&#39;)</span>
+    <span class="n">objectName</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">objectImage</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">upload_to</span><span class="o">=</span><span class="s">&#39;./static/images/memory_objects&#39;</span><span class="p">,</span>
+                                    <span class="n">default</span><span class="o">=</span><span class="s">&#39;./static/images/char2.png&#39;</span><span class="p">)</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">position_x</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">position_y</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">public</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">objectImage</span><span class="o">.</span><span class="n">url</span>
+    <span class="c">#</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">unique_together</span> <span class="o">=</span> <span class="p">((</span><span class="s">&quot;palaceRoom&quot;</span><span class="p">,</span> <span class="s">&quot;objectName&quot;</span> <span class="p">),)</span></div>
+
+
+<div class="viewcode-block" id="Object"><a class="viewcode-back" href="../../coreapp.html#coreapp.forms.Object">[docs]</a><span class="k">class</span> <span class="nc">Object</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">palaceRoom</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s">&#39;PalaceRoom&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&quot; &quot;</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&quot; &quot;</span><span class="p">)</span>
     <span class="n">width</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
     <span class="n">height</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
     <span class="n">position_x</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -86,7 +141,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span>
 
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-        <span class="n">unique_together</span> <span class="o">=</span> <span class="p">((</span><span class="s">&quot;palaceRoom&quot;</span><span class="p">,</span> <span class="s">&quot;description&quot;</span><span class="p">),)</span></div>
+        <span class="n">unique_together</span> <span class="o">=</span> <span class="p">((</span><span class="s">&quot;palaceRoom&quot;</span><span class="p">,</span> <span class="s">&quot;url&quot;</span><span class="p">),)</span></div>
 </pre></div>
 
           </div>
