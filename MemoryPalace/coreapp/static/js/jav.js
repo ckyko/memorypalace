@@ -108,6 +108,9 @@ $(function(){
         contentType: false,
         success: function(data) {
             alert('success');
+        },
+        error:function(){
+            alert("well at least its running");
         }
     });
 
@@ -160,14 +163,15 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-    var jsonOject = 
+    var jsonObject = {"user":1,"userPalace":2,"palaceRoom":4,"description":"testStuff",
+    "objectImage":"/mediaFiles/static/images/memory_objects/ticket2front_GiKRioO.png",
+    "width":100,"height":100,"position_x":100,"position_y":100};
+    var jsonData = JSON.parse( jsonObject );
      $.ajax({
-        url: $(upload_image).attr('action'),
-        method: $(upload_image).attr('method'),
-        data: temp,
-        cache: false,
-        processData: false,
-        contentType: false,
+        url: "http://127.0.0.1:8000/snippets/",
+        type: "POST",
+        data: jsonData,
+        dataType: "json",
         success: function(data) {
             alert('success');
         }
