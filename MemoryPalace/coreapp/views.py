@@ -245,7 +245,7 @@ def createPalace(req):
                 # get user name
                 palaceName = data['CreatePalaceForm'].cleaned_data['palaceName']
                 # get number of room
-                numOfRooms = data['CreatePalaceForm'].cleaned_data['numOfRooms']
+                #numOfRooms = data['CreatePalaceForm'].cleaned_data['numOfRooms']
                 # get public or not
                 public = data['CreatePalaceForm'].cleaned_data['public']
                 palace = UserPalace()                    # create form instance
