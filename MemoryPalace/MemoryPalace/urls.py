@@ -49,6 +49,8 @@ urlpatterns = [
     url(r'.*login/', 'coreapp.views.log_in', name='login'),
     url(r'.*register/', 'coreapp.views.register', name='register'),
     url(r'.*createPalace/', 'coreapp.views.createPalace', name='createPalace'),
+    url(r'.*deletePalace/', 'coreapp.views.deletePalace', name='deletePalace'),
+    url(r'.*deleteRoom/', 'coreapp.views.deleteRoom', name='deleteRoom'),
     url(r'^palace_library/', 'coreapp.views.palace_library', name='palace_library'),
     url(r'.*createRoom/', 'coreapp.views.createRoom', name='createRoom'),
     url(r'^MemoryPalace/', 'coreapp.views.MemoryPalace', name='MemoryPalace'),
@@ -57,7 +59,7 @@ urlpatterns = [
     url(r'^upload_image/', 'coreapp.views.upload_image'),
     url(r'^update/', 'coreapp.views.update'),
     #url(r'^api', include(router.urls)),
-    url(r'^snippets/$', 'coreapp.views.snippet_list'),
-    url(r'^snippets/(?P<pk>[0-9]+)/$', 'coreapp.views.snippet_detail'),
+    #url(r'^snippets/$', 'coreapp.views.snippet_list'),
+    #url(r'^snippets/(?P<pk>[0-9]+)/$', 'coreapp.views.snippet_detail'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

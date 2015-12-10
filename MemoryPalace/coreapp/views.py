@@ -125,15 +125,15 @@ def register(req):
     database and redirect to index page.
     '''
 
-    #This is for functionality test. Delete test user and register again
+    ##############################################################
+    #FOR FUNCTIONAILITY TESTS
     try:
         u = User.objects.get(username='testuser')
     except User.DoesNotExist:
         pass
     else:
         u.delete()
-
-
+    ##############################################################
     if req.method == 'POST':
         name = req.POST.get('username', '')                 # get username
         password1 = req.POST.get('password1', '')           # get password
@@ -168,7 +168,7 @@ def MemoryPalace(req):
     '''
         This function response Memory palace room page.
         the url for this function is /MemoryPalace
-        function check user login or not, if not it will just dispaly a model of room.
+        function check user login or not, if not it will just display a model of room.
         if user is login and specify which room, it will open user's room. it means pass
         all user's room information to page
     '''
@@ -241,6 +241,7 @@ def createPalace(req):
                 palace.public = public
                 palace.user = req.user             # get user and put in form
                 palace.save()                      # save form to database
+                data['CreatePalaceForm'] = CreatePalaceForm()# reset form avoid duplication
                 return redirect('/palace_library/#Private')     # redirect to palace library page
             else:
                 return redirect('/palace_library/#modal_createPalace')# if form is not valid, still in create palace page
@@ -248,6 +249,24 @@ def createPalace(req):
             data['CreatePalaceForm'] = CreatePalaceForm()
             return redirect('/palace_library/#modal_createPalace')
 
+def deletePalace(req):
+    try:
+        u = UserPalace.objects.filter(palaceName=req.GET.get('palaceName', ''))
+    except User.DoesNotExist:
+        pass
+    else:
+        u.delete()
+    return redirect('/palace_library/#Private')
+
+def deleteRoom(req):
+    try:
+        palaceName=req.GET.get('palaceName', '')
+        u = PalaceRoom.objects.filter(roomName=req.GET.get('roomName', ''))
+    except User.DoesNotExist:
+        pass
+    else:
+        u.delete()
+    return redirect('/MemoryPalace?palaceName='+ palaceName)
 
 def createRoom(req):
     '''
@@ -277,6 +296,7 @@ def createRoom(req):
                 room.roomName = roomName
                 room.backgroundImage = background_image
                 room.save()                  # save room to database
+                data['CreateRoomForm'] = CreateRoomForm()# reset form avoid duplication
                 return redirect('/MemoryPalace?palaceName=' + palaceName + '&roomName='+ roomName)
             else:
                 return redirect('/MemoryPalace/createRoom?palaceName='+ palaceName)
