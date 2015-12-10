@@ -1,0 +1,27 @@
+{% include 'modal_createRoom.html'%}
+<div class="horscrollbox">
+    <div class="room_store">
+
+        {% if user_palace %}
+          <div class="card-panel col s12 m3 hoverable" id="background_card">
+            <a class="modal-trigger" href="/MemoryPalace/createRoom?palaceName={{user_palace.palaceName}}">
+            <i class="large material-icons"  id="background_add">add</i>
+                </a>
+          </div>
+        {% endif %}
+
+      {% for room in user_room %}
+        <a class="create_room hoverable card-panel" href="/MemoryPalace?palaceName={{user_palace.palaceName}}&roomName={{room.roomName}}">
+        <div class="card-image">
+            <img class="roomImage" src="{{ room.backgroundImage }}">
+        <span>{{room.roomName}}</span>
+        <!--<div class="cancel">close</div>-->
+        </div>
+        </a>
+      {% endfor %}
+
+
+
+
+    </div>
+</div>
