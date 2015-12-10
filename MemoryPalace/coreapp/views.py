@@ -122,15 +122,15 @@ def register(req):
     database and redirect to index page.
     '''
 
-    #This is for functionality test. Delete test user and register again
+    ##############################################################
+    #FOR FUNCTIONAILITY TESTS
     try:
         u = User.objects.get(username='testuser')
     except User.DoesNotExist:
         pass
     else:
         u.delete()
-
-
+    ##############################################################
     if req.method == 'POST':
         name = req.POST.get('username', '')                 # get username
         password1 = req.POST.get('password1', '')           # get password
@@ -223,6 +223,15 @@ def createPalace(req):
     :param req:
     :return:
     '''
+    ##############################################################
+    #FOR FUNCTIONAILITY TESTS
+    try:
+        u = UserPalace.objects.filter(palaceName='testuser_palace')
+    except User.DoesNotExist:
+        pass
+    else:
+        u.delete()
+    ##############################################################
     if not req.user.is_authenticated():   # check login already or not
         return HttpResponseRedirect('/')
     else:
