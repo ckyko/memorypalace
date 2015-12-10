@@ -7,7 +7,10 @@ from django.contrib.auth.models import User
 from coreapp import views
 from mock import patch
 
-# URL_Dict = {'/': views.index, '/MemoryPalace/': views.MemoryPalace, '/about/': views.about, '/contact/': views.contact, '/login/': views.log_in, '/register/': views.register}
+# URL_Dict = {'/': views.index, '/MemoryPalace/': views.MemoryPalace,
+# '/about/': views.about, '/contact/': views.contact, '/login/': views.log_in,
+# '/register/': views.register}
+
 # #Dictionary to test multiple pages with same functionality
 # class MemoryPalaceTest(TestCase):
 #     #Test if the provided "value" is linked to the url
@@ -69,27 +72,32 @@ class ViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_register_with_new_user(self):
-        response = self.client.post(reverse('register'), {'username': 'newUserName',
-                                                           'password1': 'password',
-                                                           'password2': 'password'})
+        response = self.client.post(reverse('register'),
+                        {'username': 'newUserName', 'password1': 'password',
+                         'password2': 'password'})
+
         new_user = User.objects.get(username='newUserName')
         self.assertTrue(new_user is not None, msg="user not create.")
 
     def test_login_with_a_user(self):
-        user = User.objects.create_user(username="testing", password="password")
+        user=User.objects.create_user(username="testing", password="password")
         self.assertTrue(user is not None, msg="user not create.")
         response = self.client.post(reverse('login'), {'username': 'testing',
-                                                         'password': 'password'})
+                                                       'password': 'password'})
 
 
 
 
 class UserPalaceDataBaseTestCase(TestCase):
     def setUp(self):
-        user = User.objects.create_user(username="testing", password="password")
-        user_palace = UserPalace.objects.create(user=user, palaceName='testing palace')
-        palace_room = PalaceRoom.objects.create(userPalace=user_palace, roomName="testing room")
-        PalaceObject.objects.create(palaceRoom=palace_room, description="testing palace object")
+        user = User.objects.create_user(username="testing",
+                                        password="password")
+        user_palace = UserPalace.objects.create(user=user,
+                                                palaceName='testing palace')
+        palace_room = PalaceRoom.objects.create(userPalace=user_palace,
+                                                roomName="testing room")
+        PalaceObject.objects.create(palaceRoom=palace_room,
+                                    description="testing palace object")
 
     def test_palace_room_object_create_in_database_or_not(self):
         user = User.objects.get(username="testing")
@@ -99,19 +107,21 @@ class UserPalaceDataBaseTestCase(TestCase):
         user_room = PalaceRoom.objects.get(userPalace=user_palace)
         self.assertTrue(user_room is not None, msg="user_room not create.")
         palace_object = PalaceObject.objects.get(palaceRoom=user_room)
-        self.assertTrue(palace_object is not None, msg="palace_object not create.")
+        self.assertTrue(palace_object is not None,
+                        msg="palace_object not create.")
 
     def test_palaceName(self):
         user_palace = UserPalace.objects.get(palaceName='testing palace')
-        self.assertTrue(user_palace is not None, msg="palace name is create not correct")
+        self.assertTrue(user_palace is not None,
+                        msg="palace name is create not correct")
 
     def test_roomName(self):
         palace_room = PalaceRoom.objects.get(roomName="testing room")
-        self.assertTrue(palace_room is not None, msg="room name is create not correct")
+        self.assertTrue(palace_room is not None,
+                        msg="room name is create not correct")
 
     def tearDown(self):
         del self
-
 
 # class RegisterTestCase(TestCase):
 #     @patch.object(views, 'request')

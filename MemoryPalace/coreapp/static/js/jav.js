@@ -202,8 +202,8 @@ $(document).ready(function(){
 
     //Add a caption to the image.
     $(document).on('dblclick', '.draggable', function() {
-	var caption = prompt("Enter a caption for this image.");
-	$(this).attr('title', caption);
+        var caption = prompt("Enter a caption for this image.");
+	      $(this).attr('title', caption);
 
 	/*Materialize tooltip. Having some trouble with this still.
 
@@ -213,6 +213,33 @@ $(document).ready(function(){
 	$(this).attr('data-tooltip', caption);
 	*/
     });
+
+    $('#roombg').on('click', function(e) {
+        var $delTarget = $(e.target);
+
+        if($(e.target).hasClass('draggable')) {
+          $('.draggable').removeClass('permaBorder');
+          $(($delTarget).addClass('permaBorder'));
+          if($('#delete-draggable').hasClass('disabled')) {
+            $('#delete-draggable').removeClass('disabled');
+          }
+        }
+        else if(!$(e.target).hasClass('draggable')){
+          $('.draggable').removeClass('permaBorder');
+          if(!$('#delete-draggable').hasClass('disabled')) {
+            $('#delete-draggable').addClass('disabled');
+          }
+        }
+    });
+
+    /* Delete functionality. For Later.
+    $('#delete-draggable').click(function() {
+      alert("ready");
+      if($(myfunc).hasClass('draggable')) {
+        alert("DeleteMe");
+      }
+    });
+    */
 });
 
 //This function is used to trigger Modals for particular id or query string
