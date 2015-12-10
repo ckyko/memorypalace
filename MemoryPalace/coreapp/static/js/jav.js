@@ -44,7 +44,8 @@ interact('.draggable')
 //        console.log(typeof(height));
 //        console.log(typeof(width));
 
-      $.get("/update/",{'id': id, 'title': title, 'position_x': position_x, 'position_y':position_y, 'height':height }, function(ret){
+      $.get("/update/",{'id': id, 'title': title, 'position_x': position_x,
+      'position_y':position_y, 'height':height, 'width':width }, function(ret){
 //            alert("success...");
         })
 
@@ -142,8 +143,8 @@ $(function(){
 
     var data = new FormData($('form').get(2));
     var room_name = $("#room_name").text();
-    alert(room_name);
-    alert(typeof(room_name));
+//    alert(room_name);
+//    alert(typeof(room_name));
     data.append('room_name',room_name);
     $.ajax({
         url: $(upload_image).attr('action'),
@@ -154,9 +155,9 @@ $(function(){
         processData: false,
         contentType: false,
         success: function(msg) {
-            alert(msg['id']);
+//            alert(msg['id']);
             object_id = msg['id']
-            alert(msg['url'])
+//            alert(msg['url'])
             url = msg['url']
             //$("<img class='scrollBoxImg' id='"+object_id+"' src='/"+url+"'/>").appendTo("#vertscrollbox");
             $("<img class='draggable' id='"+object_id+"' src='/"+url+"'/>").appendTo("#roombg");
