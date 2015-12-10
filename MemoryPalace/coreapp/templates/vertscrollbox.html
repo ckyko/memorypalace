@@ -18,10 +18,14 @@
     <img class="scrollBoxImg" src="{% static "images/memory_objects/char6.png"%}" />
   </div>
   <div class="center-align">
-    <input type="file" id="file" accept="image/*" style="visibility: hidden; width: 1px; height: 1px" multiple/>
-    <a class="btn-floating btn-large waves-effect waves-light teal accent-4" onclick="document.getElementById('file').click(); return false">
+      <form action="/upload_image/" method="post" id="upload_image" enctype="multipart/form-data">
+          {% csrf_token %}
+    <!--<input type="file" id="file" accept="image/*" style="visibility: hidden; width: 1px; height: 1px" multiple/>-->
+          {{objectForm.objectImage}}
+    <a class="btn-floating btn-large waves-effect waves-light teal accent-4" onclick="document.getElementById('id_objectImage').click(); return false">
       <i class="material-icons">library_add</i>
     </a>
+      </form>
   </div>
 </div>
 {% include "modal_image_objects.html" %}
