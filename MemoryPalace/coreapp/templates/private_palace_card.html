@@ -10,11 +10,14 @@
     <p>{{palace.palaceName}}</p>
   </div>
   <div class="card-action">
-    <a class="btn-floating btn-large teal accent-4" id="private_palace_fullscreen">
+    <a class="btn-floating btn-large teal accent-4" id="fullscreen__{{palace.palaceName}}">
       <i class="large material-icons">play_circle_filled</i>
     </a>
-    <a class="btn-floating btn-large teal accent-4" id="private_palace_edit" href="/MemoryPalace?palaceName={{palace.palaceName}}">
+    <a class="btn-floating btn-large teal accent-4" id="edit_{{palace.palaceName}}" href="/MemoryPalace?palaceName={{palace.palaceName}}">
       <i class="large material-icons">mode_edit</i>
+    </a>
+    <a class="btn-floating btn-small red right" id="delete_{{palace.palaceName}}" href="/deletePalace?palaceName={{palace.palaceName}}">
+      <i class="large material-icons">delete</i>
     </a>
   </div>
 </div>

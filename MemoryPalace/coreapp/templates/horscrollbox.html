@@ -12,13 +12,19 @@
         {% endif %}
 
       {% for room in user_room %}
-        <a class="create_room hoverable card-panel" href="/MemoryPalace?palaceName={{user_palace.palaceName}}&roomName={{room.roomName}}">
-        <div class="card-image">
-            <img class="roomImage" src="/{{ room.backgroundImage }}">
-        <span>{{room.roomName}}</span>
-        <!--<div class="cancel">close</div>-->
+        <div class="create_room hoverable card">
+        <div class="card-image center room_card">
+          <span>
+            <a class="btn-floating btn red" id="delete_{{user_palace.palaceName}}_{{room.roomName}}" href="/deleteRoom?palaceName={{user_palace.palaceName}}&roomName={{room.roomName}}">
+              <i class="large material-icons">close</i>
+            </a>
+            {{room.roomName}}
+          </span>
+          <a id="{{user_palace.palaceName}}_{{room.roomName}}" href="/MemoryPalace?palaceName={{user_palace.palaceName}}&roomName={{room.roomName}}">
+          <img class="roomImage" src="/{{ room.backgroundImage }}">
+          </a>
         </div>
-        </a>
+      </div>
       {% endfor %}
 
 

@@ -196,3 +196,12 @@ img.draggable:hover {
   width:100%;
   height:50%;
 }
+
+div.room_card:hover span:first-of-type a {
+    display: block;
+}
+
+div.room_card span:first-of-type a {
+    position:absolute;
+    display:none;
+}
