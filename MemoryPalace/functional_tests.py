@@ -66,7 +66,8 @@ class NewVisitorTest(unittest.TestCase):
         element.click()
         element = self.browser.find_element_by_xpath("//div/ul[@class='tabs']/li[2]/a[@href='#Private']")
         element.click()
-
+        element = self.browser.find_element_by_id("private_add_palace_card")
+        element.click()
 
 if __name__ == '__main__':
     unittest.main()
