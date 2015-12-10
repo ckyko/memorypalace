@@ -264,11 +264,10 @@ def createRoom(req):
                 if palace.palaceName == palaceName:
                     this_palace = palace
             # the_palace = PalaceRoom.objects.filter(userPalace=this_palace)
-
             data['CreateRoomForm'] = CreateRoomForm(req.POST, req.FILES)     # pass information to form
             if data['CreateRoomForm'].is_valid():
                 roomName = data['CreateRoomForm'].cleaned_data['roomName']
-                backgroundImage = data['CreateRoomForm'].cleaned_data['backgroundImage']
+                background_image = data['CreateRoomForm'].cleaned_data['backgroundImage']
                 room = PalaceRoom()              # create room object instance
                 room.user = input_user
                 room.userPalace = this_palace
