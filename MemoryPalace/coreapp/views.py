@@ -223,15 +223,6 @@ def createPalace(req):
     :param req:
     :return:
     '''
-    ##############################################################
-    #FOR FUNCTIONAILITY TESTS
-    try:
-        u = UserPalace.objects.filter(palaceName='testuser_palace')
-    except User.DoesNotExist:
-        pass
-    else:
-        u.delete()
-    ##############################################################
     if not req.user.is_authenticated():   # check login already or not
         return HttpResponseRedirect('/')
     else:
@@ -247,6 +238,7 @@ def createPalace(req):
                 palace.public = public
                 palace.user = req.user             # get user and put in form
                 palace.save()                      # save form to database
+                data['CreatePalaceForm'] = CreatePalaceForm()# reset form avoid duplication
                 return redirect('/palace_library/#Private')     # redirect to palace library page
             else:
                 return redirect('/palace_library/#modal_createPalace')# if form is not valid, still in create palace page
@@ -254,6 +246,24 @@ def createPalace(req):
             data['CreatePalaceForm'] = CreatePalaceForm()
             return redirect('/palace_library/#modal_createPalace')
 
+def deletePalace(req):
+    try:
+        u = UserPalace.objects.filter(palaceName=req.GET.get('palaceName', ''))
+    except User.DoesNotExist:
+        pass
+    else:
+        u.delete()
+    return redirect('/palace_library/#Private')
+
+def deleteRoom(req):
+    try:
+        palaceName=req.GET.get('palaceName', '')
+        u = PalaceRoom.objects.filter(roomName=req.GET.get('roomName', ''))
+    except User.DoesNotExist:
+        pass
+    else:
+        u.delete()
+    return redirect('/MemoryPalace?palaceName='+ palaceName)
 
 def createRoom(req):
     '''
@@ -283,6 +293,7 @@ def createRoom(req):
                 room.roomName = roomName
                 room.backgroundImage = background_image
                 room.save()                  # save room to database
+                data['CreateRoomForm'] = CreateRoomForm()# reset form avoid duplication
                 return redirect('/MemoryPalace?palaceName=' + palaceName + '&roomName='+ roomName)
             else:
                 return redirect('/MemoryPalace/createRoom?palaceName='+ palaceName)
