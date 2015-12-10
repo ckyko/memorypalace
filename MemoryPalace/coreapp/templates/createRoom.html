@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>
+            {{ uf.roomName.label_tag }}
+            {{ uf.roomName }}
+        </p>
+        <P>
+            {{ uf.backgroundImage.label_tag }}
+            {{ uf.backgroundImage }}
+        </P>
+
+        <input type="submit" value="create">
+    </form>
+</body>
+</html>
