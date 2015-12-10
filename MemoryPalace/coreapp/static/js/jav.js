@@ -167,6 +167,15 @@ $(document).ready(function(){
           }
         }
     });
+
+    /* Delete functionality. For Later.
+    $('#delete-draggable').click(function() {
+      alert("ready");
+      if($(myfunc).hasClass('draggable')) {
+        alert("DeleteMe");
+      }
+    });
+    */
 });
 
 //This function is used to trigger Modals for particular id or query string
