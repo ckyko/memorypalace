@@ -306,38 +306,27 @@ def createRoom(req):
 
 @csrf_exempt
 def upload_image(req):
+    '''
+    This function will called when upload image.
+    '''
     if req.is_ajax():
         room_name = req.POST.get("room_name")
-        print(room_name)
         form = UploadImageForm(data=req.POST, files=req.FILES)
-        print(req.FILES)
         if form.is_valid():
-            print('valid form')
             user_room = PalaceRoom.objects.filter(roomName=room_name)
-            # print(user_room.roomName)
             if user_room:
                 image_file = form.cleaned_data['objectImage']
                 object = PalaceObject()
-                print(type(object))
                 object.objectImage = image_file
                 for room in user_room:
                     object.palaceRoom = room
-                    print("get room")
                 object.objectName = 'testing'
-                print("sssave")
                 object.save()
-                # print(object.id)
                 id = object.id
-                # print(object.objectImage)
-                # print(type(object.objectImage))
                 url = object.objectImage.url
-                print(url)
-                print(type(url))
                 object_name_list = url.split('/', 2)
-                # print(object_name_list)
                 object.objectName = object_name_list[2]
                 object.save()
-                print(object.objectName)
                 src = object.objectName
                 name_dict = {'id': id, 'url': src}
                 return JsonResponse(name_dict, safe=False)
@@ -352,30 +341,27 @@ def upload_image(req):
 
 @csrf_exempt
 def update(req):
+    '''
+    This function is for updata room object information.
+    '''
     if req.is_ajax():
         id = req.GET.get("id")
         position_x = req.GET.get("position_x")
         position_y = req.GET.get("position_y")
         height = req.GET.get("height")
+        width = req.GET.get("width")
         title = req.GET.get("title")
         num_id = int(id)
         num_position_x = int(position_x)
         num_position_y = int(position_y)
         num_height = int(height[:-2])
-        # print(num_id)
-        # print(type(num_id))
-        # print(num_position_x)
-        # print(num_position_y)
-        # print(height)
-        # print(num_height)
-        # print(type(num_height))
-        # print(width)
+        num_width = int(width[:-2])
         objects = PalaceObject.objects.filter(id=num_id)
         object = objects[0]
         object.position_x = num_position_x
         object.position_y = num_position_y
         object.height = num_height
-        object.width = num_height
+        object.width = num_width
         object.description = title
         object.save()
 
