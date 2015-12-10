@@ -299,11 +299,11 @@ def createRoom(req):
 def upload_image(req):
     if req.is_ajax():
         room_name = req.POST.get("room_name")
-        print(room_name)
+        # print(room_name)
         form = UploadImageForm(data=req.POST, files=req.FILES)
-        print(req.FILES)
+        # print(req.FILES)
         if form.is_valid():
-            print('valid form')
+            # print('valid form')
             user_room = PalaceRoom.objects.filter(roomName=room_name)
             # print(user_room.roomName)
             if user_room:
@@ -328,7 +328,7 @@ def upload_image(req):
                 # print(object_name_list)
                 object.objectName = object_name_list[2]
                 object.save()
-                print(object.objectName)
+                # print(object.objectName)
                 src = object.objectName
                 name_dict = {'id': id, 'url': src}
                 return JsonResponse(name_dict, safe=False)
@@ -344,7 +344,6 @@ def upload_image(req):
 @csrf_exempt
 def update(req):
     if req.is_ajax():
-        print("something")
         id = req.GET.get("id")
         position_x = req.GET.get("position_x")
         position_y = req.GET.get("position_y")
@@ -354,13 +353,13 @@ def update(req):
         num_position_x = int(position_x)
         num_position_y = int(position_y)
         num_height = int(height[:-2])
-        print(num_id)
-        print(type(num_id))
-        print(num_position_x)
-        print(num_position_y)
-        print(height)
-        print(num_height)
-        print(type(num_height))
+        # print(num_id)
+        # print(type(num_id))
+        # print(num_position_x)
+        # print(num_position_y)
+        # print(height)
+        # print(num_height)
+        # print(type(num_height))
         # print(width)
         objects = PalaceObject.objects.filter(id=num_id)
         object = objects[0]
@@ -370,10 +369,6 @@ def update(req):
         object.width = num_height
         object.description = title
         object.save()
-
-
-        print(object)
-        print(object.objectName)
 
     else:
         return HttpResponseRedirect('/')

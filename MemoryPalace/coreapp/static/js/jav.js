@@ -32,20 +32,20 @@ interact('.draggable')
 //         width = target.css('width');
 
 //         alert(id);
-        console.log(id);
-        console.log(position_x);
-        console.log(position_y);
-        console.log(height);
-        console.log(width);
-        console.log(title);
-        console.log(typeof(id));
-        console.log(typeof(position_x));
-        console.log(typeof(position_y));
-        console.log(typeof(height));
-        console.log(typeof(width));
+//        console.log(id);
+//        console.log(position_x);
+//        console.log(position_y);
+//        console.log(height);
+//        console.log(width);
+//        console.log(title);
+//        console.log(typeof(id));
+//        console.log(typeof(position_x));
+//        console.log(typeof(position_y));
+//        console.log(typeof(height));
+//        console.log(typeof(width));
 
       $.get("/update/",{'id': id, 'title': title, 'position_x': position_x, 'position_y':position_y, 'height':height }, function(ret){
-            alert("success...");
+//            alert("success...");
         })
 
 
@@ -96,14 +96,7 @@ interact('.draggable')
 	    target.textContent = Math.round(event.rect.width) + '×' + Math.round(event.rect.height);
 	  });
 	//*** END RESIZING CODE ***
-  function sentData(event){
-    var target = event.target,
-         id = target.getAttribute('id');
 
-    alert(id);
-
-
-  }
 //*** CONTINUE DRAGGING CODE ***
   function dragMoveListener (event) {
     var target = event.target,
@@ -149,10 +142,9 @@ $(function(){
 
     var data = new FormData($('form').get(2));
     var room_name = $("#room_name").text();
-    alert(room_name);
-    alert(typeof(room_name));
+//    alert(room_name);
+//    alert(typeof(room_name));
     data.append('room_name',room_name);
-    alert("aaa");
     $.ajax({
         url: $(upload_image).attr('action'),
         method: $(upload_image).attr('method'),
@@ -162,9 +154,9 @@ $(function(){
         processData: false,
         contentType: false,
         success: function(msg) {
-            alert(msg['id']);
+//            alert(msg['id']);
             object_id = msg['id']
-            alert(msg['url'])
+//            alert(msg['url'])
             url = msg['url']
             $("<img class='scrollBoxImg' id='"+object_id+"' src='"+url+"'/>").appendTo("#vertscrollbox");
             $("<img class='draggable' id='"+object_id+"' src='"+url+"'/>").appendTo("#roombg");
