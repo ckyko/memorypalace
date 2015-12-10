@@ -142,8 +142,8 @@ $(function(){
 
     var data = new FormData($('form').get(2));
     var room_name = $("#room_name").text();
-//    alert(room_name);
-//    alert(typeof(room_name));
+    alert(room_name);
+    alert(typeof(room_name));
     data.append('room_name',room_name);
     $.ajax({
         url: $(upload_image).attr('action'),
@@ -154,12 +154,12 @@ $(function(){
         processData: false,
         contentType: false,
         success: function(msg) {
-//            alert(msg['id']);
+            alert(msg['id']);
             object_id = msg['id']
-//            alert(msg['url'])
+            alert(msg['url'])
             url = msg['url']
-            $("<img class='scrollBoxImg' id='"+object_id+"' src='"+url+"'/>").appendTo("#vertscrollbox");
-            $("<img class='draggable' id='"+object_id+"' src='"+url+"'/>").appendTo("#roombg");
+            $("<img class='scrollBoxImg' id='"+object_id+"' src='/"+url+"'/>").appendTo("#vertscrollbox");
+            $("<img class='draggable' id='"+object_id+"' src='/"+url+"'/>").appendTo("#roombg");
         }
     });
 
@@ -214,9 +214,25 @@ $(document).ready(function(){
     });
 });
 
-//Add New Palaces
-$(document).ready(function(){
-    $('#palace_card').click(function(){
-      $().appendTo("#Private");
-    });
+//This function is used to trigger Modals for particular id or query string
+$(function(){
+   if (window.location.hash){
+      var hash = window.location.hash.substring(1);
+      if (hash == "modal_register"){//if id after current url is modal_register trigger modal
+         $('#modal_register_login').openModal();
+      }
+      if (hash == "modal_login"){//if id after current url is modal_register trigger modal
+         $('#modal_register_login').openModal();
+      }
+      if (hash == "modal_createPalace"){
+         $('ul.tabs').tabs('select_tab', 'Private');
+         $('#modal_createPalace').openModal();
+      }
+   }
+   var url = document.URL;//Gets the current URL
+   shortUrl=url.substring(0,url.lastIndexOf("="));//gets substring of current url until "="
+   var root = location.protocol + '//' + location.host;//homepage
+   if (shortUrl == root + "/MemoryPalace/createRoom?palaceName"){
+     $('#modal_createRoom').openModal();
+   }
 });
