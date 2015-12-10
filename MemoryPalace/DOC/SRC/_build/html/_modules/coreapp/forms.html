@@ -39,7 +39,7 @@
             
   <h1>Source code for coreapp.forms</h1><div class="highlight"><pre>
 <span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
-<span class="kn">from</span> <span class="nn">django.forms</span> <span class="kn">import</span>  <span class="n">ModelForm</span>
+<span class="kn">from</span> <span class="nn">django.forms</span> <span class="kn">import</span> <span class="n">ModelForm</span>
 <span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">PalaceRoom</span><span class="p">,</span> <span class="n">UserPalace</span>
 <span class="c"># from django.contrib.auth.models import User</span>
 
@@ -51,7 +51,7 @@
 <div class="viewcode-block" id="CreatePalaceForm"><a class="viewcode-back" href="../../coreapp.html#coreapp.forms.CreatePalaceForm">[docs]</a><span class="k">class</span> <span class="nc">CreatePalaceForm</span><span class="p">(</span><span class="n">ModelForm</span><span class="p">):</span>
 <div class="viewcode-block" id="CreatePalaceForm.Meta"><a class="viewcode-back" href="../../coreapp.html#coreapp.forms.CreatePalaceForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">UserPalace</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;palaceName&#39;</span><span class="p">,</span> <span class="s">&#39;numOfRooms&#39;</span><span class="p">,</span> <span class="s">&#39;public&#39;</span><span class="p">]</span></div></div>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;palaceName&#39;</span><span class="p">,</span> <span class="s">&#39;public&#39;</span><span class="p">]</span></div></div>
 
 <span class="c"># class CreateRoomForm(forms.Form):</span>
 <span class="c">#     roomName = forms.CharField()</span>
@@ -59,7 +59,12 @@
 <div class="viewcode-block" id="CreateRoomForm"><a class="viewcode-back" href="../../coreapp.html#coreapp.forms.CreateRoomForm">[docs]</a><span class="k">class</span> <span class="nc">CreateRoomForm</span><span class="p">(</span><span class="n">ModelForm</span><span class="p">):</span>
 <div class="viewcode-block" id="CreateRoomForm.Meta"><a class="viewcode-back" href="../../coreapp.html#coreapp.forms.CreateRoomForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">PalaceRoom</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&#39;roomName&#39;</span><span class="p">,</span> <span class="s">&#39;backgroundImage&#39;</span><span class="p">]</span></div></div>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;roomName&#39;</span><span class="p">,</span> <span class="s">&#39;backgroundImage&#39;</span><span class="p">]</span></div></div>
+
+<div class="viewcode-block" id="UploadImageForm"><a class="viewcode-back" href="../../coreapp.html#coreapp.forms.UploadImageForm">[docs]</a><span class="k">class</span> <span class="nc">UploadImageForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">objectImage</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ImageField</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">FileInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+                  <span class="s">&#39;class&#39;</span><span class="p">:</span><span class="s">&#39;upload_image_object&#39;</span><span class="p">,</span> <span class="s">&#39;accept&#39;</span><span class="p">:</span><span class="s">&#39;image/*&#39;</span><span class="p">,</span>
+                  <span class="s">&#39;style&#39;</span><span class="p">:</span> <span class="s">&#39;  visibility: hidden; width: 1px; height: 1px;&#39;</span><span class="p">}))</span></div>
 </pre></div>
 
           </div>
