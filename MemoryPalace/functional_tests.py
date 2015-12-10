@@ -64,7 +64,7 @@ class NewVisitorTest(unittest.TestCase):
         '''
         This function lets user create a palace
         '''
-        element = self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[2]/a[@href='/palace_library']")
+        element = self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[2]/a[@href='/palace_library/']")
         element.click()
         element = self.browser.find_element_by_xpath("//div/ul[@class='tabs']/li[2]/a[@href='#Private']")
         element.click()
@@ -79,7 +79,7 @@ class NewVisitorTest(unittest.TestCase):
         This function lets user delete a palace
         '''
         self.browser.get('http://localhost:8000')
-        element = self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[2]/a[@href='/palace_library']")
+        element = self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[2]/a[@href='/palace_library/']")
         element.click()
         element = self.browser.find_element_by_xpath("//div/ul[@class='tabs']/li[2]/a[@href='#Private']")
         element.click()
@@ -91,7 +91,7 @@ class NewVisitorTest(unittest.TestCase):
         '''
         This function lets user create a room
         '''
-        element = self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[2]/a[@href='/palace_library']")
+        element = self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[2]/a[@href='/palace_library/']")
         element.click()
         element = self.browser.find_element_by_xpath("//div/ul[@class='tabs']/li[2]/a[@href='#Private']")
         element.click()
@@ -112,7 +112,7 @@ class NewVisitorTest(unittest.TestCase):
         '''
         This function lets user delete a room
         '''
-        element = self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[2]/a[@href='/palace_library']")
+        element = self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[2]/a[@href='/palace_library/']")
         element.click()
         element = self.browser.find_element_by_xpath("//div/ul[@class='tabs']/li[2]/a[@href='#Private']")
         element.click()
@@ -142,7 +142,7 @@ class NewVisitorTest(unittest.TestCase):
         This function tests the palace library of the website
         '''
         self.browser.get('http://localhost:8000')
-        element = self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[2]/a[@href='/palace_library']")
+        element = self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[2]/a[@href='/palace_library/']")
         element.click()
         element=self.browser.find_element_by_class_name("disabled")
         action_chains = ActionChains(self.browser)
