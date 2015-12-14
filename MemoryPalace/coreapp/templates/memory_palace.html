@@ -9,7 +9,7 @@
         {% csrf_token %}
         <!--<input type="file" id="file" accept="image/*" style="visibility: hidden; width: 1px; height: 1px" multiple/>-->
         {{objectForm.objectImage}}
-        <a class="btn-floating btn-large waves-effect waves-light teal accent-4" onclick="document.getElementById('id_objectImage').click(); return false">
+        <a id="add_objectImag" class="btn-floating btn-large waves-effect waves-light teal accent-4" onclick="document.getElementById('id_objectImage').click(); return false">
           <i class="material-icons">library_add</i>
         </a>&nbsp&nbsp
         <a id="delete-draggable" class="btn-floating btn-large waves-effect waves-light teal accent-4 disabled">
