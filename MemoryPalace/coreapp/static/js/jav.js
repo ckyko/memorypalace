@@ -190,17 +190,20 @@ $(document).ready(function(){
 */
 $(document).ready(function(){
     //Click on image from the vertical box to add it to the room.
+    if (window.location.href.indexOf("&roomName") > -1){
       $('.scrollBoxImg').click(function(){
-        if (window.location.href.indexOf("&roomName") > -1){
           //$("<img class='draggable' src='"+$(this).attr('src')+"'/>").appendTo("#roombg"); //disabled until stored in database 12/14/2015 by satya
           //        var room_name = $("#room_name").text();
           //        var target = $(e.target);
           //        alert(target);
-        }
-        else {
-          alert("Please add/select a room first!");
-        }
-      });
+        });
+      }
+      else {
+        $("#add_objectImag").addClass('disabled');
+        $('.scrollBoxImg').click(function(){
+        alert("Please add/select a room first!");
+        });
+      }
 
     //Add a caption to the image.
     $(document).on('dblclick', '.draggable', function() {
