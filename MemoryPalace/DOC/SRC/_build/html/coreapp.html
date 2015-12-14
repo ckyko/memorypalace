@@ -70,7 +70,7 @@
 <em class="property">class </em><code class="descname">Meta</code><a class="reference internal" href="_modules/coreapp/forms.html#CreatePalaceForm.Meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.forms.CreatePalaceForm.Meta" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="attribute">
 <dt id="coreapp.forms.CreatePalaceForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = ['palaceName', 'numOfRooms', 'public']</em><a class="headerlink" href="#coreapp.forms.CreatePalaceForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fields</code><em class="property"> = ['palaceName', 'public']</em><a class="headerlink" href="#coreapp.forms.CreatePalaceForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -83,7 +83,7 @@
 
 <dl class="attribute">
 <dt id="coreapp.forms.CreatePalaceForm.base_fields">
-<code class="descclassname">CreatePalaceForm.</code><code class="descname">base_fields</code><em class="property"> = OrderedDict([('palaceName', &lt;django.forms.fields.CharField object at 0x2aae31504990&gt;), ('numOfRooms', &lt;django.forms.fields.IntegerField object at 0x2aae31504ad0&gt;), ('public', &lt;django.forms.fields.BooleanField object at 0x2aae315049d0&gt;)])</em><a class="headerlink" href="#coreapp.forms.CreatePalaceForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">CreatePalaceForm.</code><code class="descname">base_fields</code><em class="property"> = OrderedDict([('palaceName', &lt;django.forms.fields.CharField object at 0x2b4f1211d7d0&gt;), ('public', &lt;django.forms.fields.BooleanField object at 0x2b4f1211d8d0&gt;)])</em><a class="headerlink" href="#coreapp.forms.CreatePalaceForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -120,7 +120,7 @@
 
 <dl class="attribute">
 <dt id="coreapp.forms.CreateRoomForm.base_fields">
-<code class="descclassname">CreateRoomForm.</code><code class="descname">base_fields</code><em class="property"> = OrderedDict([('roomName', &lt;django.forms.fields.CharField object at 0x2aae31504850&gt;), ('backgroundImage', &lt;django.forms.fields.ImageField object at 0x2aae31504550&gt;)])</em><a class="headerlink" href="#coreapp.forms.CreateRoomForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">CreateRoomForm.</code><code class="descname">base_fields</code><em class="property"> = OrderedDict([('roomName', &lt;django.forms.fields.CharField object at 0x2b4f1211da10&gt;), ('backgroundImage', &lt;django.forms.fields.ImageField object at 0x2b4f1211db90&gt;)])</em><a class="headerlink" href="#coreapp.forms.CreateRoomForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -135,13 +135,69 @@
 
 </dd></dl>
 
+<dl class="class">
+<dt id="coreapp.forms.UploadImageForm">
+<em class="property">class </em><code class="descclassname">coreapp.forms.</code><code class="descname">UploadImageForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id=u'id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/forms.html#UploadImageForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.forms.UploadImageForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.forms.forms.Form</span></code></p>
+<dl class="attribute">
+<dt id="coreapp.forms.UploadImageForm.base_fields">
+<code class="descname">base_fields</code><em class="property"> = OrderedDict([('objectImage', &lt;django.forms.fields.ImageField object at 0x2b4f1211dc10&gt;)])</em><a class="headerlink" href="#coreapp.forms.UploadImageForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="coreapp.forms.UploadImageForm.declared_fields">
+<code class="descname">declared_fields</code><em class="property"> = OrderedDict([('objectImage', &lt;django.forms.fields.ImageField object at 0x2b4f1211dc10&gt;)])</em><a class="headerlink" href="#coreapp.forms.UploadImageForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="coreapp.forms.UploadImageForm.media">
+<code class="descname">media</code><a class="headerlink" href="#coreapp.forms.UploadImageForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="coreapp-models-module">
 <h2>coreapp.models module<a class="headerlink" href="#coreapp-models-module" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-coreapp.models"></span><dl class="class">
-<dt id="coreapp.models.PalaceObject">
-<em class="property">class </em><code class="descclassname">coreapp.models.</code><code class="descname">PalaceObject</code><span class="sig-paren">(</span><em>id</em>, <em>palaceRoom</em>, <em>description</em>, <em>objectImage</em>, <em>width</em>, <em>height</em>, <em>position_x</em>, <em>position_y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/models.html#PalaceObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.models.PalaceObject" title="Permalink to this definition">¶</a></dt>
+<dt id="coreapp.models.Object">
+<em class="property">class </em><code class="descclassname">coreapp.models.</code><code class="descname">Object</code><span class="sig-paren">(</span><em>id</em>, <em>palaceRoom</em>, <em>url</em>, <em>description</em>, <em>width</em>, <em>height</em>, <em>position_x</em>, <em>position_y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/models.html#Object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.models.Object" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="exception">
+<dt id="coreapp.models.Object.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#coreapp.models.Object.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="coreapp.models.Object.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descclassname">Object.</code><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#coreapp.models.Object.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="coreapp.models.Object.objects">
+<code class="descclassname">Object.</code><code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#coreapp.models.Object.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="coreapp.models.Object.palaceRoom">
+<code class="descclassname">Object.</code><code class="descname">palaceRoom</code><a class="headerlink" href="#coreapp.models.Object.palaceRoom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="coreapp.models.PalaceObject">
+<em class="property">class </em><code class="descclassname">coreapp.models.</code><code class="descname">PalaceObject</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/models.html#PalaceObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.models.PalaceObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>user: The foreign key to connect it to a user
+userPalace: The foriegn key to the Palace the room belongs in
+palaceRoom: The foriegn key that gives you the room the object belongs in.
+objectName: The name of the object unique to the room it is inside
+objectImage: The image used for the object
+position_x: The x coordinate of the object in the room
+position_y: The y coordinate of the object in the room</p>
 <dl class="exception">
 <dt id="coreapp.models.PalaceObject.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#coreapp.models.PalaceObject.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -168,8 +224,13 @@
 
 <dl class="class">
 <dt id="coreapp.models.PalaceRoom">
-<em class="property">class </em><code class="descclassname">coreapp.models.</code><code class="descname">PalaceRoom</code><span class="sig-paren">(</span><em>id</em>, <em>userPalace</em>, <em>roomName</em>, <em>backgroundImage</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/models.html#PalaceRoom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.models.PalaceRoom" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">coreapp.models.</code><code class="descname">PalaceRoom</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/models.html#PalaceRoom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.models.PalaceRoom" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>user: The foreign key to connect it to a user
+userPalace: The foriegn key to the Palace the room belongs in
+roomName: The name of the room coupled with the Palace so that they are
+named uniqely for their palace
+backgroundImage: The background Image of the room</p>
 <dl class="exception">
 <dt id="coreapp.models.PalaceRoom.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#coreapp.models.PalaceRoom.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -183,6 +244,11 @@
 </dd></dl>
 
 <dl class="attribute">
+<dt id="coreapp.models.PalaceRoom.object_set">
+<code class="descclassname">PalaceRoom.</code><code class="descname">object_set</code><a class="headerlink" href="#coreapp.models.PalaceRoom.object_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="coreapp.models.PalaceRoom.objects">
 <code class="descclassname">PalaceRoom.</code><code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#coreapp.models.PalaceRoom.objects" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -190,6 +256,11 @@
 <dl class="attribute">
 <dt id="coreapp.models.PalaceRoom.palaceobject_set">
 <code class="descclassname">PalaceRoom.</code><code class="descname">palaceobject_set</code><a class="headerlink" href="#coreapp.models.PalaceRoom.palaceobject_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="coreapp.models.PalaceRoom.user">
+<code class="descclassname">PalaceRoom.</code><code class="descname">user</code><a class="headerlink" href="#coreapp.models.PalaceRoom.user" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -201,8 +272,13 @@
 
 <dl class="class">
 <dt id="coreapp.models.UserPalace">
-<em class="property">class </em><code class="descclassname">coreapp.models.</code><code class="descname">UserPalace</code><span class="sig-paren">(</span><em>id</em>, <em>user</em>, <em>palaceName</em>, <em>numOfRooms</em>, <em>public</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/models.html#UserPalace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.models.UserPalace" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">coreapp.models.</code><code class="descname">UserPalace</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/models.html#UserPalace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.models.UserPalace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>user: The foreign key to connect it to a user
+palaceName: The name of the Memory Palace and is Unique for each user
+so a user can&#8217;t have 2 palaces with the same name
+numOfRooms: The number of rooms in the palace
+public: Whether the Palace is public or not false by default</p>
 <dl class="exception">
 <dt id="coreapp.models.UserPalace.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#coreapp.models.UserPalace.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -233,81 +309,101 @@
 </dd></dl>
 
 </div>
-<div class="section" id="module-coreapp.tests">
-<span id="coreapp-tests-module"></span><h2>coreapp.tests module<a class="headerlink" href="#module-coreapp.tests" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="coreapp.tests.MemoryPalaceTest">
-<em class="property">class </em><code class="descclassname">coreapp.tests.</code><code class="descname">MemoryPalaceTest</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/tests.html#MemoryPalaceTest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.tests.MemoryPalaceTest" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.test.testcases.TestCase</span></code></p>
-<dl class="method">
-<dt id="coreapp.tests.MemoryPalaceTest.test_URL_Dict_returns_correct_html">
-<code class="descname">test_URL_Dict_returns_correct_html</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#coreapp.tests.MemoryPalaceTest.test_URL_Dict_returns_correct_html" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="coreapp.tests.MemoryPalaceTest.test_database">
-<code class="descname">test_database</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#coreapp.tests.MemoryPalaceTest.test_database" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="coreapp.tests.MemoryPalaceTest.test_root_url_resolves_to_URL_Dict_view">
-<code class="descname">test_root_url_resolves_to_URL_Dict_view</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#coreapp.tests.MemoryPalaceTest.test_root_url_resolves_to_URL_Dict_view" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="coreapp-tests-module">
+<h2>coreapp.tests module<a class="headerlink" href="#coreapp-tests-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-coreapp.views">
 <span id="coreapp-views-module"></span><h2>coreapp.views module<a class="headerlink" href="#module-coreapp.views" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="coreapp.views.JSONResponse">
+<em class="property">class </em><code class="descclassname">coreapp.views.</code><code class="descname">JSONResponse</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#JSONResponse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.JSONResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.http.response.HttpResponse</span></code></p>
+</dd></dl>
+
 <dl class="function">
 <dt id="coreapp.views.MemoryPalace">
 <code class="descclassname">coreapp.views.</code><code class="descname">MemoryPalace</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#MemoryPalace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.MemoryPalace" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function response Memory palace room page.
 the url for this function is /MemoryPalace
-function check user login or not, if not it will just dispaly a model of room.
-if user is login and specify which room, it will open user&#8217;s room. it means pass
-all user&#8217;s room information to page</p>
+function check user login or not, if not it will just dispaly a model
+of room. if user is login and specify which room, it will open user&#8217;s
+room. it means pass all user&#8217;s room information to page</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="coreapp.views.about">
 <code class="descclassname">coreapp.views.</code><code class="descname">about</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#about"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.about" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>this function return about page</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="coreapp.views.contact">
 <code class="descclassname">coreapp.views.</code><code class="descname">contact</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#contact"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.contact" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>this function return contact page</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="coreapp.views.createPalace">
 <code class="descclassname">coreapp.views.</code><code class="descname">createPalace</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#createPalace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.createPalace" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>This function response create palace form page.
+the url for this is /createPalace/
+function check user login or not, if not it will redirect to room.
+if user is login already, it will return create palace form.
+:param req:
+:return:</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="coreapp.views.createRoom">
 <code class="descclassname">coreapp.views.</code><code class="descname">createRoom</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#createRoom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.createRoom" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function give create room form page.
+the url for this function is ../createRoom</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="coreapp.views.deletePalace">
+<code class="descclassname">coreapp.views.</code><code class="descname">deletePalace</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#deletePalace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.deletePalace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="coreapp.views.deleteRoom">
+<code class="descclassname">coreapp.views.</code><code class="descname">deleteRoom</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#deleteRoom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.deleteRoom" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="coreapp.views.index">
 <code class="descclassname">coreapp.views.</code><code class="descname">index</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.index" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>This is index page function.
+This function will check user login already or not first.
+if yes, it will change &#8220;login|register&#8221; to &#8220;log out&#8221;, it will change link
+for that also.
+:param req:
+:return: index page</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="coreapp.views.log_in">
 <code class="descclassname">coreapp.views.</code><code class="descname">log_in</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#log_in"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.log_in" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>This is login function.
+this function will return the login form if user didn&#8217;t click submit.
+if user fill in all information correct and click submit, it will log in
+user and redirect to index page.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="coreapp.views.log_out">
 <code class="descclassname">coreapp.views.</code><code class="descname">log_out</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#log_out"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.log_out" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>This is log out function.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="coreapp.views.palace_library">
 <code class="descclassname">coreapp.views.</code><code class="descname">palace_library</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#palace_library"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.palace_library" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>This function give palace library function.
+This function will first check user login or not, if not it will library
+page without user information. if user is login, it will give library page
+with user information.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="coreapp.views.register">
@@ -315,9 +411,31 @@ all user&#8217;s room information to page</p>
 <dd></dd></dl>
 
 <dl class="function">
+<dt id="coreapp.views.snippet_detail">
+<code class="descclassname">coreapp.views.</code><code class="descname">snippet_detail</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#snippet_detail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.snippet_detail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="coreapp.views.snippet_list">
+<code class="descclassname">coreapp.views.</code><code class="descname">snippet_list</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#snippet_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.snippet_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
 <dt id="coreapp.views.testing">
 <code class="descclassname">coreapp.views.</code><code class="descname">testing</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#testing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.testing" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="function">
+<dt id="coreapp.views.update">
+<code class="descclassname">coreapp.views.</code><code class="descname">update</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is for updata room object information.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="coreapp.views.upload_image">
+<code class="descclassname">coreapp.views.</code><code class="descname">upload_image</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#upload_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.upload_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will called when upload image.</p>
+</dd></dl>
 
 </div>
 <div class="section" id="module-coreapp">
@@ -339,7 +457,7 @@ all user&#8217;s room information to page</p>
 <li><a class="reference internal" href="#module-coreapp.admin">coreapp.admin module</a></li>
 <li><a class="reference internal" href="#module-coreapp.forms">coreapp.forms module</a></li>
 <li><a class="reference internal" href="#coreapp-models-module">coreapp.models module</a></li>
-<li><a class="reference internal" href="#module-coreapp.tests">coreapp.tests module</a></li>
+<li><a class="reference internal" href="#coreapp-tests-module">coreapp.tests module</a></li>
 <li><a class="reference internal" href="#module-coreapp.views">coreapp.views module</a></li>
 <li><a class="reference internal" href="#module-coreapp">Module contents</a></li>
 </ul>
