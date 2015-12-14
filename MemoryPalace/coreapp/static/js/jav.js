@@ -192,13 +192,13 @@ $(document).ready(function(){
     //Click on image from the vertical box to add it to the room.
       $('.scrollBoxImg').click(function(){
         if (window.location.href.indexOf("&roomName") > -1){
-          $("<img class='draggable' src='"+$(this).attr('src')+"'/>").appendTo("#roombg");
+          //$("<img class='draggable' src='"+$(this).attr('src')+"'/>").appendTo("#roombg"); //disabled until stored in database 12/14/2015 by satya
           //        var room_name = $("#room_name").text();
           //        var target = $(e.target);
           //        alert(target);
         }
         else {
-          alert("Please add a room first!");
+          alert("Please add/select a room first!");
         }
       });
 
@@ -218,12 +218,12 @@ $(document).ready(function(){
 
     $('#roombg').on('click', function(e) {
         var $delTarget = $(e.target);
-
         if($(e.target).hasClass('draggable')) {
           $('.draggable').removeClass('permaBorder');
           $(($delTarget).addClass('permaBorder'));
           if($('#delete-draggable').hasClass('disabled')) {
             $('#delete-draggable').removeClass('disabled');
+            $("#delete-draggable").prop("href", "/deleteImageObject"+window.location.search+"&objectID="+e.target.id)
           }
         }
         else if(!$(e.target).hasClass('draggable')){
