@@ -51,6 +51,7 @@ urlpatterns = [
     url(r'.*createPalace/', 'coreapp.views.createPalace', name='createPalace'),
     url(r'.*deletePalace/', 'coreapp.views.deletePalace', name='deletePalace'),
     url(r'.*deleteRoom/', 'coreapp.views.deleteRoom', name='deleteRoom'),
+    url(r'.*deleteImageObject/', 'coreapp.views.deleteImageObject', name='deleteImageObject'),
     url(r'^palace_library/', 'coreapp.views.palace_library', name='palace_library'),
     url(r'.*createRoom/', 'coreapp.views.createRoom', name='createRoom'),
     url(r'^MemoryPalace/', 'coreapp.views.MemoryPalace', name='MemoryPalace'),

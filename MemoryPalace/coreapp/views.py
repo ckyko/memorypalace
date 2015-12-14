@@ -272,6 +272,15 @@ def deletePalace(req):
         u.delete()
     return redirect('/palace_library/#Private')
 
+def deleteImageObject(req):
+    try:
+        u = PalaceObject.objects.filter(id=req.GET.get('objectID', ''))
+    except User.DoesNotExist:
+        pass
+    else:
+        u.delete()
+    return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', '')+ '&roomName=' +req.GET.get('roomName', ''))
+
 def deleteRoom(req):
     try:
         palaceName=req.GET.get('palaceName', '')
