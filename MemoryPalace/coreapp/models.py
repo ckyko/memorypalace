@@ -44,8 +44,7 @@ class PalaceRoom(models.Model):
     user = models.ForeignKey(User, null=True)
     userPalace = models.ForeignKey('UserPalace', null=True)
     roomName = models.CharField(max_length=200, unique=True)
-    backgroundImage = models.ImageField(upload_to='static/images',
-                                        default='static/images/room.jpg')
+    backgroundImage = models.ImageField(upload_to='static/images/rooms')#,default='static/images/room.jpg'
 
     def __unicode__(self):
         return self.roomName
@@ -72,8 +71,7 @@ class PalaceObject(models.Model):
     description = models.CharField(max_length=200, default=" ")
     # objectImage = models.ImageField(upload_to='./coreapp/static/images')
     objectName = models.CharField(max_length=200, default="", unique=True)
-    objectImage = models.ImageField(upload_to='./static/images/memory_objects',
-                                    default='./static/images/char2.png')
+    objectImage = models.ImageField(upload_to='./static/images/memory_objects')#,default='./static/images/char2.png')
     width = models.IntegerField(default=50)
     height = models.IntegerField(default=50)
     position_x = models.IntegerField(default=0)
@@ -102,3 +100,18 @@ class Object(models.Model):
 
     class Meta:
         unique_together = (("palaceRoom", "url"),)
+
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+
+@receiver(post_delete, sender=PalaceRoom)
+def PalaceRoom_post_delete_handler(sender, **kwargs):
+    PalaceRoom = kwargs['instance']
+    storage, path = PalaceRoom.backgroundImage.storage, PalaceRoom.backgroundImage.path
+    storage.delete(path)
+
+@receiver(post_delete, sender=PalaceObject)
+def PalaceObject_post_delete_handler(sender, **kwargs):
+    PalaceObject = kwargs['instance']
+    storage, path = PalaceObject.objectImage.storage, PalaceObject.objectImage.path
+    storage.delete(path)
