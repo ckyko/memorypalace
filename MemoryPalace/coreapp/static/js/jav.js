@@ -190,15 +190,17 @@ $(document).ready(function(){
 */
 $(document).ready(function(){
     //Click on image from the vertical box to add it to the room.
-    $('.scrollBoxImg').click(function(){
-        $("<img class='draggable' src='"+$(this).attr('src')+"'/>").appendTo("#roombg");
-//        var room_name = $("#room_name").text();
-//        var target = $(e.target);
-//        alert(target);
-
-
-
-    });
+      $('.scrollBoxImg').click(function(){
+        if (window.location.href.indexOf("&roomName") > -1){
+          $("<img class='draggable' src='"+$(this).attr('src')+"'/>").appendTo("#roombg");
+          //        var room_name = $("#room_name").text();
+          //        var target = $(e.target);
+          //        alert(target);
+        }
+        else {
+          alert("Please add a room first!");
+        }
+      });
 
     //Add a caption to the image.
     $(document).on('dblclick', '.draggable', function() {

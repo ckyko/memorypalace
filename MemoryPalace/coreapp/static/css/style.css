@@ -65,7 +65,7 @@ footer.page-footer {
   width: 1024px; height: 720px;
   border: 2px solid black;
   background-repeat: no-repeat;
-  background-image: url('../images/rooms/room2.jpg');
+  background-color: DarkGray;
 }
 .outerscrollbox {
   display: inline-block; *display: inline;
