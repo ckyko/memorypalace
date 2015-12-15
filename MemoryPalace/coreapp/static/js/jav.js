@@ -207,8 +207,11 @@ $(document).ready(function(){
 
     //Add a caption to the image.
     $(document).on('dblclick', '.draggable', function() {
-        var caption = prompt("Enter a caption for this image.");
+        $('#modal_caption').openModal();
+        var caption = $("#modal_caption_id").val();
+        //var caption = prompt("Enter a caption for this image.");
 	      $(this).attr('title', caption);
+        $("#modal_caption_id").val('');
 
 	/*Materialize tooltip. Having some trouble with this still.
 
