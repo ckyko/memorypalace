@@ -147,11 +147,10 @@ img.draggable:hover {
   position: relative;
 }
 
-#modal1{
-  overflow-x: hidden;
-
+#modal_caption{
+  height:300px;
+  width:300px;
 }
-
 #modal_register_login{
   height:520px;
   width:350px;
