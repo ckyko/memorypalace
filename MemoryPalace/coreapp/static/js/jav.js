@@ -264,3 +264,20 @@ $(function(){
      $('#modal_createRoom').openModal();
    }
 });
+
+$(document).ready(function(){
+    var jsonObject = {"user":1,"userPalace":2,"palaceRoom":4,"description":"testStuff",
+    "objectImage":"/mediaFiles/static/images/memory_objects/ticket2front_GiKRioO.png",
+    "width":100,"height":100,"position_x":100,"position_y":100};
+    var jsonData = JSON.parse( jsonObject );
+     $.ajax({
+        url: "http://127.0.0.1:8000/snippets/",
+        type: "POST",
+        data: jsonData,
+        dataType: "json",
+        success: function(data) {
+            alert('success');
+        }
+    });
+
+})

@@ -1,3 +1,9 @@
+"""
+tests,py
+
+Contains the unit tests for the project
+"""
+
 from django.core.urlresolvers import resolve
 from django.core.urlresolvers import reverse
 from django.test import TestCase
@@ -27,59 +33,91 @@ from mock import patch
 #             self.assertIn(b'<title>MemoryPalace</title>', response.content)
 #             self.assertTrue(response.content.strip().endswith(b'</html>'))
 
-    # def test_database(self):
-    #     pObjNum= len(PalaceObject.objects.all())
-    #     obj = PalaceObject("Char","This is a test feature","char2.png")
-    #     obj.save()
-    #     self.assertEqual(len(PalaceObject.objects.all()),pObjNum+1)
-
 
 class ViewsTestCase(TestCase):
+    """
+    Class: ViewsTestCasepyli
+
+    Tests the functions inside a room
+    """
     def test_index_page(self):
+        """
+        Tests that the index page is running
+        """
         response = self.client.get(reverse('index'))
         self.assertEqual(response.status_code, 200)
 
     def test_about_page(self):
+        """
+        Tests that the about page is running
+        """
         response = self.client.get(reverse('about'))
         self.assertEqual(response.status_code, 200)
 
     def test_contact_page(self):
+        """
+        Tests that the about contact is running
+        """
         response = self.client.get(reverse('contact'))
         self.assertEqual(response.status_code, 200)
+
 
     def test_memory_palace_page(self):
         response = self.client.get(reverse('MemoryPalace'))
         self.assertEqual(response.status_code, 200)
 
     def test_palace_library_page(self):
+        """
+        Tests that the about palace_library page is running
+        """
         response = self.client.get(reverse('palace_library'))
         self.assertEqual(response.status_code, 200)
 
     def test_register(self):
+        """
+        Tests that the about register page is running
+        """
         response = self.client.get(reverse('register'))
         self.assertEqual(response.status_code, 200)
 
     def test_login(self):
+        """
+        Tests that the about login page is running
+        """
         response = self.client.get(reverse('login'))
         self.assertEqual(response.status_code, 200)
 
     def test_createPalace(self):
+        """
+        Tests the pages and transitions to createPalace page
+        """
         response = self.client.get(reverse('createPalace'))
         self.assertEqual(response.status_code, 302)
 
     def test_createRoom(self):
+        """
+        Tests the pages and transitions to createPage page
+        """
         response = self.client.get(reverse('createRoom'))
         self.assertEqual(response.status_code, 302)
 
     def test_register_with_new_user(self):
+        """
+        Test user Registration
+        """
+
         response = self.client.post(reverse('register'),
                         {'username': 'newUserName', 'password1': 'password',
+     
                          'password2': 'password'})
 
         new_user = User.objects.get(username='newUserName')
         self.assertTrue(new_user is not None, msg="user not create.")
 
     def test_login_with_a_user(self):
+        """
+        Testing login
+        """
         user=User.objects.create_user(username="testing", password="password")
         self.assertTrue(user is not None, msg="user not create.")
         response = self.client.post(reverse('login'), {'username': 'testing',
@@ -89,7 +127,14 @@ class ViewsTestCase(TestCase):
 
 
 class UserPalaceDataBaseTestCase(TestCase):
+    """
+    Tests wheather the dastabase adds the models as its supposed to
+    """
     def setUp(self):
+    	 """
+        Inputs tests data for the test
+        :return:
+        """
         user = User.objects.create_user(username="testing",
                                         password="password")
         user_palace = UserPalace.objects.create(user=user,
@@ -100,6 +145,10 @@ class UserPalaceDataBaseTestCase(TestCase):
                                     description="testing palace object")
 
     def test_palace_room_object_create_in_database_or_not(self):
+        """
+        Testing object creation
+        :return:
+        """
         user = User.objects.get(username="testing")
         self.assertTrue(user is not None, msg="user not create.")
         user_palace = UserPalace.objects.get(user=user)
@@ -111,16 +160,28 @@ class UserPalaceDataBaseTestCase(TestCase):
                         msg="palace_object not create.")
 
     def test_palaceName(self):
+        """
+        Test creating a memory palace
+        :return:
+        """
         user_palace = UserPalace.objects.get(palaceName='testing palace')
         self.assertTrue(user_palace is not None,
                         msg="palace name is create not correct")
 
     def test_roomName(self):
+        """
+        Test if the Room naem i
+        :return:
+        """
         palace_room = PalaceRoom.objects.get(roomName="testing room")
         self.assertTrue(palace_room is not None,
                         msg="room name is create not correct")
 
     def tearDown(self):
+        """
+        deletes new data from test
+        :return:
+        """
         del self
 
 # class RegisterTestCase(TestCase):
