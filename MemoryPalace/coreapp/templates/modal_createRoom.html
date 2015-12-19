@@ -1,0 +1,18 @@
+<div class="modal modal-fixed-footer" id="modal_createRoom">
+  <form method="post" enctype="multipart/form-data" action="createRoom/?palaceName={{user_palace.palaceName}}">
+    <div class="modal-content">
+      {% csrf_token %}
+      <p>
+        {{ CreateRoomForm.roomName.label_tag }}
+        {{ CreateRoomForm.roomName }}
+      </p>
+      <P>
+        {{ CreateRoomForm.backgroundImage.label_tag }}
+        {{ CreateRoomForm.backgroundImage }}
+      </P>
+    </div>
+    <div class="modal-footer">
+      <button class="btn waves-effect waves-light" type="submit" name="action" id="createRoom_submit">Submit</button>
+    </div>
+  </form>
+</div>
