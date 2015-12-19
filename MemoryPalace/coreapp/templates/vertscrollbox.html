@@ -1,0 +1,17 @@
+{% load staticfiles %}
+<div class="outerscrollbox">
+  <div id="vertscrollbox">
+    <img class="scrollBoxImg" src="{% static "images/memory_objects/char1.png"%}" />
+    <img class="scrollBoxImg" src="{% static "images/memory_objects/char2.png"%}" />
+    <img class="scrollBoxImg" src="{% static "images/memory_objects/char3.png"%}" />
+    <img class="scrollBoxImg" src="{% static "images/memory_objects/char4.png"%}" />
+    <img class="scrollBoxImg" src="{% static "images/memory_objects/char5.png"%}" />
+    <img class="scrollBoxImg" src="{% static "images/memory_objects/char6.png"%}" />
+  </div>
+  <div class="center-align">
+    <a class="modal-trigger btn-floating btn-large waves-effect waves-light teal accent-4" href="#modal_image_objects">
+      <i class="material-icons">aspect_ratio</i>
+    </a>
+  </div>
+</div>
+{% include "modal_image_objects.html" %}
