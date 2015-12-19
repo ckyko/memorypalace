@@ -327,6 +327,7 @@ def createRoom(req):
                 return redirect('/MemoryPalace?palaceName=' + palaceName +
                                 '&roomName=' + roomName)
             else:
+                data['CreateRoomForm'] = CreateRoomForm()# reset form avoid duplication
                 return redirect('/MemoryPalace/createRoom?palaceName=' +
                                 palaceName)
         else:
