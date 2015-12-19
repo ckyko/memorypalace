@@ -1,0 +1,34 @@
+{% include 'modal_createRoom.html'%}
+{% load staticfiles %}
+<div class="horscrollbox">
+    <div class="room_store">
+
+        {% if user_palace %}
+          <div class="card-panel col s12 m3 hoverable" id="background_card">
+            <a class="modal-trigger" href="/MemoryPalace/createRoom?palaceName={{user_palace.palaceName}}">
+            <i class="large material-icons"  id="background_add">add</i>
+                </a>
+          </div>
+        {% endif %}
+
+      {% for room in user_room %}
+        <div class="create_room hoverable card">
+        <div class="card-image center room_card">
+          <span>
+            <a class="btn-floating btn red" id="delete_{{user_palace.palaceName}}_{{room.roomName}}" href="/deleteRoom?palaceName={{user_palace.palaceName}}&roomName={{room.roomName}}">
+              <i class="large material-icons">close</i>
+            </a>
+            {{room.roomName}}
+          </span>
+          <a id="{{user_palace.palaceName}}_{{room.roomName}}" href="/MemoryPalace?palaceName={{user_palace.palaceName}}&roomName={{room.roomName}}">
+          <img class="roomImage" src="/{{ room.backgroundImage }}">
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+
+
+
+
+    </div>
+</div>
