@@ -199,9 +199,34 @@ img.draggable:hover {
 
 div.room_card:hover span:first-of-type a {
     display: block;
+    }
+html,body{
+    height: 100%
 }
 
 div.room_card span:first-of-type a {
     position:absolute;
     display:none;
+    }
+#bodywrapper{
+    min-height: 100%;
+    position:relative;
+}
+
+#bodycontent{
+    padding-bottom: 190px;    /* height of footer */
+}
+
+footer{
+    height: 190px;
+    width:100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+#delete-draggable{}
+
+.permaBorder{
+  border: 1px solid black;
 }
