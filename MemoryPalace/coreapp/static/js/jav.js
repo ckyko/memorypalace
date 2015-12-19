@@ -202,9 +202,9 @@ $(document).ready(function(){
 
     //Add a caption to the image.
     $(document).on('dblclick', '.draggable', function() {
-	var caption = prompt("Enter a caption for this image.");
-	$(this).attr('title', caption);
-	
+        var caption = prompt("Enter a caption for this image.");
+	      $(this).attr('title', caption);
+
 	/*Materialize tooltip. Having some trouble with this still.
 
 	$(this).attr('class', 'btn tooltipped');
@@ -213,6 +213,33 @@ $(document).ready(function(){
 	$(this).attr('data-tooltip', caption);
 	*/
     });
+
+    $('#roombg').on('click', function(e) {
+        var $delTarget = $(e.target);
+
+        if($(e.target).hasClass('draggable')) {
+          $('.draggable').removeClass('permaBorder');
+          $(($delTarget).addClass('permaBorder'));
+          if($('#delete-draggable').hasClass('disabled')) {
+            $('#delete-draggable').removeClass('disabled');
+          }
+        }
+        else if(!$(e.target).hasClass('draggable')){
+          $('.draggable').removeClass('permaBorder');
+          if(!$('#delete-draggable').hasClass('disabled')) {
+            $('#delete-draggable').addClass('disabled');
+          }
+        }
+    });
+
+    /* Delete functionality. For Later.
+    $('#delete-draggable').click(function() {
+      alert("ready");
+      if($(myfunc).hasClass('draggable')) {
+        alert("DeleteMe");
+      }
+    });
+    */
 });
 
 //This function is used to trigger Modals for particular id or query string
@@ -237,3 +264,20 @@ $(function(){
      $('#modal_createRoom').openModal();
    }
 });
+
+$(document).ready(function(){
+    var jsonObject = {"user":1,"userPalace":2,"palaceRoom":4,"description":"testStuff",
+    "objectImage":"/mediaFiles/static/images/memory_objects/ticket2front_GiKRioO.png",
+    "width":100,"height":100,"position_x":100,"position_y":100};
+    var jsonData = JSON.parse( jsonObject );
+     $.ajax({
+        url: "http://127.0.0.1:8000/snippets/",
+        type: "POST",
+        data: jsonData,
+        dataType: "json",
+        success: function(data) {
+            alert('success');
+        }
+    });
+
+})
