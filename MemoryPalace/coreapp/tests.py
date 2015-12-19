@@ -1,10 +1,10 @@
-from django.core.urlresolvers import resolve
+# from django.core.urlresolvers import resolve
 from django.core.urlresolvers import reverse
 from django.test import TestCase
-from django.http import HttpRequest
 from .models import UserPalace, PalaceRoom, PalaceObject
 from django.contrib.auth.models import User
-from coreapp import views
+# from BeautifulSoup import BeautifulSoup
+# from coreapp import views
 from mock import patch
 
 # URL_Dict = {'/': views.index, '/MemoryPalace/': views.MemoryPalace, '/about/': views.about, '/contact/': views.contact, '/login/': views.log_in, '/register/': views.register}
@@ -31,6 +31,10 @@ from mock import patch
     #     self.assertEqual(len(PalaceObject.objects.all()),pObjNum+1)
 
 
+# class RegisterTestCase(TestCase):
+#     @patch.object(views, 'request')
+#     def test_register_username_with_testing(self):
+
 class ViewsTestCase(TestCase):
     def test_index_page(self):
         response = self.client.get(reverse('index'))
@@ -52,19 +56,19 @@ class ViewsTestCase(TestCase):
         response = self.client.get(reverse('palace_library'))
         self.assertEqual(response.status_code, 200)
 
-    def test_register(self):
+    def test_register_url(self):
         response = self.client.get(reverse('register'))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
-    def test_login(self):
+    def test_login_url(self):
         response = self.client.get(reverse('login'))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
-    def test_createPalace(self):
+    def test_createPalace_url(self):
         response = self.client.get(reverse('createPalace'))
         self.assertEqual(response.status_code, 302)
 
-    def test_createRoom(self):
+    def test_createRoom_url(self):
         response = self.client.get(reverse('createRoom'))
         self.assertEqual(response.status_code, 302)
 
@@ -80,8 +84,13 @@ class ViewsTestCase(TestCase):
         self.assertTrue(user is not None, msg="user not create.")
         response = self.client.post(reverse('login'), {'username': 'testing',
                                                          'password': 'password'})
+        self.assertEqual(response.status_code, 302)
+        index_response = self.client.get(reverse('index'))
+        self.assertContains(index_response,'<li><a class="modal-trigger" href=/logout>Logout</a></li>')
 
 
+    def test_create_palace(self):
+        user = User.objects.create_user(username="testing", password="password")
 
 
 class UserPalaceDataBaseTestCase(TestCase):
@@ -113,6 +122,4 @@ class UserPalaceDataBaseTestCase(TestCase):
         del self
 
 
-# class RegisterTestCase(TestCase):
-#     @patch.object(views, 'request')
-#     def test_register_username_with_testing(self):
+

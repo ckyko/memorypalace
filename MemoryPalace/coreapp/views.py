@@ -11,9 +11,8 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 # from django.contrib.auth.forms import forms
-from django.core.urlresolvers import reverse
-import json
-
+# from django.core.urlresolvers import reverse
+# import json
 
 
 data = {'title': 'MemoryPalace', 'header': 'Login | Register',
@@ -21,13 +20,13 @@ data = {'title': 'MemoryPalace', 'header': 'Login | Register',
 
 
 def index(req):
-    '''
+    """
     This is index page function.
     This function will check user login already or not first.
     if yes, it will change "login|register" to "log out", it will change link for that also.
     :param req:
     :return: index page
-    '''
+    """
     if req.user.is_authenticated():         # check login already or not
         data['header'] = 'Logout'
         data['headerLink'] = '/logout'
@@ -38,26 +37,26 @@ def index(req):
 
 
 def about(req):
-    '''
+    """
     this function return about page
-    '''
+    """
     return render(req, 'about.html', data)
 
 
 def contact(req):
-    '''
+    """
     this function return contact page
-    '''
+    """
     return render(req, 'contact.html', data)
 
 
 def log_in(req):
-    '''
+    """
     This is login function.
     this function will return the login form if user didn't click submit.
     if user fill in all information correct and click submit, it will log in
     user and redirect to index page.
-    '''
+    """
     errors = []
     temp = data
     if req.method == "POST":      # check if user submit or not
@@ -83,10 +82,10 @@ def log_in(req):
 
 
 def log_out(req):
-    '''
+    """
     This is log out function.
 
-    '''
+    """
     if req.user.is_authenticated():        # check login already or not
         logout(req)                        # log out user
     data['header'] = 'Login | Register'
@@ -95,12 +94,12 @@ def log_out(req):
 
 
 def palace_library(req):
-    '''
+    """
     This function give palace library function.
     This function will first check user login or not, if not it will library
     page without user information. if user is login, it will give library page
     with user information.
-    '''
+    """
     if not req.user.is_authenticated():        # check login already or not
         data['user_palace'] = None
         return render(req, 'palace_library.html', data)
@@ -117,16 +116,15 @@ def testing(req):
 
 
 def register(req):
-    errors = []
-    temp = data
-    '''
+    """
     This is register function. This function will give a register form first,
     once user input the correct information, it will save user information to
     database and redirect to index page.
-    '''
-
+    """
+    errors = []
+    temp = data
     ##############################################################
-    #FOR FUNCTIONAILITY TESTS
+    # FOR FUNCTIONALITY TESTS
     try:
         u = User.objects.get(username='testuser')
     except User.DoesNotExist:
@@ -165,13 +163,13 @@ def register(req):
 
 
 def MemoryPalace(req):
-    '''
+    """
         This function response Memory palace room page.
         the url for this function is /MemoryPalace
         function check user login or not, if not it will just display a model of room.
         if user is login and specify which room, it will open user's room. it means pass
         all user's room information to page
-    '''
+    """
     if req.user.is_authenticated():   # check login already or not
         data['header'] = 'Logout'
         data['headerLink'] = '/logout'
@@ -204,7 +202,6 @@ def MemoryPalace(req):
                 # get all object in this room from database
                 roomObj = PalaceObject.objects.filter(palaceRoom=room)
                 data['roomObj'] = roomObj       # put all objects in data
-                print("success")
             return render(req, 'memory_palace.html', data)
         else:
             data['user_room'] = None
@@ -217,14 +214,14 @@ def MemoryPalace(req):
 
 
 def createPalace(req):
-    '''
+    """
     This function response create palace form page.
     the url for this is /createPalace/
     function check user login or not, if not it will redirect to room.
     if user is login already, it will return create palace form.
     :param req:
     :return:
-    '''
+    """
     if not req.user.is_authenticated():   # check login already or not
         return HttpResponseRedirect('/')
     else:
@@ -244,10 +241,12 @@ def createPalace(req):
                 data['CreatePalaceForm'] = CreatePalaceForm()# reset form avoid duplication
                 return redirect('/palace_library/#Private')     # redirect to palace library page
             else:
-                return redirect('/palace_library/#modal_createPalace')# if form is not valid, still in create palace page
+                # if form is not valid, still in create palace page
+                return redirect('/palace_library/#modal_createPalace')
         else:             # if not submit, we sent the form
             data['CreatePalaceForm'] = CreatePalaceForm()
             return redirect('/palace_library/#modal_createPalace')
+
 
 def deletePalace(req):
     try:
@@ -257,6 +256,7 @@ def deletePalace(req):
     else:
         u.delete()
     return redirect('/palace_library/#Private')
+
 
 def deleteRoom(req):
     try:
@@ -268,12 +268,13 @@ def deleteRoom(req):
         u.delete()
     return redirect('/MemoryPalace?palaceName='+ palaceName)
 
+
 def createRoom(req):
-    '''
+    """
     This function give create room form page.
     the url for this function is ../createRoom
 
-    '''
+    """
     if not req.user.is_authenticated():        # check login already or not
         return HttpResponseRedirect('/')
     else:
@@ -304,11 +305,12 @@ def createRoom(req):
             data['CreateRoomForm'] = CreateRoomForm()
             return redirect('/MemoryPalace/createRoom?palaceName='+ palaceName)
 
+
 @csrf_exempt
 def upload_image(req):
-    '''
+    """
     This function will called when upload image.
-    '''
+    """
     if req.is_ajax():
         room_name = req.POST.get("room_name")
         form = UploadImageForm(data=req.POST, files=req.FILES)
@@ -339,48 +341,51 @@ def upload_image(req):
     else:
         return HttpResponseRedirect('/')
 
+
 @csrf_exempt
 def update(req):
-    '''
+    """
     This function is for updata room object information.
-    '''
+    """
     if req.is_ajax():
-        id = req.GET.get("id")
+        id = req.GET.get("id")     # get id from req
         position_x = req.GET.get("position_x")
         position_y = req.GET.get("position_y")
-        height = req.GET.get("height")
+        height = req.GET.get("height")    # get height from req
         width = req.GET.get("width")
         title = req.GET.get("title")
-        num_id = int(id)
+        num_id = int(id)                 # change type of id to int
         num_position_x = int(position_x)
         num_position_y = int(position_y)
         num_height = int(height[:-2])
         num_width = int(width[:-2])
-        objects = PalaceObject.objects.filter(id=num_id)
+        objects = PalaceObject.objects.filter(id=num_id)  # get object by id
         object = objects[0]
-        object.position_x = num_position_x
+        object.position_x = num_position_x         # update object information
         object.position_y = num_position_y
         object.height = num_height
         object.width = num_width
         object.description = title
-        object.save()
+        object.save()                       # save object information
 
     else:
         return HttpResponseRedirect('/')
 
+
 class JSONResponse(HttpResponse):
 
-    #An HttpResponse that renders its content into JSON.
+    # An HttpResponse that renders its content into JSON.
 
     def __init__(self, data, **kwargs):
         content = JSONRenderer().render(data)
         kwargs['content_type'] = 'application/json'
         super(JSONResponse, self).__init__(content, **kwargs)
 
+
 @csrf_exempt
 def snippet_detail(request,pk):
 
-    #Retrieve, update or delete a code snippet.
+    # Retrieve, update or delete a code snippet.
 
     try:
         pObj = PalaceObject.objects.get(roomName= pk)
@@ -403,10 +408,11 @@ def snippet_detail(request,pk):
         pObj.delete()
         return HttpResponse(status=204)
 
+
 @csrf_exempt
 def snippet_list(request):
 
-    #List all code snippets, or create a new snippet.
+    # List all code snippets, or create a new snippet.
 
     if request.method == 'GET':
         snippets = PalaceObject.objects.all()

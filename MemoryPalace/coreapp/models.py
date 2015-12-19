@@ -70,7 +70,6 @@ class PalaceObject(models.Model):
     # userPalace = models.ForeignKey('UserPalace', null=True)
     palaceRoom = models.ForeignKey('PalaceRoom', null=True)
     description = models.CharField(max_length=200, default=" ")
-    # objectImage = models.ImageField(upload_to='./coreapp/static/images')
     objectName = models.CharField(max_length=200, default=" ", unique=True)
     objectImage = models.ImageField(upload_to='./static/images/memory_objects', default='./static/images/char2.png')
     width = models.IntegerField(default=50)
@@ -84,7 +83,7 @@ class PalaceObject(models.Model):
         return self.objectImage.url
     #
     class Meta:
-        unique_together = (("palaceRoom", "objectName" ),)
+        unique_together = (("palaceRoom", "objectName"),)
 
 
 class Object(models.Model):
