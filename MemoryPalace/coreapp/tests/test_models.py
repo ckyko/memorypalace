@@ -45,6 +45,7 @@ class UserPalaceDataBaseTestCase(TestCase):
         user_palace = UserPalace.objects.get(palaceName='testing palace')
         self.assertTrue(user_palace is not None,
                         msg="palace name is create not correct")
+        self.assertEqual(user_palace.__unicode__(), user_palace.palaceName)
 
     def test_roomName(self):
         """
@@ -54,6 +55,7 @@ class UserPalaceDataBaseTestCase(TestCase):
         palace_room = PalaceRoom.objects.get(roomName="testing room")
         self.assertTrue(palace_room is not None,
                         msg="room name is create not correct")
+        self.assertEqual(palace_room.__unicode__(), palace_room.roomName)
 
     def tearDown(self):
         """
