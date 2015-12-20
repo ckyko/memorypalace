@@ -63,8 +63,9 @@ class NewVisitorTest(unittest.TestCase):
         This function will let a user logout to the website
         '''
         #Check if logged in, if so logout
-        if self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[3]/a[@href='/logout']"):
-            self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[3]/a[@href='/logout']").click()
+        if self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[3]/a[@data-activates='testuser']"):
+            self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[3]/a[@data-activates='testuser']").click()
+            self.browser.find_element_by_id('testuser').click()
 
     def Palace_add(self):
         '''
