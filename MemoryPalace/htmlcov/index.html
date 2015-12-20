@@ -1,249 +1,290 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+
+
+<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Coverage report</title>
-    <link rel='stylesheet' href='style.css' type='text/css'>
+    <link rel="stylesheet" href="style.css" type="text/css">
     
-    <script type='text/javascript' src='jquery-1.4.3.min.js'></script>
-    <script type='text/javascript' src='jquery.tablesorter.min.js'></script>
-    <script type='text/javascript' src='jquery.hotkeys.js'></script>
-    <script type='text/javascript' src='coverage_html.js'></script>
-    <script type='text/javascript' charset='utf-8'>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.debounce.min.js"></script>
+    <script type="text/javascript" src="jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="coverage_html.js"></script>
+    <script type="text/javascript">
         jQuery(document).ready(coverage.index_ready);
     </script>
 </head>
-<body id='indexfile'>
+<body class="indexfile">
 
-<div id='header'>
-    <div class='content'>
+<div id="header">
+    <div class="content">
         <h1>Coverage report:
-            <span class='pc_cov'>55%</span>
+            <span class="pc_cov">52%</span>
         </h1>
-        <img id='keyboard_icon' src='keybd_closed.png'>
+
+        <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
+
+        <form id="filter_container">
+            <input id="filter" type="text" value="" placeholder="filter..." />
+        </form>
     </div>
 </div>
 
-<div class='help_panel'>
-    <img id='panel_icon' src='keybd_open.png'>
-    <p class='legend'>Hot-keys on this page</p>
+<div class="help_panel">
+    <img id="panel_icon" src="keybd_open.png" alt="Hide keyboard shortcuts" />
+    <p class="legend">Hot-keys on this page</p>
     <div>
-    <p class='keyhelp'>
-        <span class='key'>n</span>
-        <span class='key'>s</span>
-        <span class='key'>m</span>
-        <span class='key'>x</span>
+    <p class="keyhelp">
+        <span class="key">n</span>
+        <span class="key">s</span>
+        <span class="key">m</span>
+        <span class="key">x</span>
         
-        <span class='key'>c</span> &nbsp; change column sorting
+        <span class="key">c</span> &nbsp; change column sorting
     </p>
     </div>
 </div>
 
-<div id='index'>
-    <table class='index'>
+<div id="index">
+    <table class="index">
         <thead>
             
-            <tr class='tablehead' title='Click to sort'>
-                <th class='name left headerSortDown shortkey_n'>Module</th>
-                <th class='shortkey_s'>statements</th>
-                <th class='shortkey_m'>missing</th>
-                <th class='shortkey_x'>excluded</th>
+            <tr class="tablehead" title="Click to sort">
+                <th class="name left headerSortDown shortkey_n">Module</th>
+                <th class="shortkey_s">statements</th>
+                <th class="shortkey_m">missing</th>
+                <th class="shortkey_x">excluded</th>
                 
-                <th class='right shortkey_c'>coverage</th>
+                <th class="right shortkey_c">coverage</th>
             </tr>
         </thead>
         
         <tfoot>
-            <tr class='total'>
-                <td class='name left'>Total</td>
-                <td>655</td>
-                <td>297</td>
+            <tr class="total">
+                <td class="name left">Total</td>
+                <td>711</td>
+                <td>338</td>
                 <td>0</td>
                 
-                <td class='right'>55%</td>
+                <td class="right" data-ratio="373 711">52%</td>
             </tr>
         </tfoot>
         <tbody>
             
-            <tr class='file'>
-                <td class='name left'><a href='MemoryPalace___init__.html'>MemoryPalace/__init__</a></td>
+            <tr class="file">
+                <td class="name left"><a href="MemoryPalace___init___py.html">MemoryPalace/__init__.py</a></td>
                 <td>0</td>
                 <td>0</td>
                 <td>0</td>
                 
-                <td class='right'>100%</td>
+                <td class="right" data-ratio="0 0">100%</td>
             </tr>
             
-            <tr class='file'>
-                <td class='name left'><a href='MemoryPalace_settings.html'>MemoryPalace/settings</a></td>
+            <tr class="file">
+                <td class="name left"><a href="MemoryPalace_settings_py.html">MemoryPalace/settings.py</a></td>
                 <td>22</td>
                 <td>0</td>
                 <td>0</td>
                 
-                <td class='right'>100%</td>
+                <td class="right" data-ratio="22 22">100%</td>
             </tr>
             
-            <tr class='file'>
-                <td class='name left'><a href='MemoryPalace_urls.html'>MemoryPalace/urls</a></td>
+            <tr class="file">
+                <td class="name left"><a href="MemoryPalace_urls_py.html">MemoryPalace/urls.py</a></td>
                 <td>9</td>
                 <td>0</td>
                 <td>0</td>
                 
-                <td class='right'>100%</td>
+                <td class="right" data-ratio="9 9">100%</td>
             </tr>
             
-            <tr class='file'>
-                <td class='name left'><a href='MemoryPalace_wsgi.html'>MemoryPalace/wsgi</a></td>
+            <tr class="file">
+                <td class="name left"><a href="MemoryPalace_wsgi_py.html">MemoryPalace/wsgi.py</a></td>
                 <td>5</td>
                 <td>5</td>
                 <td>0</td>
                 
-                <td class='right'>0%</td>
+                <td class="right" data-ratio="0 5">0%</td>
             </tr>
             
-            <tr class='file'>
-                <td class='name left'><a href='coreapp___init__.html'>coreapp/__init__</a></td>
+            <tr class="file">
+                <td class="name left"><a href="coreapp___init___py.html">coreapp/__init__.py</a></td>
                 <td>0</td>
                 <td>0</td>
                 <td>0</td>
                 
-                <td class='right'>100%</td>
+                <td class="right" data-ratio="0 0">100%</td>
             </tr>
             
-            <tr class='file'>
-                <td class='name left'><a href='coreapp_admin.html'>coreapp/admin</a></td>
-                <td>5</td>
-                <td>0</td>
-                <td>0</td>
-                
-                <td class='right'>100%</td>
-            </tr>
-            
-            <tr class='file'>
-                <td class='name left'><a href='coreapp_forms.html'>coreapp/forms</a></td>
-                <td>13</td>
-                <td>0</td>
-                <td>0</td>
-                
-                <td class='right'>100%</td>
-            </tr>
-            
-            <tr class='file'>
-                <td class='name left'><a href='coreapp_migrations_0001_initial.html'>coreapp/migrations/0001_initial</a></td>
-                <td>5</td>
-                <td>0</td>
-                <td>0</td>
-                
-                <td class='right'>100%</td>
-            </tr>
-            
-            <tr class='file'>
-                <td class='name left'><a href='coreapp_migrations_0002_auto_20151219_0433.html'>coreapp/migrations/0002_auto_20151219_0433</a></td>
-                <td>7</td>
-                <td>0</td>
-                <td>0</td>
-                
-                <td class='right'>100%</td>
-            </tr>
-            
-            <tr class='file'>
-                <td class='name left'><a href='coreapp_migrations___init__.html'>coreapp/migrations/__init__</a></td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                
-                <td class='right'>100%</td>
-            </tr>
-            
-            <tr class='file'>
-                <td class='name left'><a href='coreapp_models.html'>coreapp/models</a></td>
-                <td>55</td>
-                <td>8</td>
-                <td>0</td>
-                
-                <td class='right'>85%</td>
-            </tr>
-            
-            <tr class='file'>
-                <td class='name left'><a href='coreapp_serializers.html'>coreapp/serializers</a></td>
-                <td>16</td>
-                <td>7</td>
-                <td>0</td>
-                
-                <td class='right'>56%</td>
-            </tr>
-            
-            <tr class='file'>
-                <td class='name left'><a href='coreapp_tests___init__.html'>coreapp/tests/__init__</a></td>
-                <td>3</td>
-                <td>0</td>
-                <td>0</td>
-                
-                <td class='right'>100%</td>
-            </tr>
-            
-            <tr class='file'>
-                <td class='name left'><a href='coreapp_tests_test_functionality.html'>coreapp/tests/test_functionality</a></td>
-                <td>85</td>
-                <td>1</td>
-                <td>0</td>
-                
-                <td class='right'>99%</td>
-            </tr>
-            
-            <tr class='file'>
-                <td class='name left'><a href='coreapp_tests_test_models.html'>coreapp/tests/test_models</a></td>
-                <td>29</td>
-                <td>0</td>
-                <td>0</td>
-                
-                <td class='right'>100%</td>
-            </tr>
-            
-            <tr class='file'>
-                <td class='name left'><a href='coreapp_tests_test_views.html'>coreapp/tests/test_views</a></td>
-                <td>40</td>
-                <td>0</td>
-                <td>0</td>
-                
-                <td class='right'>100%</td>
-            </tr>
-            
-            <tr class='file'>
-                <td class='name left'><a href='coreapp_views.html'>coreapp/views</a></td>
-                <td>271</td>
-                <td>192</td>
-                <td>0</td>
-                
-                <td class='right'>29%</td>
-            </tr>
-            
-            <tr class='file'>
-                <td class='name left'><a href='functional_tests.html'>functional_tests</a></td>
-                <td>84</td>
-                <td>84</td>
-                <td>0</td>
-                
-                <td class='right'>0%</td>
-            </tr>
-            
-            <tr class='file'>
-                <td class='name left'><a href='manage.html'>manage</a></td>
+            <tr class="file">
+                <td class="name left"><a href="coreapp_admin_py.html">coreapp/admin.py</a></td>
                 <td>6</td>
                 <td>0</td>
                 <td>0</td>
                 
-                <td class='right'>100%</td>
+                <td class="right" data-ratio="6 6">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="coreapp_forms_py.html">coreapp/forms.py</a></td>
+                <td>13</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="13 13">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="coreapp_migrations_0001_initial_py.html">coreapp/migrations/0001_initial.py</a></td>
+                <td>5</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="5 5">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="coreapp_migrations_0002_auto_20151210_0301_py.html">coreapp/migrations/0002_auto_20151210_0301.py</a></td>
+                <td>6</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="6 6">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="coreapp_migrations_0003_auto_20151210_0453_py.html">coreapp/migrations/0003_auto_20151210_0453.py</a></td>
+                <td>5</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="5 5">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="coreapp_migrations_0004_auto_20151210_1608_py.html">coreapp/migrations/0004_auto_20151210_1608.py</a></td>
+                <td>5</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="5 5">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="coreapp_migrations_0005_auto_20151220_0651_py.html">coreapp/migrations/0005_auto_20151220_0651.py</a></td>
+                <td>5</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="5 5">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="coreapp_migrations___init___py.html">coreapp/migrations/__init__.py</a></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 0">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="coreapp_models_py.html">coreapp/models.py</a></td>
+                <td>56</td>
+                <td>10</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="46 56">82%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="coreapp_serializers_py.html">coreapp/serializers.py</a></td>
+                <td>16</td>
+                <td>7</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="9 16">56%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="coreapp_tests___init___py.html">coreapp/tests/__init__.py</a></td>
+                <td>3</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="3 3">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="coreapp_tests_test_functionality_py.html">coreapp/tests/test_functionality.py</a></td>
+                <td>85</td>
+                <td>1</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="84 85">99%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="coreapp_tests_test_models_py.html">coreapp/tests/test_models.py</a></td>
+                <td>29</td>
+                <td>15</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="14 29">48%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="coreapp_tests_test_views_py.html">coreapp/tests/test_views.py</a></td>
+                <td>46</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="46 46">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="coreapp_views_py.html">coreapp/views.py</a></td>
+                <td>305</td>
+                <td>216</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="89 305">29%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="functional_tests_py.html">functional_tests.py</a></td>
+                <td>84</td>
+                <td>84</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 84">0%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="manage_py.html">manage.py</a></td>
+                <td>6</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="6 6">100%</td>
             </tr>
             
         </tbody>
     </table>
+
+    <p id="no_rows">
+        No items found using the specified filter.
+    </p>
 </div>
 
-<div id='footer'>
-    <div class='content'>
+<div id="footer">
+    <div class="content">
         <p>
-            <a class='nav' href='http://nedbatchelder.com/code/coverage'>coverage.py v3.6</a>
+            <a class="nav" href="https://coverage.readthedocs.org">coverage.py v4.0.3</a>,
+            created at 2015-12-20 03:39
         </p>
     </div>
 </div>
