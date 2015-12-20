@@ -33,6 +33,9 @@ def about(req):
     """
     this function return about page
     """
+    data = {'title': 'MemoryPalace',
+        'CreatePalaceForm':CreatePalaceForm(),
+        'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
     return render(req, 'about.html', data)
 
 
@@ -40,6 +43,9 @@ def contact(req):
     """
     this function return contact page
     """
+    data = {'title': 'MemoryPalace',
+        'CreatePalaceForm':CreatePalaceForm(),
+        'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
     return render(req, 'contact.html', data)
 
 
@@ -82,7 +88,8 @@ def log_out(req):
     """
     This is log out function.
 
-    """   data = {'title': 'MemoryPalace'}
+    """
+    data = {'title': 'MemoryPalace'}
     if req.user.is_authenticated():        # check login already or not
         logout(req)                        # log out user
     return HttpResponseRedirect('/')
