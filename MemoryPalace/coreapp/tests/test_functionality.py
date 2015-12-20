@@ -38,7 +38,7 @@ class NewVisitorTest(unittest.TestCase):
         #Submit the Registration
         self.browser.find_element_by_id("register_submit").submit()
         #Check if redirected to hompage after succesfull Registration
-        self.assertEquals(self.browser.current_url, "http://localhost:8000/" )
+        self.assertEquals(self.browser.current_url, "http://localhost:8000/#modal_login" )
 
     def login(self):
         '''
