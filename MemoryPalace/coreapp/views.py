@@ -16,8 +16,7 @@ import json
 
 
 
-data = {'title': 'MemoryPalace', 'header': 'Login | Register',
-        'headerLink': '#modal_register_login',
+data = {'title': 'MemoryPalace',
         'CreatePalaceForm':CreatePalaceForm(),
         'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
 
@@ -31,12 +30,6 @@ def index(req):
     :param req:
     :return: index page
     '''
-    if req.user.is_authenticated():         # check login already or not
-        data['header'] = 'Logout'
-        data['headerLink'] = '/logout'
-    else:
-        data['header'] = 'Login | Register'
-        data['headerLink'] = '#modal_register_login'
     return render(req, 'home.html', data)
 
 
@@ -93,8 +86,6 @@ def log_out(req):
     '''
     if req.user.is_authenticated():        # check login already or not
         logout(req)                        # log out user
-    data['header'] = 'Login | Register'
-    data['headerLink'] = '#modal_register_login'
     return HttpResponseRedirect('/')
 
 
@@ -179,8 +170,6 @@ def MemoryPalace(req):
         room. it means pass all user's room information to page
     '''
     if req.user.is_authenticated():   # check login already or not
-        data['header'] = 'Logout'
-        data['headerLink'] = '/logout'
         data['room'] = None
         data['user_room'] = None
         data['roomObj'] = None
