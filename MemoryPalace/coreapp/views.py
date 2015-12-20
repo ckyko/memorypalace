@@ -5,7 +5,7 @@ from django.shortcuts import render, HttpResponseRedirect, HttpResponse, redirec
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .forms import CreatePalaceForm, CreateRoomForm, UploadImageForm
-from .models import UserPalace, PalaceRoom, PalaceObject
+from .models import UserPalace, PalaceRoom, PalaceObject, RoomObject
 from serializers import PalaceObjectSerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
@@ -199,6 +199,7 @@ def MemoryPalace(req):
                 data['user_palace'] = this_palace     # put user palace on data
                 # put all palace room for palace which user choose in data
                 data['user_room'] = user_room
+                data['palace_object'] = PalaceObject.objects.filter(userPalace=this_palace)
 
             roomName = req.GET.get('roomName', '')  # get room name
             if roomName:
@@ -210,8 +211,8 @@ def MemoryPalace(req):
                 data['room'] = room              # put specify room on data
                 # get all object in this room from database
                 img_url = room.backgroundImage
-                roomObj = PalaceObject.objects.filter(palaceRoom=room)
-                data['roomObj'] = roomObj       # put all objects in data
+                palace_object = RoomObject.objects.filter(palaceRoom=room)
+                data['roomObj'] = palace_object       # put all objects in data
             return render(req, 'memory_palace.html', data)
         else:
             data['user_room'] = None
@@ -332,18 +333,20 @@ def upload_image(req):
     This function will called when upload image.
     """
     if req.is_ajax():
-        room_name = req.POST.get("room_name")
+        palace_id = req.POST.get("palace_id")
+        print(palace_id)
+        palace_id_number = int(palace_id)
         form = UploadImageForm(data=req.POST, files=req.FILES)
         if form.is_valid():
-            user_room = PalaceRoom.objects.filter(roomName=room_name)
+            userPalace = UserPalace.objects.filter(id=palace_id_number)
 
-            if user_room:
-                print "user_room get"
+            if userPalace:
+                print "UserPalace get"
                 image_file = form.cleaned_data['objectImage']
                 object = PalaceObject()
                 object.objectImage = image_file
-                for room in user_room:
-                    object.palaceRoom = room
+                for palace in userPalace:
+                    object.userPalace = palace
                 object.objectName = 'testing'
                 object.save()
                 id = object.id
@@ -352,8 +355,8 @@ def upload_image(req):
                 object.objectName = object_name_list[2]
                 object.save()
                 src = object.objectName
-                name_dict = {'id': id, 'url': src}
-                return JsonResponse(name_dict, safe=False)
+                my_dict = {'id': id, 'url': src}
+                return JsonResponse(my_dict, safe=False)
             else:
                 print "room not fond"
 
@@ -362,6 +365,30 @@ def upload_image(req):
             print form.errors
     else:
         return HttpResponseRedirect('/')
+
+
+def create_room_object(req):
+    if req.is_ajax():
+        id = req.GET.get("id")     # get id from req
+        print(id)
+        id_number = int(id)
+        print(id_number)
+        palace_object_list = PalaceObject.objects.filter(id=id_number)
+        print(palace_object_list)
+        url = req.GET.get("url")
+        print(url)
+        room_name = req.GET.get("room_name")
+        room_list = PalaceRoom.objects.filter(roomName=room_name)
+        print(room_list[0])
+        print(room_name)
+        room_object = RoomObject()
+        room_object.palaceObject = palace_object_list[0]
+        room_object.palaceRoom = room_list[0]
+        room_object.url = url
+        room_object.save()
+        room_object_id = room_object.id
+        my_dict = {'id': room_object_id}
+        return JsonResponse(my_dict, safe=False)
 
 
 @csrf_exempt
@@ -381,7 +408,7 @@ def update(req):
         num_position_y = int(position_y)
         num_height = int(height[:-2])
         num_width = int(width[:-2])
-        objects = PalaceObject.objects.filter(id=num_id)  # get object by id
+        objects = RoomObject.objects.filter(id=num_id)  # get objects by id
         object = objects[0]
         object.position_x = num_position_x         # update object information
         object.position_y = num_position_y
@@ -393,58 +420,58 @@ def update(req):
     else:
         return HttpResponseRedirect('/')
 
-
-class JSONResponse(HttpResponse):
-
-    # An HttpResponse that renders its content into JSON.
-
-    def __init__(self, data, **kwargs):
-        content = JSONRenderer().render(data)
-        kwargs['content_type'] = 'application/json'
-        super(JSONResponse, self).__init__(content, **kwargs)
-
-
-@csrf_exempt
-def snippet_detail(request, pk):
-
-    # Retrieve, update or delete a code snippet.
-
-    try:
-        pObj = PalaceObject.objects.get(roomName=pk)
-    except PalaceObject.DoesNotExist:
-        return HttpResponse(status=404)
-
-    if request.method == 'GET':
-        serializer = PalaceObjectSerializer(pObj)
-        return JSONResponse(serializer.data)
-
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer = PalaceObjectSerializer(pObj, data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JSONResponse(serializer.data)
-        return JSONResponse(serializer.errors, status=400)
-
-    elif request.method == 'DELETE':
-        pObj.delete()
-        return HttpResponse(status=204)
-
-
-@csrf_exempt
-def snippet_list(request):
-
-    # List all code snippets, or create a new snippet.
-
-    if request.method == 'GET':
-        snippets = PalaceObject.objects.all()
-        serializer = PalaceObjectSerializer(snippets, many=True)
-        return JSONResponse(serializer.data)
-
-    elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = PalaceObjectSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JSONResponse(serializer.data, status=201)
-        return JSONResponse(serializer.errors, status=400)
+#
+# class JSONResponse(HttpResponse):
+#
+#     # An HttpResponse that renders its content into JSON.
+#
+#     def __init__(self, data, **kwargs):
+#         content = JSONRenderer().render(data)
+#         kwargs['content_type'] = 'application/json'
+#         super(JSONResponse, self).__init__(content, **kwargs)
+#
+#
+# @csrf_exempt
+# def snippet_detail(request, pk):
+#
+#     # Retrieve, update or delete a code snippet.
+#
+#     try:
+#         pObj = PalaceObject.objects.get(roomName=pk)
+#     except PalaceObject.DoesNotExist:
+#         return HttpResponse(status=404)
+#
+#     if request.method == 'GET':
+#         serializer = PalaceObjectSerializer(pObj)
+#         return JSONResponse(serializer.data)
+#
+#     elif request.method == 'PUT':
+#         data = JSONParser().parse(request)
+#         serializer = PalaceObjectSerializer(pObj, data=data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return JSONResponse(serializer.data)
+#         return JSONResponse(serializer.errors, status=400)
+#
+#     elif request.method == 'DELETE':
+#         pObj.delete()
+#         return HttpResponse(status=204)
+#
+#
+# @csrf_exempt
+# def snippet_list(request):
+#
+#     # List all code snippets, or create a new snippet.
+#
+#     if request.method == 'GET':
+#         snippets = PalaceObject.objects.all()
+#         serializer = PalaceObjectSerializer(snippets, many=True)
+#         return JSONResponse(serializer.data)
+#
+#     elif request.method == 'POST':
+#         data = JSONParser().parse(request)
+#         serializer = PalaceObjectSerializer(data=data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return JSONResponse(serializer.data, status=201)
+#         return JSONResponse(serializer.errors, status=400)

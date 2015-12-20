@@ -142,10 +142,12 @@ $(function(){
 //		sentImg();
 
     var data = new FormData($('form').get(2));
-    var room_name = $("#room_name").text();
+//    var room_name = $("#room_name").text();
+    var palace_id = $("#palace_id").text();
+    console.log(palace_id);
 //    alert(room_name);
 //    alert(typeof(room_name));
-    data.append('room_name',room_name);
+    data.append('palace_id',palace_id);
     $.ajax({
         url: $(upload_image).attr('action'),
         method: $(upload_image).attr('method'),
@@ -159,8 +161,8 @@ $(function(){
             object_id = msg['id']
 //            alert(msg['url'])
             url = msg['url']
-            $("<img class='scrollBoxImg' id='"+object_id+"' src='/"+url+"'/>").appendTo("#vertscrollbox");
-            $("<img class='draggable' id='"+object_id+"' src='/"+url+"'/>").appendTo("#roombg");
+            $("<img class='scrollBoxImg' id='"+object_id+"' src='/"+url+"'/>").prependTo("#vertscrollbox");
+//            $("<img class='draggable' id='"+object_id+"' src='/"+url+"'/>").appendTo("#roombg");
         }
     });
 
@@ -190,8 +192,19 @@ $(document).ready(function(){
 */
 $(document).ready(function(){
     //Click on image from the vertical box to add it to the room.
-    $('.scrollBoxImg').click(function(){
-        $("<img class='draggable' src='"+$(this).attr('src')+"'/>").appendTo("#roombg");
+    $('.scrollBoxImg').click(function(event){
+        var target = event.target;
+        var id = target.id;
+        var url = target.getAttribute('src');
+        var room_name = $("#room_name").text();
+        console.log(room_name);
+        console.log(id);
+        console.log(url);
+      $.get("/create_room_object/",{'id': id, 'url':url, 'room_name':room_name }, function(msg){
+            object_id = msg['id']
+            $("<img class='draggable'"+ "id='"+ object_id + "' src='"+url+"'/>").appendTo("#roombg");
+        })
+//        $("<img class='draggable' src='"+$(this).attr('src')+"'/>").appendTo("#roombg");
 //        var room_name = $("#room_name").text();
 //        var target = $(e.target);
 //        alert(target);
@@ -265,19 +278,19 @@ $(function(){
    }
 });
 
-$(document).ready(function(){
-    var jsonObject = {"user":1,"userPalace":2,"palaceRoom":4,"description":"testStuff",
-    "objectImage":"/mediaFiles/static/images/memory_objects/ticket2front_GiKRioO.png",
-    "width":100,"height":100,"position_x":100,"position_y":100};
-    var jsonData = JSON.parse( jsonObject );
-     $.ajax({
-        url: "http://127.0.0.1:8000/snippets/",
-        type: "POST",
-        data: jsonData,
-        dataType: "json",
-        success: function(data) {
-            alert('success');
-        }
-    });
-
-})
+//$(document).ready(function(){
+//    var jsonObject = {"user":1,"userPalace":2,"palaceRoom":4,"description":"testStuff",
+//    "objectImage":"/mediaFiles/static/images/memory_objects/ticket2front_GiKRioO.png",
+//    "width":100,"height":100,"position_x":100,"position_y":100};
+//    var jsonData = JSON.parse( jsonObject );
+//     $.ajax({
+//        url: "http://127.0.0.1:8000/snippets/",
+//        type: "POST",
+//        data: jsonData,
+//        dataType: "json",
+//        success: function(data) {
+//            alert('success');
+//        }
+//    });
+//
+//})
