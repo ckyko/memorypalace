@@ -1,0 +1,27 @@
+{% load staticfiles %}
+<!-- Modal Structure -->
+<div id="modal_image_objects" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    {% include "search.html" %}
+    <div id="modal_images">
+      <table>
+          <tr>
+          {% for object in public_object %}
+                <td>
+                 <img class="scrollBoxImg" id="{{ object.id }}" src="/{{object.objectImage}}" />
+
+                </td>
+              {% if forloop.counter|divisibleby:5 %}
+
+                </tr>
+                <tr>
+              {% endif %}
+          {% endfor%}
+          </tr>
+    </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="modal-action modal-close waves-effect waves-green btn-flat ">Done</a>
+  </div>
+</div>
