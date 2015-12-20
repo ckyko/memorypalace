@@ -7,15 +7,13 @@
   </div>
   <div id="vertscrollbox">
       {% for object in palace_object %}
-      <img class="scrollBoxImg" id="{{object.id}}" src="/{{object.objectImage}}" />
+      <img class="scrollBoxImg" id="{{ object.id }}" src="/{{object.objectImage}}" />
       {% endfor%}
 
-    <img class="scrollBoxImg" src="{% static "images/memory_objects/char1.png"%}" />
-    <img class="scrollBoxImg" src="{% static "images/memory_objects/char2.png"%}" />
-    <img class="scrollBoxImg" src="{% static "images/memory_objects/char3.png"%}" />
-    <img class="scrollBoxImg" src="{% static "images/memory_objects/char4.png"%}" />
-    <img class="scrollBoxImg" src="{% static "images/memory_objects/char5.png"%}" />
-    <img class="scrollBoxImg" src="{% static "images/memory_objects/char6.png"%}" />
+      {% for object in public_object %}
+      <img class="scrollBoxImg" id="{{ object.id }}" src="/{{object.objectImage}}" />
+      {% endfor%}
+
   </div>
   <div class="center-align">
       <form action="/upload_image/" method="post" id="upload_image" enctype="multipart/form-data">
