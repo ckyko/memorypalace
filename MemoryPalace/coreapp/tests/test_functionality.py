@@ -4,7 +4,7 @@ from selenium.webdriver import ActionChains
 import os
 import unittest
 
-keys_dict = {"username":"testuser", "email":"testuser@testemail.com", "password":"testuser", "palace_name":"testuser_palace", "room_name":"testuser_palace_room", "img_loc":"/home/satya/wdhw/memory/memorypalacedev/MemoryPalace/coreapp/static/images/previews/pre1.jpg"  }
+keys_dict = {"username":"testuser", "email":"testuser@testemail.com", "password":"testuser", "palace_name":"testuser_palace", "room_name":"testuser_palace_room", "img_loc":os.getcwd()+"/coreapp/static/images/previews/pre1.jpg"  }
 class NewVisitorTest(unittest.TestCase):
 
 
