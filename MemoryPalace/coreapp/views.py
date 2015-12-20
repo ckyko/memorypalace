@@ -414,7 +414,7 @@ def update(req):
         object.position_y = num_position_y
         object.height = num_height
         object.width = num_width
-        object.description = title
+        object.note = title
         object.save()                       # save object information
 
     else:
