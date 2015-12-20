@@ -142,14 +142,15 @@ $(function(){
 //		sentImg();
 
     var data = new FormData($('form').get(2));
-    var room_name = $("#room_name").text();
+//    var room_name = $("#room_name").text();
+    var palace_id = $("#palace_id").text();
+    console.log(palace_id);
 //    alert(room_name);
 //    alert(typeof(room_name));
-    data.append('room_name',room_name);
+    data.append('palace_id',palace_id);
     $.ajax({
         url: $(upload_image).attr('action'),
         method: $(upload_image).attr('method'),
-//        dataType: "json",
         data: data,
         cache: false,
         processData: false,
@@ -159,44 +160,34 @@ $(function(){
             object_id = msg['id']
 //            alert(msg['url'])
             url = msg['url']
-            //$("<img class='scrollBoxImg' id='"+object_id+"' src='/"+url+"'/>").appendTo("#vertscrollbox");
-            $("<img class='draggable' id='"+object_id+"' src='/"+url+"'/>").appendTo("#roombg");
+            $("<img class='scrollBoxImg' id='"+object_id+"' src='/"+url+"'/>").prependTo("#vertscrollbox");
+//            $("<img class='draggable' id='"+object_id+"' src='/"+url+"'/>").appendTo("#roombg");
+
         }
     });
 
   });
 
 })
-//$(document).ready(function(){
-//    alert("aaaaa");
-//    var room_name = $("#room_name").text()
-//    alert(room_name)
-//
-//
-////    var get_json = {{ json_roomName|safe }};
-////    alert(get_json);
-////    var romename = get_json.roomName;
-////    alert(romename);
-//});
 
-/* KAYINGS
-$(document).ready(function(){
-  $("#saveImg").click(function(){
-    var img = $("#file").val();
 
-    $.get("/saveImg",{'img':img}, function(ret){
-        $('#vertscrollbox').append(ret);
-    })
-*/
 $(document).ready(function(){
     //Click on image from the vertical box to add it to the room.
+
     if (window.location.href.indexOf("&roomName") > -1){
-      $('.scrollBoxImg').click(function(){
-          //$("<img class='draggable' src='"+$(this).attr('src')+"'/>").appendTo("#roombg"); //disabled until stored in database 12/14/2015 by satya
-          //        var room_name = $("#room_name").text();
-          //        var target = $(e.target);
-          //        alert(target);
-        });
+       $('#vertscrollbox').on("click", "img.scrollBoxImg", function(event){
+        var target = event.target;
+        var id = target.id;
+        var url = target.getAttribute('src');
+        var room_name = $("#room_name").text();
+        console.log(room_name);
+        console.log(id);
+        console.log(url);
+      $.get("/create_room_object/",{'id': id, 'url':url, 'room_name':room_name }, function(msg){
+            object_id = msg['id']
+            $("<img class='draggable'"+ "id='"+ object_id + "' src='"+url+"'/>").appendTo("#roombg");
+        })
+    });
       }
       else {
         $("#add_objectImag").addClass('disabled');
@@ -204,6 +195,7 @@ $(document).ready(function(){
         alert("Please add/select a room first!");
         });
       }
+
 
     //Add a caption to the image.
     $(document).on('dblclick', '.draggable', function() {
@@ -274,19 +266,19 @@ $(function(){
    }
 });
 
-$(document).ready(function(){
-    var jsonObject = {"user":1,"userPalace":2,"palaceRoom":4,"description":"testStuff",
-    "objectImage":"/mediaFiles/static/images/memory_objects/ticket2front_GiKRioO.png",
-    "width":100,"height":100,"position_x":100,"position_y":100};
-    var jsonData = JSON.parse( jsonObject );
-     $.ajax({
-        url: "http://127.0.0.1:8000/snippets/",
-        type: "POST",
-        data: jsonData,
-        dataType: "json",
-        success: function(data) {
-            alert('success');
-        }
-    });
-
-})
+//$(document).ready(function(){
+//    var jsonObject = {"user":1,"userPalace":2,"palaceRoom":4,"description":"testStuff",
+//    "objectImage":"/mediaFiles/static/images/memory_objects/ticket2front_GiKRioO.png",
+//    "width":100,"height":100,"position_x":100,"position_y":100};
+//    var jsonData = JSON.parse( jsonObject );
+//     $.ajax({
+//        url: "http://127.0.0.1:8000/snippets/",
+//        type: "POST",
+//        data: jsonData,
+//        dataType: "json",
+//        success: function(data) {
+//            alert('success');
+//        }
+//    });
+//
+//})

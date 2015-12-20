@@ -1,9 +1,11 @@
 {% extends "index.html" %}
 {% block body %}
 {% load staticfiles %}
+
 <div id="index-banner" class="container section no-pad-bot">
   <div class="center-align">
     <h1 class="teal-text text-darken-4" id="room_name">{{ room.roomName }}</h1>
+      <p id="palace_id" style="visibility: hidden;">{{user_palace.id}}</p>
     <div class="right-align">
       <form action="/upload_image/" method="post" id="upload_image" enctype="multipart/form-data">
         {% csrf_token %}

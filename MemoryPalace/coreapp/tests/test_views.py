@@ -1,5 +1,4 @@
 from django.test import TestCase
-from django.core.urlresolvers import resolve
 from django.core.urlresolvers import reverse
 from django.http import HttpRequest
 from coreapp import views
@@ -50,14 +49,14 @@ class ViewsTestCase(TestCase):
         Tests that the about register page is running
         """
         response = self.client.get(reverse('register'))
-        # self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
     def test_login(self):
         """
         Tests that the about login page is running
         """
         response = self.client.get(reverse('login'))
-        # self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
     def test_createPalace(self):
         """
@@ -93,4 +92,12 @@ class ViewsTestCase(TestCase):
         user=User.objects.create_user(username="testing", password="password")
         self.assertTrue(user is not None, msg="user not create.")
         response = self.client.post(reverse('login'), {'username': 'testing',
-                                                       'password': 'password'})
+                                                         'password': 'password'})
+        self.assertEqual(response.status_code, 302)
+        index_response = self.client.get(reverse('index'))
+        self.assertContains(index_response,'<li><a class="modal-trigger" href=/logout>Logout</a></li>')
+
+
+
+    def test_create_palace(self):
+        user = User.objects.create_user(username="testing", password="password")

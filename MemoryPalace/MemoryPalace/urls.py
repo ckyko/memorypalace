@@ -59,6 +59,7 @@ urlpatterns = [
     url(r'^testing/', 'coreapp.views.testing'),
     url(r'^upload_image/', 'coreapp.views.upload_image'),
     url(r'^update/', 'coreapp.views.update'),
+    url(r'^create_room_object/', 'coreapp.views.create_room_object'),
     #url(r'^api', include(router.urls)),
     #url(r'^snippets/$', 'coreapp.views.snippet_list'),
     #url(r'^snippets/(?P<pk>[0-9]+)/$', 'coreapp.views.snippet_detail'),

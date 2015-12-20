@@ -6,3 +6,4 @@ from .models import *
 admin.site.register(UserPalace)
 admin.site.register(PalaceRoom)
 admin.site.register(PalaceObject)
+admin.site.register(RoomObject)
