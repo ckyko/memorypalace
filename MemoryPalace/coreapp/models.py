@@ -56,6 +56,7 @@ class PalaceRoom(models.Model):
 # Palace Object Table
 # Contains the objects inside a room
 
+
 class PalaceObject(models.Model):
     """
     user: The foreign key to connect it to a user
@@ -67,8 +68,8 @@ class PalaceObject(models.Model):
     position_y: The y coordinate of the object in the room
     """
     # user = models.ForeignKey(User, null=True)
-    # userPalace = models.ForeignKey('UserPalace', null=True)
-    palaceRoom = models.ForeignKey('PalaceRoom', null=True)
+    userPalace = models.ForeignKey('UserPalace', null=True)
+    # palaceRoom = models.ForeignKey('PalaceRoom', null=True)
     description = models.CharField(max_length=200, default=" ")
     objectName = models.CharField(max_length=200, default="", unique=True)
     objectImage = models.ImageField(upload_to='./static/images/memory_objects',
@@ -84,20 +85,21 @@ class PalaceObject(models.Model):
         return self.objectImage.url
     #
     class Meta:
-        unique_together = (("palaceRoom", "objectName"),)
+        unique_together = (("userPalace", "objectName"),)
 
 
-class Object(models.Model):
+class RoomObject(models.Model):
     palaceRoom = models.ForeignKey('PalaceRoom', null=True)
-    url = models.CharField(max_length=200, default=" ", unique=True)
-    description = models.CharField(max_length=200, default=" ")
+    palaceObject = models.ForeignKey('PalaceObject', null=True)
+    url = models.CharField(max_length=200, default=" ")
+    note = models.CharField(max_length=200, default=" ")
     width = models.IntegerField(default=50)
     height = models.IntegerField(default=50)
     position_x = models.IntegerField(default=0)
     position_y = models.IntegerField(default=0)
 
     def __unicode__(self):
-        return self.description
+        return self.url
 
-    class Meta:
-        unique_together = (("palaceRoom", "url"),)
+    # class Meta:
+    #     unique_together = (("palaceRoom", "url"),)
