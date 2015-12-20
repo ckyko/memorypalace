@@ -151,7 +151,6 @@ $(function(){
     $.ajax({
         url: $(upload_image).attr('action'),
         method: $(upload_image).attr('method'),
-//        dataType: "json",
         data: data,
         cache: false,
         processData: false,
@@ -169,30 +168,11 @@ $(function(){
   });
 
 })
-//$(document).ready(function(){
-//    alert("aaaaa");
-//    var room_name = $("#room_name").text()
-//    alert(room_name)
-//
-//
-////    var get_json = {{ json_roomName|safe }};
-////    alert(get_json);
-////    var romename = get_json.roomName;
-////    alert(romename);
-//});
 
-/* KAYINGS
-$(document).ready(function(){
-  $("#saveImg").click(function(){
-    var img = $("#file").val();
 
-    $.get("/saveImg",{'img':img}, function(ret){
-        $('#vertscrollbox').append(ret);
-    })
-*/
 $(document).ready(function(){
     //Click on image from the vertical box to add it to the room.
-    $('.scrollBoxImg').click(function(event){
+    $('#vertscrollbox').on("click", "img.scrollBoxImg", function(event){
         var target = event.target;
         var id = target.id;
         var url = target.getAttribute('src');
@@ -204,13 +184,6 @@ $(document).ready(function(){
             object_id = msg['id']
             $("<img class='draggable'"+ "id='"+ object_id + "' src='"+url+"'/>").appendTo("#roombg");
         })
-//        $("<img class='draggable' src='"+$(this).attr('src')+"'/>").appendTo("#roombg");
-//        var room_name = $("#room_name").text();
-//        var target = $(e.target);
-//        alert(target);
-
-
-
     });
 
     //Add a caption to the image.
