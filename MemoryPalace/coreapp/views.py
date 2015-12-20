@@ -200,6 +200,7 @@ def MemoryPalace(req):
                 # put all palace room for palace which user choose in data
                 data['user_room'] = user_room
                 data['palace_object'] = PalaceObject.objects.filter(userPalace=this_palace)
+                data['public_object'] = PalaceObject.objects.filter(public=True)
 
             roomName = req.GET.get('roomName', '')  # get room name
             if roomName:
@@ -331,6 +332,7 @@ def createRoom(req):
 def upload_image(req):
     """
     This function will called when upload image.
+    It will create PalaceObject and save.
     """
     if req.is_ajax():
         palace_id = req.POST.get("palace_id")
@@ -368,19 +370,17 @@ def upload_image(req):
 
 
 def create_room_object(req):
+    """
+    This Function is for adding the room object. When the user click object in vertscrollbox,
+    this function will called.
+    """
     if req.is_ajax():
         id = req.GET.get("id")     # get id from req
-        print(id)
         id_number = int(id)
-        print(id_number)
         palace_object_list = PalaceObject.objects.filter(id=id_number)
-        print(palace_object_list)
         url = req.GET.get("url")
-        print(url)
         room_name = req.GET.get("room_name")
         room_list = PalaceRoom.objects.filter(roomName=room_name)
-        print(room_list[0])
-        print(room_name)
         room_object = RoomObject()
         room_object.palaceObject = palace_object_list[0]
         room_object.palaceRoom = room_list[0]
@@ -420,58 +420,58 @@ def update(req):
     else:
         return HttpResponseRedirect('/')
 
-#
-# class JSONResponse(HttpResponse):
-#
-#     # An HttpResponse that renders its content into JSON.
-#
-#     def __init__(self, data, **kwargs):
-#         content = JSONRenderer().render(data)
-#         kwargs['content_type'] = 'application/json'
-#         super(JSONResponse, self).__init__(content, **kwargs)
-#
-#
-# @csrf_exempt
-# def snippet_detail(request, pk):
-#
-#     # Retrieve, update or delete a code snippet.
-#
-#     try:
-#         pObj = PalaceObject.objects.get(roomName=pk)
-#     except PalaceObject.DoesNotExist:
-#         return HttpResponse(status=404)
-#
-#     if request.method == 'GET':
-#         serializer = PalaceObjectSerializer(pObj)
-#         return JSONResponse(serializer.data)
-#
-#     elif request.method == 'PUT':
-#         data = JSONParser().parse(request)
-#         serializer = PalaceObjectSerializer(pObj, data=data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return JSONResponse(serializer.data)
-#         return JSONResponse(serializer.errors, status=400)
-#
-#     elif request.method == 'DELETE':
-#         pObj.delete()
-#         return HttpResponse(status=204)
-#
-#
-# @csrf_exempt
-# def snippet_list(request):
-#
-#     # List all code snippets, or create a new snippet.
-#
-#     if request.method == 'GET':
-#         snippets = PalaceObject.objects.all()
-#         serializer = PalaceObjectSerializer(snippets, many=True)
-#         return JSONResponse(serializer.data)
-#
-#     elif request.method == 'POST':
-#         data = JSONParser().parse(request)
-#         serializer = PalaceObjectSerializer(data=data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return JSONResponse(serializer.data, status=201)
-#         return JSONResponse(serializer.errors, status=400)
+
+class JSONResponse(HttpResponse):
+
+    # An HttpResponse that renders its content into JSON.
+
+    def __init__(self, data, **kwargs):
+        content = JSONRenderer().render(data)
+        kwargs['content_type'] = 'application/json'
+        super(JSONResponse, self).__init__(content, **kwargs)
+
+
+@csrf_exempt
+def snippet_detail(request, pk):
+
+    # Retrieve, update or delete a code snippet.
+
+    try:
+        pObj = PalaceObject.objects.get(roomName=pk)
+    except PalaceObject.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        serializer = PalaceObjectSerializer(pObj)
+        return JSONResponse(serializer.data)
+
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request)
+        serializer = PalaceObjectSerializer(pObj, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JSONResponse(serializer.data)
+        return JSONResponse(serializer.errors, status=400)
+
+    elif request.method == 'DELETE':
+        pObj.delete()
+        return HttpResponse(status=204)
+
+
+@csrf_exempt
+def snippet_list(request):
+
+    # List all code snippets, or create a new snippet.
+
+    if request.method == 'GET':
+        snippets = PalaceObject.objects.all()
+        serializer = PalaceObjectSerializer(snippets, many=True)
+        return JSONResponse(serializer.data)
+
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = PalaceObjectSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JSONResponse(serializer.data, status=201)
+        return JSONResponse(serializer.errors, status=400)
