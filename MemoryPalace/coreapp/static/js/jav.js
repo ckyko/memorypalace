@@ -145,7 +145,7 @@ $(function(){
             object_id = msg['id']
 //            alert(msg['url'])
             url = msg['url']
-            $("<img class='scrollBoxImg' id='"+object_id+"' src='/"+url+"'/>").prependTo("#vertscrollbox");
+            $("<img title = 'right click to delete' class='scrollBoxImg' id='"+object_id+"' src='/"+url+"'/>").prependTo("#vertscrollbox");
 //            $("<img class='draggable' id='"+object_id+"' src='/"+url+"'/>").appendTo("#roombg");
 
         }
@@ -214,6 +214,15 @@ $(document).ready(function(){
           }
         }
     });
+    $('#vertscrollbox').mousedown(function(e) {
+        if( e.button == 2 ) {
+          $("#vertscrollbox").bind("contextmenu", function(e) {
+            e.preventDefault();
+          });
+          var root = location.protocol + '//' + location.host;
+          window.location.href = root+"/deleteImageObject"+window.location.search+"&objectID="+e.target.id;
+        }
+      });
 
     /* Delete functionality. For Later.
     $('#delete-draggable').click(function() {
