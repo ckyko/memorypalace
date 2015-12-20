@@ -70,7 +70,7 @@ def log_in(req):
             if user.is_active:                    # check user is active or not
                 login(req, user)
                 # req.session['username'] = name
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect(req.META.get('HTTP_REFERER'))#redirect to the page whilst clicking on the modal
             else:
                 errors.append('Disabled account')
                 temp['errors'] = errors
@@ -167,7 +167,7 @@ def register(req):
                     password=password1,
                     )
                 user.save()
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect('/#modal_login')
         temp['errors'] = errors
         return redirect('/#modal_register')
         del errors[:] #reset errors
