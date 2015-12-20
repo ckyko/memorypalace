@@ -1,11 +1,7 @@
 {% load staticfiles %}
 <div class="outerscrollbox">
-  <div class="center-align">
-    <a class="modal-trigger btn-floating btn-large waves-effect waves-light teal accent-4" href="#modal_image_objects">
-      <i class="material-icons">aspect_ratio</i>
-    </a>
-  </div>
   <div id="vertscrollbox">
+
       {% for object in palace_object %}
       <img class="scrollBoxImg" id="{{ object.id }}" src="/{{object.objectImage}}" />
       {% endfor%}
@@ -16,17 +12,9 @@
 
   </div>
   <div class="center-align">
-      <form action="/upload_image/" method="post" id="upload_image" enctype="multipart/form-data">
-          {% csrf_token %}
-    <!--<input type="file" id="file" accept="image/*" style="visibility: hidden; width: 1px; height: 1px" multiple/>-->
-          {{objectForm.objectImage}}
-    <a class="btn-floating btn-large waves-effect waves-light teal accent-4" onclick="document.getElementById('id_objectImage').click(); return false">
-      <i class="material-icons">library_add</i>
-    </a>&nbsp&nbsp
-    <a id="delete-draggable" class="btn-floating btn-large waves-effect waves-light teal accent-4 disabled">
-      <i class="material-icons">delete</i>
+    <a class="modal-trigger btn-floating btn-large waves-effect waves-light teal accent-4" href="#modal_image_objects">
+      <i class="material-icons">aspect_ratio</i>
     </a>
-      </form>
   </div>
 </div>
 {% include "modal_image_objects.html" %}

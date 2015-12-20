@@ -274,6 +274,16 @@ def deletePalace(req):
     return redirect('/palace_library/#Private')
 
 
+def deleteImageObject(req):
+    try:
+        u = RoomObject.objects.filter(id=req.GET.get('objectID', ''))
+    except User.DoesNotExist:
+        pass
+    else:
+        u.delete()
+    return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', '')+ '&roomName=' +req.GET.get('roomName', ''))
+
+
 def deleteRoom(req):
     try:
         palaceName=req.GET.get('palaceName', '')
@@ -321,6 +331,7 @@ def createRoom(req):
                 return redirect('/MemoryPalace?palaceName=' + palaceName +
                                 '&roomName=' + roomName)
             else:
+                data['CreateRoomForm'] = CreateRoomForm()# reset form avoid duplication
                 return redirect('/MemoryPalace/createRoom?palaceName=' +
                                 palaceName)
         else:

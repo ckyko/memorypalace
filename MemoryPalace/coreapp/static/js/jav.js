@@ -162,6 +162,7 @@ $(function(){
             url = msg['url']
             $("<img class='scrollBoxImg' id='"+object_id+"' src='/"+url+"'/>").prependTo("#vertscrollbox");
 //            $("<img class='draggable' id='"+object_id+"' src='/"+url+"'/>").appendTo("#roombg");
+
         }
     });
 
@@ -172,7 +173,9 @@ $(function(){
 
 $(document).ready(function(){
     //Click on image from the vertical box to add it to the room.
-    $('#vertscrollbox').on("click", "img.scrollBoxImg", function(event){
+
+    if (window.location.href.indexOf("&roomName") > -1){
+       $('#vertscrollbox').on("click", "img.scrollBoxImg", function(event){
         var target = event.target;
         var id = target.id;
         var url = target.getAttribute('src');
@@ -185,11 +188,23 @@ $(document).ready(function(){
             $("<img class='draggable'"+ "id='"+ object_id + "' src='"+url+"'/>").appendTo("#roombg");
         })
     });
+      }
+      else {
+        $("#add_objectImag").addClass('disabled');
+        $('.scrollBoxImg').click(function(){
+        alert("Please add/select a room first!");
+        });
+      }
+
 
     //Add a caption to the image.
     $(document).on('dblclick', '.draggable', function() {
-        var caption = prompt("Enter a caption for this image.");
-	      $(this).attr('title', caption);
+        $('#modal_caption').openModal();
+        $('#modal_caption_done').click(function(){
+        var caption = $("#modal_caption_id").val();
+        //var caption = prompt("Enter a caption for this image.");
+        $('.draggable').attr('title', caption);
+        });
 
 	/*Materialize tooltip. Having some trouble with this still.
 
@@ -202,12 +217,12 @@ $(document).ready(function(){
 
     $('#roombg').on('click', function(e) {
         var $delTarget = $(e.target);
-
         if($(e.target).hasClass('draggable')) {
           $('.draggable').removeClass('permaBorder');
           $(($delTarget).addClass('permaBorder'));
           if($('#delete-draggable').hasClass('disabled')) {
             $('#delete-draggable').removeClass('disabled');
+            $("#delete-draggable").prop("href", "/deleteImageObject"+window.location.search+"&objectID="+e.target.id)
           }
         }
         else if(!$(e.target).hasClass('draggable')){
