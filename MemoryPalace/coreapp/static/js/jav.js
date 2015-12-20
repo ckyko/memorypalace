@@ -28,21 +28,6 @@ interact('.draggable')
 
          var height = $('#'+id).css('height');
          var width = $('#'+id).css('width');
-//         height = target.css('height'),
-//         width = target.css('width');
-
-//         alert(id);
-//        console.log(id);
-//        console.log(position_x);
-//        console.log(position_y);
-//        console.log(height);
-//        console.log(width);
-//        console.log(title);
-//        console.log(typeof(id));
-//        console.log(typeof(position_x));
-//        console.log(typeof(position_y));
-//        console.log(typeof(height));
-//        console.log(typeof(width));
 
       $.get("/update/",{'id': id, 'title': title, 'position_x': position_x,
       'position_y':position_y, 'height':height, 'width':width }, function(ret){
@@ -180,9 +165,6 @@ $(document).ready(function(){
         var id = target.id;
         var url = target.getAttribute('src');
         var room_name = $("#room_name").text();
-        console.log(room_name);
-        console.log(id);
-        console.log(url);
       $.get("/create_room_object/",{'id': id, 'url':url, 'room_name':room_name }, function(msg){
             object_id = msg['id']
             $("<img class='draggable'"+ "id='"+ object_id + "' src='"+url+"'/>").appendTo("#roombg");
