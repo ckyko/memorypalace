@@ -9,5 +9,9 @@
       opacity: .5, // Opacity of modal background
     });
     $('.tooltipped').tooltip({delay: 50});
+    $('.dropdown-button').dropdown({
+      hover: true, // Activate on hover
+      belowOrigin: true, // Displays dropdown below the button
+    });
   });
 })(jQuery); // end of jQuery name space
