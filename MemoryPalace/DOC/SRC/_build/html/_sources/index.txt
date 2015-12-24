@@ -8,13 +8,14 @@ Welcome to MemoryPalace's documentation!
 
 Contents:
 
-.. toctree::
+.. automodule::
    :maxdepth: 4
 
    MemoryPalace
    coreapp
    functional_tests
    manage
+   modules
 
 
 Indices and tables
