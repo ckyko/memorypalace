@@ -192,8 +192,8 @@ img.draggable:hover {
 }
 
 .roomImage{
-  width:100%;
-  height:50%;
+  width:150px;
+  height:100px;
 }
 
 div.room_card:hover span:first-of-type a {

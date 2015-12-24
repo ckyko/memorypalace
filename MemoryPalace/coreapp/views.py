@@ -22,17 +22,10 @@ def index(req):
     :param req:
     :return: index page
     """
-    data = {'title': 'MemoryPalace', 'header': 'Login | Register',
-        'headerLink': '#modal_register_login',
+    data = {'title': 'MemoryPalace',
         'CreatePalaceForm':CreatePalaceForm(),
         'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
 
-    if req.user.is_authenticated():         # check login already or not
-        data['header'] = 'Logout'
-        data['headerLink'] = '/logout'
-    else:
-        data['header'] = 'Login | Register'
-        data['headerLink'] = '#modal_register_login'
     return render(req, 'home.html', data)
 
 
@@ -40,11 +33,9 @@ def about(req):
     """
     this function return about page
     """
-    data = {'title': 'MemoryPalace', 'header': 'Login | Register',
-            'headerLink': '#modal_register_login'}
-    if req.user.is_authenticated():   # check login already or not
-        data['header'] = 'Logout'
-        data['headerLink'] = '/logout'
+    data = {'title': 'MemoryPalace',
+        'CreatePalaceForm':CreatePalaceForm(),
+        'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
     return render(req, 'about.html', data)
 
 
@@ -52,11 +43,9 @@ def contact(req):
     """
     this function return contact page
     """
-    data = {'title': 'MemoryPalace', 'header': 'Login | Register',
-    'headerLink': '#modal_register_login'}
-    if req.user.is_authenticated():   # check login already or not
-        data['header'] = 'Logout'
-        data['headerLink'] = '/logout'
+    data = {'title': 'MemoryPalace',
+        'CreatePalaceForm':CreatePalaceForm(),
+        'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
     return render(req, 'contact.html', data)
 
 
@@ -67,8 +56,7 @@ def log_in(req):
     if user fill in all information correct and click submit, it will log in
     user and redirect to index page.
     """
-    data = {'title': 'MemoryPalace', 'header': 'Login | Register',
-        'headerLink': '#modal_register_login',
+    data = {'title': 'MemoryPalace',
         'CreatePalaceForm':CreatePalaceForm(),
         'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
     errors = []
@@ -82,7 +70,7 @@ def log_in(req):
             if user.is_active:                    # check user is active or not
                 login(req, user)
                 # req.session['username'] = name
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect(req.META.get('HTTP_REFERER'))#redirect to the page whilst clicking on the modal
             else:
                 errors.append('Disabled account')
                 temp['errors'] = errors
@@ -101,12 +89,9 @@ def log_out(req):
     This is log out function.
 
     """
-    data = {'title': 'MemoryPalace', 'header': 'Login | Register',
-    'headerLink': '#modal_register_login'}
+    data = {'title': 'MemoryPalace'}
     if req.user.is_authenticated():        # check login already or not
         logout(req)                        # log out user
-    data['header'] = 'Login | Register'
-    data['headerLink'] = '#modal_register_login'
     return HttpResponseRedirect('/')
 
 
@@ -117,16 +102,13 @@ def palace_library(req):
     page without user information. if user is login, it will give library page
     with user information.
     """
-    data = {'title': 'MemoryPalace', 'header': 'Login | Register',
-    'headerLink': '#modal_register_login',
+    data = {'title': 'MemoryPalace',
     'CreatePalaceForm':CreatePalaceForm(),
     'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
     if not req.user.is_authenticated():        # check login already or not
         data['user_palace'] = None
         return render(req, 'palace_library.html', data)
     else:
-        data['header'] = 'Logout'
-        data['headerLink'] = '/logout'
         input_user = req.user          # get user
 
         # get all user palaces for user
@@ -136,10 +118,10 @@ def palace_library(req):
 
 
 def testing(req):
-    data = {'title': 'MemoryPalace', 'header': 'Login | Register',
-            'headerLink': '#modal_register_login',
-            'CreatePalaceForm':CreatePalaceForm(),
-            'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+    data = {'title': 'MemoryPalace',
+        'CreatePalaceForm':CreatePalaceForm(),
+        'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+
     data['test'] = "images/memory_objects/char2.png"
     return render(req, 'test.html', data)
 
@@ -150,10 +132,10 @@ def register(req):
     once user input the correct information, it will save user information to
     database and redirect to index page.
     """
-    data = {'title': 'MemoryPalace', 'header': 'Login | Register',
-            'headerLink': '#modal_register_login',
-            'CreatePalaceForm': CreatePalaceForm(),
-            'CreateRoomForm': CreateRoomForm(), 'objectForm': UploadImageForm()}
+    data = {'title': 'MemoryPalace',
+    'CreatePalaceForm':CreatePalaceForm(),
+    'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+
     errors = []
     temp = data
     ##############################################################
@@ -187,7 +169,7 @@ def register(req):
                     password=password1,
                     )
                 user.save()
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect('/#modal_login')
         temp['errors'] = errors
         return redirect('/#modal_register')
         del errors[:] #reset errors
@@ -203,13 +185,11 @@ def MemoryPalace(req):
         if user is login and specify which room, it will open user's room. it means pass
         all user's room information to page
     """
-    data = {'title': 'MemoryPalace', 'header': 'Login | Register',
-            'headerLink': '#modal_register_login',
-            'CreatePalaceForm':CreatePalaceForm(),
-            'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+
+    data = {'title': 'MemoryPalace',
+        'CreatePalaceForm':CreatePalaceForm(),
+        'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
     if req.user.is_authenticated():   # check login already or not
-        data['header'] = 'Logout'
-        data['headerLink'] = '/logout'
         data['room'] = None
         data['user_room'] = None
         data['roomObj'] = None
@@ -277,8 +257,6 @@ def createPalace(req):
     if not req.user.is_authenticated():   # check login already or not
         return HttpResponseRedirect('/')
     else:
-        data['header'] = 'Logout'
-        data['headerLink'] = '/logout'
         if req.method == "POST":      # if user submit the form
 
             # create palace form
@@ -318,11 +296,17 @@ def deletePalace(req):
 
 def deleteImageObject(req):
     try:
-        u = RoomObject.objects.filter(id=req.GET.get('objectID', ''))
+        if(PalaceObject.objects.filter(id=req.GET.get('objectID', '')) and PalaceObject.objects.filter(public=0)):#if delete called on palace object and palace object isn't public
+            u = PalaceObject.objects.filter(id=req.GET.get('objectID', ''))
+        elif(RoomObject.objects.filter(id=req.GET.get('objectID', ''))):#if delete called on room object
+            u = RoomObject.objects.filter(id=req.GET.get('objectID', ''))
     except User.DoesNotExist:
         pass
     else:
-        u.delete()
+        try:
+            u.delete()#try delete if u exists
+        except:
+            pass#pass on exceptional cases i.e when object is public
     return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', '')+ '&roomName=' +req.GET.get('roomName', ''))
 
 
@@ -343,8 +327,7 @@ def createRoom(req):
     the url for this function is ../createRoom
 
     """
-    data = {'title': 'MemoryPalace', 'header': 'Login | Register',
-        'headerLink': '#modal_register_login',
+    data = {'title': 'MemoryPalace',
         'CreatePalaceForm':CreatePalaceForm(),
         'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
     if not req.user.is_authenticated():        # check login already or not

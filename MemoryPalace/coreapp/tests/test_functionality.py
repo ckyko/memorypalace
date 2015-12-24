@@ -4,7 +4,10 @@ from selenium.webdriver import ActionChains
 import os
 import unittest
 
-keys_dict = {"username":"testuser", "email":"testuser@testemail.com", "password":"testuser", "palace_name":"testuser_palace", "room_name":"testuser_palace_room", "img_loc":"/home/satya/wdhw/memory/memorypalacedev/MemoryPalace/coreapp/static/images/previews/pre1.jpg"  }
+loc=os.getcwd()#get current location it should be the location to tests folder
+os.chdir("..")#go back to coreapp
+loc=os.getcwd()#assign new location to the variable
+keys_dict = {"username":"testuser", "email":"testuser@testemail.com", "password":"testuser", "palace_name":"testuser_palace", "room_name":"testuser_palace_room", "img_loc":loc+"/static/images/previews/pre1.jpg"  }
 class NewVisitorTest(unittest.TestCase):
 
 
@@ -38,7 +41,7 @@ class NewVisitorTest(unittest.TestCase):
         #Submit the Registration
         self.browser.find_element_by_id("register_submit").submit()
         #Check if redirected to hompage after succesfull Registration
-        self.assertEquals(self.browser.current_url, "http://localhost:8000/" )
+        self.assertEquals(self.browser.current_url, "http://localhost:8000/#modal_login" )
 
     def login(self):
         '''
@@ -53,7 +56,7 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.find_element_by_id("username").send_keys(keys_dict["username"])
         #Enter the Password
         self.browser.find_element_by_id("password").send_keys(keys_dict["password"])
-        #Submit to Login
+        #Submit login
         self.browser.find_element_by_id("login_submit").submit()
         #Check if redirected to the homepage after succesfull login
         self.assertEquals(self.browser.current_url, "http://localhost:8000/" )
@@ -63,8 +66,9 @@ class NewVisitorTest(unittest.TestCase):
         This function will let a user logout to the website
         '''
         #Check if logged in, if so logout
-        if self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[3]/a[@href='/logout']"):
-            self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[3]/a[@href='/logout']").click()
+        if self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[3]/a[@data-activates='testuser']"):
+            self.browser.find_element_by_xpath("//nav/div/ul[@class='right hide-on-med-and-down']/li[3]/a[@data-activates='testuser']").click()
+            self.browser.find_element_by_id('testuser').click()
 
     def Palace_add(self):
         '''
@@ -93,7 +97,7 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.find_element_by_xpath("//div/ul[@class='tabs']/li[2]/a[@href='#Private']").click()
         #Check if it conatains a palace with name 'testuser_palace'
         self.assertTrue('testuser_palace', self.browser.find_element_by_tag_name("p"))
-        #click on delete button to delete the palace
+        #click on delete button to delete the palace#Check if in Memory Palace under specific room
         self.browser.find_element_by_id("delete_"+keys_dict["palace_name"]).click()
 
     def Room_add(self):
@@ -116,6 +120,8 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.find_element_by_id("id_backgroundImage").send_keys(keys_dict["img_loc"])
         #Submit the form
         self.browser.find_element_by_id("createRoom_submit").submit()
+        #Check if in Memory Palace under specific room
+        self.assertEquals(self.browser.current_url, "http://localhost:8000/MemoryPalace/?palaceName="+keys_dict['palace_name']+'&roomName='+keys_dict['room_name'] )
 
     def Room_delete(self):
         '''
@@ -141,6 +147,7 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn('Welcome!', self.browser.find_element_by_tag_name('h1').text)
         #Call register function
         self.register()
+        self.browser.get('http://localhost:8000')
         #Call login function
         self.login()
         #Call logout function
@@ -187,9 +194,9 @@ class NewVisitorTest(unittest.TestCase):
         #Call Room_add function
         self.Room_add()
         #Call Room_delete function
-        self.Room_delete()
+        #self.Room_delete()
         #Call Palace_delete function
-        self.Palace_delete()
+        #self.Palace_delete()
         #Call logout function
         self.logout()
 

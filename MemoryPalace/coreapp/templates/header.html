@@ -1,20 +1,33 @@
 {% load staticfiles %}
 <nav class="white" role="navigation">
   <div class="nav-wrapper container">
-    <img height="65px" src="{% static "images/logo.jpg"%}" />
+    <a href="/"><img height="65px" src="{% static "images/logo.jpg"%}" /></a>
     <ul class="right hide-on-med-and-down">
       <li><a href="/">Home</a></li>
       <li><a href="/palace_library/">Library</a></li>
-      <li><a class="modal-trigger" href={{headerLink}}>{{header}}</a></li>
+      {% if user.is_authenticated %}
+      <!-- <li><a class="modal-trigger" href=/logout>Logout</a></li> -->
+      <li><a class='dropdown-button' data-activates='{{ user.username}}' style="cursor:pointer;">{{ user.username}}</a></li>
+      {% else %}
+      <li><a class="modal-trigger" href=#modal_register_login>Login | Register</a></li>
+      {% endif %}
     </ul>
+
 
     <ul id="nav-mobile" class="side-nav">
       <li><a href="/">Home</a></li>
       <li><a href="/palace_library">Library</a></li>
-      <li><a class="modal-trigger" href={{headerLink}}>{{header}}</a></li>
+      {% if user.is_authenticated %}
+      <li><a class="modal-trigger" href=/logout>"Logout"</a></li>
+      {% else %}
+      <li><a class="modal-trigger" href=#modal_register_login>Login | Register</a></li>
+      {% endif %}
     </ul>
     <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
 
   </div>
 </nav>
+<ul id='{{ user.username}}' class='dropdown-content'>
+    <li><a href="/logout">Logout</a></li>
+</ul>
 {% include "modal_register_login.html" %}
