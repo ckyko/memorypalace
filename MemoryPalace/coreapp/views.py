@@ -178,6 +178,7 @@ def MemoryPalace(req):
         if user is login and specify which room, it will open user's room. it means pass
         all user's room information to page
     """
+
     data = {'title': 'MemoryPalace',
             'CreatePalaceForm':CreatePalaceForm(),
             'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
@@ -453,6 +454,7 @@ def update(req):
         object.width = num_width
         object.note = title
         object.save()                       # save object information
+        return JsonResponse({}, safe=False)
 
     else:
         return HttpResponseRedirect('/')

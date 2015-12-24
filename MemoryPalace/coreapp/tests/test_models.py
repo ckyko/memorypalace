@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
-from coreapp.models import UserPalace, PalaceRoom, PalaceObject
+from coreapp.models import UserPalace, PalaceRoom, PalaceObject, RoomObject
 from django.contrib.auth.models import User
 
 
@@ -19,8 +19,9 @@ class UserPalaceDataBaseTestCase(TestCase):
                                                 palaceName='testing palace')
         palace_room = PalaceRoom.objects.create(userPalace=user_palace,
                                                 roomName="testing room")
-        PalaceObject.objects.create(palaceRoom=palace_room,
-                                    description="testing palace object")
+        palace_object = PalaceObject.objects.create(userPalace=user_palace,
+                                                    description="testing palace object")
+        RoomObject.objects.create(palaceRoom=palace_room, palaceObject=palace_object)
 
     def test_palace_room_object_create_in_database_or_not(self):
         """
@@ -33,8 +34,11 @@ class UserPalaceDataBaseTestCase(TestCase):
         self.assertTrue(user_palace is not None, msg="user_palace not create.")
         user_room = PalaceRoom.objects.get(userPalace=user_palace)
         self.assertTrue(user_room is not None, msg="user_room not create.")
-        palace_object = PalaceObject.objects.get(palaceRoom=user_room)
+        palace_object = PalaceObject.objects.get(userPalace=user_palace)
         self.assertTrue(palace_object is not None,
+                        msg="palace_object not create.")
+        room_object = RoomObject.objects.get(palaceRoom=user_room)
+        self.assertTrue(room_object is not None,
                         msg="palace_object not create.")
 
     def test_palaceName(self):
@@ -49,7 +53,7 @@ class UserPalaceDataBaseTestCase(TestCase):
 
     def test_roomName(self):
         """
-        Test if the Room naem i
+        Test if the Room name
         :return:
         """
         palace_room = PalaceRoom.objects.get(roomName="testing room")
