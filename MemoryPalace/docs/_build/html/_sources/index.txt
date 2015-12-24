@@ -9,9 +9,10 @@ Welcome to Memory Palaces's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 5
 
    Introduction
+   Structure
    Homepage
    Library
    Loginregister
