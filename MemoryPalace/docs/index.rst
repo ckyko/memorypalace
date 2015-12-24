@@ -9,12 +9,13 @@ Welcome to Memory Palaces's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 5
+   :maxdepth: 6
 
    Introduction
    Structure
    Homepage
    Library
+   Memorypalace
    Loginregister
 
 Indices and tables
