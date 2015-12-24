@@ -121,6 +121,7 @@ def testing(req):
     data = {'title': 'MemoryPalace',
         'CreatePalaceForm':CreatePalaceForm(),
         'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+
     data['test'] = "images/memory_objects/char2.png"
     return render(req, 'test.html', data)
 
@@ -134,6 +135,7 @@ def register(req):
     data = {'title': 'MemoryPalace',
     'CreatePalaceForm':CreatePalaceForm(),
     'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+
     errors = []
     temp = data
     ##############################################################
@@ -183,6 +185,7 @@ def MemoryPalace(req):
         if user is login and specify which room, it will open user's room. it means pass
         all user's room information to page
     """
+
     data = {'title': 'MemoryPalace',
         'CreatePalaceForm':CreatePalaceForm(),
         'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
