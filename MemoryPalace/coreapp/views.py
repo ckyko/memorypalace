@@ -137,9 +137,9 @@ def palace_library(req):
 
 def testing(req):
     data = {'title': 'MemoryPalace', 'header': 'Login | Register',
-        'headerLink': '#modal_register_login',
-        'CreatePalaceForm':CreatePalaceForm(),
-        'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+            'headerLink': '#modal_register_login',
+            'CreatePalaceForm':CreatePalaceForm(),
+            'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
     data['test'] = "images/memory_objects/char2.png"
     return render(req, 'test.html', data)
 
@@ -151,9 +151,9 @@ def register(req):
     database and redirect to index page.
     """
     data = {'title': 'MemoryPalace', 'header': 'Login | Register',
-    'headerLink': '#modal_register_login',
-    'CreatePalaceForm':CreatePalaceForm(),
-    'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+            'headerLink': '#modal_register_login',
+            'CreatePalaceForm': CreatePalaceForm(),
+            'CreateRoomForm': CreateRoomForm(), 'objectForm': UploadImageForm()}
     errors = []
     temp = data
     ##############################################################
@@ -204,9 +204,9 @@ def MemoryPalace(req):
         all user's room information to page
     """
     data = {'title': 'MemoryPalace', 'header': 'Login | Register',
-        'headerLink': '#modal_register_login',
-        'CreatePalaceForm':CreatePalaceForm(),
-        'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+            'headerLink': '#modal_register_login',
+            'CreatePalaceForm':CreatePalaceForm(),
+            'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
     if req.user.is_authenticated():   # check login already or not
         data['header'] = 'Logout'
         data['headerLink'] = '/logout'
