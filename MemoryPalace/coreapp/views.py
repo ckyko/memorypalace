@@ -456,6 +456,7 @@ def update(req):
         object.width = num_width
         object.note = title
         object.save()                       # save object information
+        return JsonResponse({}, safe=False)
 
     else:
         return HttpResponseRedirect('/')
