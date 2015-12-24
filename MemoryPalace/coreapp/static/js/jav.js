@@ -185,7 +185,7 @@ $(document).ready(function(){
         $('#modal_caption_done').click(function(){
         var caption = $("#modal_caption_id").val();
         //var caption = prompt("Enter a caption for this image.");
-        $('.draggable').attr('title', caption);
+        $('#'+object_id).attr('title', caption);
         });
 
 	/*Materialize tooltip. Having some trouble with this still.
@@ -204,7 +204,7 @@ $(document).ready(function(){
           $(($delTarget).addClass('permaBorder'));
           if($('#delete-draggable').hasClass('disabled')) {
             $('#delete-draggable').removeClass('disabled');
-            $("#delete-draggable").prop("href", "/deleteImageObject"+window.location.search+"&roomobjectID="+e.target.id)
+            $("#delete-draggable").prop("href", "/deleteRoomImageObject"+window.location.search+"&roomobjectID="+e.target.id)
           }
         }
         else if(!$(e.target).hasClass('draggable')){
@@ -220,7 +220,7 @@ $(document).ready(function(){
             e.preventDefault();
           });
           var root = location.protocol + '//' + location.host;
-          window.location.href = root+"/deleteImageObject"+window.location.search+"&palaceobjectID="+e.target.id;
+          window.location.href = root+"/deletePalaceImageObject"+window.location.search+"&palaceobjectID="+e.target.id;
         }
       });
 
