@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>coreapp.tests &mdash; MemoryPalace  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="MemoryPalace  documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for coreapp.tests</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">django.core.urlresolvers</span> <span class="kn">import</span> <span class="n">resolve</span>
+<span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpRequest</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">PalaceObject</span>
+<span class="kn">from</span> <span class="nn">coreapp</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">URL_Dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;/&#39;</span><span class="p">:</span> <span class="n">views</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;/MemoryPalace/&#39;</span><span class="p">:</span> <span class="n">views</span><span class="o">.</span><span class="n">MemoryPalace</span><span class="p">,</span> <span class="s">&#39;/about/&#39;</span><span class="p">:</span> <span class="n">views</span><span class="o">.</span><span class="n">about</span><span class="p">,</span> <span class="s">&#39;/contact/&#39;</span><span class="p">:</span> <span class="n">views</span><span class="o">.</span><span class="n">contact</span><span class="p">,</span> <span class="s">&#39;/login/&#39;</span><span class="p">:</span> <span class="n">views</span><span class="o">.</span><span class="n">log_in</span><span class="p">,</span> <span class="s">&#39;/register/&#39;</span><span class="p">:</span> <span class="n">views</span><span class="o">.</span><span class="n">register</span><span class="p">}</span>
+<span class="c">#Dictionary to test multiple pages with same functionality</span>
+<div class="viewcode-block" id="MemoryPalaceTest"><a class="viewcode-back" href="../../coreapp.html#coreapp.tests.MemoryPalaceTest">[docs]</a><span class="k">class</span> <span class="nc">MemoryPalaceTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span></div>
+    <span class="c">#Test if the provided &quot;value&quot; is linked to the url</span>
+    <span class="k">def</span> <span class="nf">test_root_url_resolves_to_URL_Dict_view</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">URL_Dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">found</span> <span class="o">=</span> <span class="n">resolve</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">found</span><span class="o">.</span><span class="n">func</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="c">#Test if every HTML page contains basic tags</span>
+    <span class="k">def</span> <span class="nf">test_URL_Dict_returns_correct_html</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">HttpRequest</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">URL_Dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">value</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">b</span><span class="s">&#39;&lt;!DOCTYPE html&gt;&#39;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="n">b</span><span class="s">&#39;&lt;title&gt;MemoryPalace&lt;/title&gt;&#39;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">b</span><span class="s">&#39;&lt;/html&gt;&#39;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">test_database</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pObjNum</span><span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">PalaceObject</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">PalaceObject</span><span class="p">(</span><span class="s">&quot;Char&quot;</span><span class="p">,</span><span class="s">&quot;This is a test feature&quot;</span><span class="p">,</span><span class="s">&quot;char2.png&quot;</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">PalaceObject</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()),</span><span class="n">pObjNum</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Satya Gupta, Enan Rahman, Hensly Taveras, Imer Jance, Kaiying Chen.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

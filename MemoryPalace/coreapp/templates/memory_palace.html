@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+{% block body %}
+{% load staticfiles %}
+
+<div id="index-banner" class="container section no-pad-bot">
+  <div class="center-align">
+    <h1 class="teal-text text-darken-4" id="room_name">{{ room.roomName }}</h1>
+      <p id="palace_id" style="visibility: hidden;">{{user_palace.id}}</p>
+    <div class="right-align">
+      <form action="/upload_image/" method="post" id="upload_image" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!--<input type="file" id="file" accept="image/*" style="visibility: hidden; width: 1px; height: 1px" multiple/>-->
+        {{objectForm.objectImage}}
+          {% if room.roomName %}
+        <a id="add_objectImag" class="btn-floating btn-large waves-effect waves-light teal accent-4" onclick="document.getElementById('id_objectImage').click(); return false">
+          <i class="material-icons">library_add</i>
+        </a>&nbsp&nbsp
+        <a id="delete-draggable" class="btn-floating btn-large waves-effect waves-light teal accent-4 disabled">
+          <i class="material-icons">delete</i>
+        </a>
+          {% endif %}
+      </form>
+    </div>
+  </div>
+  <div id="PalaceElementsContainer">
+    {% include "vertscrollbox.html" %}
+    {% include "room.html" %}
+	</div>
+  {% include "horscrollbox.html" %}
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+<div class="modal modal-fixed-footer" id="modal_createPalace">
+  <form method="post" enctype="multipart/form-data" action="createPalace/">
+    <div class="modal-content">
+      {% csrf_token %}
+      {{CreatePalaceForm.as_p}}
+    </div>
+    <div class="modal-footer">
+      <button class="btn waves-effect waves-light" type="submit" name="action" id="createPalace_submit">Submit</button>
+    </div>
+  </form>
+</div>
