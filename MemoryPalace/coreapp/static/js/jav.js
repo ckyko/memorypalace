@@ -209,11 +209,10 @@ $(document).ready(function(){
          var height = $('#'+id).css('height');
          var width = $('#'+id).css('width');
 
-      $.get("/update/",{'id': id, 'title': title, 'position_x': position_x,
-      'position_y':position_y, 'height':height, 'width':width }, function(ret){
+          $.get("/update/",{'id': id, 'title': title, 'position_x': position_x,
+          'position_y':position_y, 'height':height, 'width':width }, function(ret){
 
-        })
-
+            })
 
         });
 
@@ -233,7 +232,7 @@ $(document).ready(function(){
           $(($delTarget).addClass('permaBorder'));
           if($('#delete-draggable').hasClass('disabled')) {
             $('#delete-draggable').removeClass('disabled');
-            $("#delete-draggable").prop("href", "/deleteImageObject"+window.location.search+"&objectID="+e.target.id)
+            $("#delete-draggable").prop("href", "/deleteRoomImageObject"+window.location.search+"&roomobjectID="+e.target.id)
           }
         }
         else if(!$(e.target).hasClass('draggable')){
@@ -249,7 +248,7 @@ $(document).ready(function(){
             e.preventDefault();
           });
           var root = location.protocol + '//' + location.host;
-          window.location.href = root+"/deleteImageObject"+window.location.search+"&objectID="+e.target.id;
+          window.location.href = root+"/deletePalaceImageObject"+window.location.search+"&palaceobjectID="+e.target.id;
         }
       });
 

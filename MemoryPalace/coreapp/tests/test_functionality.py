@@ -4,10 +4,8 @@ from selenium.webdriver import ActionChains
 import os
 import unittest
 
-loc=os.getcwd()#get current location it should be the location to tests folder
-os.chdir("..")#go back to coreapp
-loc=os.getcwd()#assign new location to the variable
-keys_dict = {"username":"testuser", "email":"testuser@testemail.com", "password":"testuser", "palace_name":"testuser_palace", "room_name":"testuser_palace_room", "img_loc":loc+"/static/images/previews/pre1.jpg"  }
+loc=os.getcwd()#get current location
+keys_dict = {"username":"testuser", "email":"testuser@testemail.com", "password":"testuser", "palace_name":"testuser_palace", "room_name":"testuser_palace_room", "img_loc":loc+"/coreapp/static/images/previews/pre1.jpg"  }
 class NewVisitorTest(unittest.TestCase):
 
 
@@ -127,8 +125,6 @@ class NewVisitorTest(unittest.TestCase):
         '''
         This function lets user delete a room
         '''
-        #Check if in Memory Palace under specific room
-        self.assertEquals(self.browser.current_url, "http://localhost:8000/MemoryPalace/?palaceName="+keys_dict['palace_name']+'&roomName='+keys_dict['room_name'] )
         #Delete the room
         self.browser.get('http://127.0.0.1:8000/deleteRoom?palaceName='+keys_dict['palace_name']+'&roomName='+keys_dict['room_name'])
 
@@ -194,9 +190,9 @@ class NewVisitorTest(unittest.TestCase):
         #Call Room_add function
         self.Room_add()
         #Call Room_delete function
-        #self.Room_delete()
+        self.Room_delete()
         #Call Palace_delete function
-        #self.Palace_delete()
+        self.Palace_delete()
         #Call logout function
         self.logout()
 
