@@ -24,8 +24,6 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="MemoryPalace  documentation" href="index.html" />
-    <link rel="next" title="coreapp.migrations package" href="coreapp.migrations.html" />
-    <link rel="prev" title="MemoryPalace package" href="MemoryPalace.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -83,7 +81,7 @@
 
 <dl class="attribute">
 <dt id="coreapp.forms.CreatePalaceForm.base_fields">
-<code class="descclassname">CreatePalaceForm.</code><code class="descname">base_fields</code><em class="property"> = OrderedDict([('palaceName', &lt;django.forms.fields.CharField object at 0x2b4f1211d7d0&gt;), ('public', &lt;django.forms.fields.BooleanField object at 0x2b4f1211d8d0&gt;)])</em><a class="headerlink" href="#coreapp.forms.CreatePalaceForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">CreatePalaceForm.</code><code class="descname">base_fields</code><em class="property"> = OrderedDict([('palaceName', &lt;django.forms.fields.CharField object at 0x2b548fc6dc90&gt;), ('public', &lt;django.forms.fields.BooleanField object at 0x2b548fc6dad0&gt;)])</em><a class="headerlink" href="#coreapp.forms.CreatePalaceForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -120,7 +118,7 @@
 
 <dl class="attribute">
 <dt id="coreapp.forms.CreateRoomForm.base_fields">
-<code class="descclassname">CreateRoomForm.</code><code class="descname">base_fields</code><em class="property"> = OrderedDict([('roomName', &lt;django.forms.fields.CharField object at 0x2b4f1211da10&gt;), ('backgroundImage', &lt;django.forms.fields.ImageField object at 0x2b4f1211db90&gt;)])</em><a class="headerlink" href="#coreapp.forms.CreateRoomForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">CreateRoomForm.</code><code class="descname">base_fields</code><em class="property"> = OrderedDict([('roomName', &lt;django.forms.fields.CharField object at 0x2b548fc6d8d0&gt;), ('backgroundImage', &lt;django.forms.fields.ImageField object at 0x2b548fc6d590&gt;)])</em><a class="headerlink" href="#coreapp.forms.CreateRoomForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -141,12 +139,12 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.forms.forms.Form</span></code></p>
 <dl class="attribute">
 <dt id="coreapp.forms.UploadImageForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = OrderedDict([('objectImage', &lt;django.forms.fields.ImageField object at 0x2b4f1211dc10&gt;)])</em><a class="headerlink" href="#coreapp.forms.UploadImageForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">base_fields</code><em class="property"> = OrderedDict([('objectImage', &lt;django.forms.fields.ImageField object at 0x2b548fc6d750&gt;)])</em><a class="headerlink" href="#coreapp.forms.UploadImageForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="coreapp.forms.UploadImageForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = OrderedDict([('objectImage', &lt;django.forms.fields.ImageField object at 0x2b4f1211dc10&gt;)])</em><a class="headerlink" href="#coreapp.forms.UploadImageForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">declared_fields</code><em class="property"> = OrderedDict([('objectImage', &lt;django.forms.fields.ImageField object at 0x2b548fc6d750&gt;)])</em><a class="headerlink" href="#coreapp.forms.UploadImageForm.declared_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -159,34 +157,9 @@
 </div>
 <div class="section" id="coreapp-models-module">
 <h2>coreapp.models module<a class="headerlink" href="#coreapp-models-module" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="module-coreapp.models"></span><dl class="class">
-<dt id="coreapp.models.Object">
-<em class="property">class </em><code class="descclassname">coreapp.models.</code><code class="descname">Object</code><span class="sig-paren">(</span><em>id</em>, <em>palaceRoom</em>, <em>url</em>, <em>description</em>, <em>width</em>, <em>height</em>, <em>position_x</em>, <em>position_y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/models.html#Object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.models.Object" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
-<dl class="exception">
-<dt id="coreapp.models.Object.DoesNotExist">
-<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#coreapp.models.Object.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="coreapp.models.Object.MultipleObjectsReturned">
-<em class="property">exception </em><code class="descclassname">Object.</code><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#coreapp.models.Object.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="coreapp.models.Object.objects">
-<code class="descclassname">Object.</code><code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#coreapp.models.Object.objects" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="coreapp.models.Object.palaceRoom">
-<code class="descclassname">Object.</code><code class="descname">palaceRoom</code><a class="headerlink" href="#coreapp.models.Object.palaceRoom" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<span class="target" id="module-coreapp.models"></span><p>Models.py
+This is where all the models of the database are contained</p>
+<p>This is where all the models of the database are contained</p>
 <dl class="class">
 <dt id="coreapp.models.PalaceObject">
 <em class="property">class </em><code class="descclassname">coreapp.models.</code><code class="descname">PalaceObject</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/models.html#PalaceObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.models.PalaceObject" title="Permalink to this definition">¶</a></dt>
@@ -216,11 +189,21 @@ position_y: The y coordinate of the object in the room</p>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="coreapp.models.PalaceObject.palaceRoom">
-<code class="descclassname">PalaceObject.</code><code class="descname">palaceRoom</code><a class="headerlink" href="#coreapp.models.PalaceObject.palaceRoom" title="Permalink to this definition">¶</a></dt>
+<dt id="coreapp.models.PalaceObject.roomobject_set">
+<code class="descclassname">PalaceObject.</code><code class="descname">roomobject_set</code><a class="headerlink" href="#coreapp.models.PalaceObject.roomobject_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="coreapp.models.PalaceObject.userPalace">
+<code class="descclassname">PalaceObject.</code><code class="descname">userPalace</code><a class="headerlink" href="#coreapp.models.PalaceObject.userPalace" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
+
+<dl class="function">
+<dt id="coreapp.models.PalaceObject_post_delete_handler">
+<code class="descclassname">coreapp.models.</code><code class="descname">PalaceObject_post_delete_handler</code><span class="sig-paren">(</span><em>sender</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/models.html#PalaceObject_post_delete_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.models.PalaceObject_post_delete_handler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="class">
 <dt id="coreapp.models.PalaceRoom">
@@ -244,18 +227,13 @@ backgroundImage: The background Image of the room</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="coreapp.models.PalaceRoom.object_set">
-<code class="descclassname">PalaceRoom.</code><code class="descname">object_set</code><a class="headerlink" href="#coreapp.models.PalaceRoom.object_set" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
 <dt id="coreapp.models.PalaceRoom.objects">
 <code class="descclassname">PalaceRoom.</code><code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#coreapp.models.PalaceRoom.objects" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="coreapp.models.PalaceRoom.palaceobject_set">
-<code class="descclassname">PalaceRoom.</code><code class="descname">palaceobject_set</code><a class="headerlink" href="#coreapp.models.PalaceRoom.palaceobject_set" title="Permalink to this definition">¶</a></dt>
+<dt id="coreapp.models.PalaceRoom.roomobject_set">
+<code class="descclassname">PalaceRoom.</code><code class="descname">roomobject_set</code><a class="headerlink" href="#coreapp.models.PalaceRoom.roomobject_set" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -270,15 +248,53 @@ backgroundImage: The background Image of the room</p>
 
 </dd></dl>
 
+<dl class="function">
+<dt id="coreapp.models.PalaceRoom_post_delete_handler">
+<code class="descclassname">coreapp.models.</code><code class="descname">PalaceRoom_post_delete_handler</code><span class="sig-paren">(</span><em>sender</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/models.html#PalaceRoom_post_delete_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.models.PalaceRoom_post_delete_handler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="coreapp.models.RoomObject">
+<em class="property">class </em><code class="descclassname">coreapp.models.</code><code class="descname">RoomObject</code><span class="sig-paren">(</span><em>id</em>, <em>palaceRoom</em>, <em>palaceObject</em>, <em>url</em>, <em>note</em>, <em>width</em>, <em>height</em>, <em>position_x</em>, <em>position_y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/models.html#RoomObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.models.RoomObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="exception">
+<dt id="coreapp.models.RoomObject.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#coreapp.models.RoomObject.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="coreapp.models.RoomObject.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descclassname">RoomObject.</code><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#coreapp.models.RoomObject.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="coreapp.models.RoomObject.objects">
+<code class="descclassname">RoomObject.</code><code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#coreapp.models.RoomObject.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="coreapp.models.RoomObject.palaceObject">
+<code class="descclassname">RoomObject.</code><code class="descname">palaceObject</code><a class="headerlink" href="#coreapp.models.RoomObject.palaceObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="coreapp.models.RoomObject.palaceRoom">
+<code class="descclassname">RoomObject.</code><code class="descname">palaceRoom</code><a class="headerlink" href="#coreapp.models.RoomObject.palaceRoom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="class">
 <dt id="coreapp.models.UserPalace">
 <em class="property">class </em><code class="descclassname">coreapp.models.</code><code class="descname">UserPalace</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/models.html#UserPalace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.models.UserPalace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
-<p>user: The foreign key to connect it to a user
-palaceName: The name of the Memory Palace and is Unique for each user
-so a user can&#8217;t have 2 palaces with the same name
-numOfRooms: The number of rooms in the palace
-public: Whether the Palace is public or not false by default</p>
+<p>user: The foreign key to connect it to a user</p>
+<p>palaceName: The name of the Memory Palace and is Unique for each user
+so a user can&#8217;t have 2 palaces with the same name</p>
+<p>numOfRooms: The number of rooms in the palace</p>
+<p>public: Whether the Palace is public or not false by default</p>
 <dl class="exception">
 <dt id="coreapp.models.UserPalace.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#coreapp.models.UserPalace.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -297,6 +313,11 @@ public: Whether the Palace is public or not false by default</p>
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="coreapp.models.UserPalace.palaceobject_set">
+<code class="descclassname">UserPalace.</code><code class="descname">palaceobject_set</code><a class="headerlink" href="#coreapp.models.UserPalace.palaceobject_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="coreapp.models.UserPalace.palaceroom_set">
 <code class="descclassname">UserPalace.</code><code class="descname">palaceroom_set</code><a class="headerlink" href="#coreapp.models.UserPalace.palaceroom_set" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -309,8 +330,10 @@ public: Whether the Palace is public or not false by default</p>
 </dd></dl>
 
 </div>
-<div class="section" id="coreapp-tests-module">
-<h2>coreapp.tests module<a class="headerlink" href="#coreapp-tests-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-coreapp.tests">
+<span id="coreapp-tests-module"></span><h2>coreapp.tests module<a class="headerlink" href="#module-coreapp.tests" title="Permalink to this headline">¶</a></h2>
+<p>import all the tests and put them here.
+test should begin with <a href="#id1"><span class="problematic" id="id2">test_</span></a>&#8220;&#8221;</p>
 </div>
 <div class="section" id="module-coreapp.views">
 <span id="coreapp-views-module"></span><h2>coreapp.views module<a class="headerlink" href="#module-coreapp.views" title="Permalink to this headline">¶</a></h2>
@@ -325,9 +348,9 @@ public: Whether the Palace is public or not false by default</p>
 <code class="descclassname">coreapp.views.</code><code class="descname">MemoryPalace</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#MemoryPalace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.MemoryPalace" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function response Memory palace room page.
 the url for this function is /MemoryPalace
-function check user login or not, if not it will just dispaly a model
-of room. if user is login and specify which room, it will open user&#8217;s
-room. it means pass all user&#8217;s room information to page</p>
+function check user login or not, if not it will just display a model of room.
+if user is login and specify which room, it will open user&#8217;s room. it means pass
+all user&#8217;s room information to page</p>
 </dd></dl>
 
 <dl class="function">
@@ -359,6 +382,18 @@ if user is login already, it will return create palace form.
 <dd><p>This function give create room form page.
 the url for this function is ../createRoom</p>
 </dd></dl>
+
+<dl class="function">
+<dt id="coreapp.views.create_room_object">
+<code class="descclassname">coreapp.views.</code><code class="descname">create_room_object</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#create_room_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.create_room_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>This Function is for adding the room object. When the user click object in vertscrollbox,
+this function will called.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="coreapp.views.deleteImageObject">
+<code class="descclassname">coreapp.views.</code><code class="descname">deleteImageObject</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#deleteImageObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.deleteImageObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="function">
 <dt id="coreapp.views.deletePalace">
@@ -408,7 +443,10 @@ with user information.</p>
 <dl class="function">
 <dt id="coreapp.views.register">
 <code class="descclassname">coreapp.views.</code><code class="descname">register</code><span class="sig-paren">(</span><em>req</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#register"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.register" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>This is register function. This function will give a register form first,
+once user input the correct information, it will save user information to
+database and redirect to index page.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="coreapp.views.snippet_detail">
@@ -434,7 +472,8 @@ with user information.</p>
 <dl class="function">
 <dt id="coreapp.views.upload_image">
 <code class="descclassname">coreapp.views.</code><code class="descname">upload_image</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/coreapp/views.html#upload_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#coreapp.views.upload_image" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function will called when upload image.</p>
+<dd><p>This function will called when upload image.
+It will create PalaceObject and save.</p>
 </dd></dl>
 
 </div>
@@ -457,7 +496,7 @@ with user information.</p>
 <li><a class="reference internal" href="#module-coreapp.admin">coreapp.admin module</a></li>
 <li><a class="reference internal" href="#module-coreapp.forms">coreapp.forms module</a></li>
 <li><a class="reference internal" href="#coreapp-models-module">coreapp.models module</a></li>
-<li><a class="reference internal" href="#coreapp-tests-module">coreapp.tests module</a></li>
+<li><a class="reference internal" href="#module-coreapp.tests">coreapp.tests module</a></li>
 <li><a class="reference internal" href="#module-coreapp.views">coreapp.views module</a></li>
 <li><a class="reference internal" href="#module-coreapp">Module contents</a></li>
 </ul>
@@ -467,8 +506,6 @@ with user information.</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="MemoryPalace.html" title="previous chapter">MemoryPalace package</a></li>
-      <li>Next: <a href="coreapp.migrations.html" title="next chapter">coreapp.migrations package</a></li>
   </ul></li>
 </ul>
 </div>
