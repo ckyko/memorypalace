@@ -1,23 +1,16 @@
 """
     Models.py
     This is where all the models of the database are contained
-
-    This is where all the models of the database are contained
 """
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 class UserPalace(models.Model):
     """
-        user: The foreign key to connect it to a user
-
-        palaceName: The name of the Memory Palace and is Unique for each user
-        so a user can't have 2 palaces with the same name
-
-        numOfRooms: The number of rooms in the palace
-
-        public: Whether the Palace is public or not false by default
+        User Palace Table
+        Contains the Memory Palaces for the user.
     """
     user = models.ForeignKey(User, null=True)
     palaceName = models.CharField(max_length=200, unique=True, null=True)
@@ -30,17 +23,11 @@ class UserPalace(models.Model):
     class Meta:
         unique_together = (("user", "palaceName"),)
 
-"""
-Palace Room Table
-Contains the rooms in the Palace
-"""
+
 class PalaceRoom(models.Model):
     """
-        user: The foreign key to connect it to a user
-        userPalace: The foriegn key to the Palace the room belongs in
-        roomName: The name of the room coupled with the Palace so that they are
-        named uniqely for their palace
-        backgroundImage: The background Image of the room
+        Palace Room Table
+        Contains the rooms in the Palace
     """
     user = models.ForeignKey(User, null=True)
     userPalace = models.ForeignKey('UserPalace', null=True)
@@ -54,19 +41,11 @@ class PalaceRoom(models.Model):
     class Meta:
         unique_together = (("user", "userPalace", "roomName"),)
 
-# Palace Object Table
-# Contains the objects inside a room
-
 
 class PalaceObject(models.Model):
     """
-        user: The foreign key to connect it to a user
-        userPalace: The foriegn key to the Palace the room belongs in
-        palaceRoom: The foriegn key that gives you the room the object belongs in.
-        objectName: The name of the object unique to the room it is inside
-        objectImage: The image used for the object
-        position_x: The x coordinate of the object in the room
-        position_y: The y coordinate of the object in the room
+        Palace Object Table
+        Contains the objects inside a palace
     """
     # user = models.ForeignKey(User, null=True)
     userPalace = models.ForeignKey('UserPalace', null=True)
@@ -90,6 +69,10 @@ class PalaceObject(models.Model):
 
 
 class RoomObject(models.Model):
+    """
+        Room Objects
+        The objects in a room used from inside the palace
+    """
     palaceRoom = models.ForeignKey('PalaceRoom', null=True)
     palaceObject = models.ForeignKey('PalaceObject', null=True)
     url = models.CharField(max_length=200, default=" ")
@@ -105,17 +88,21 @@ class RoomObject(models.Model):
     class Meta:
         unique_together = (("palaceRoom", "url"),)
 
-from django.db.models.signals import post_delete
-from django.dispatch import receiver
 
 @receiver(post_delete, sender=PalaceRoom)
 def PalaceRoom_post_delete_handler(sender, **kwargs):
+    """
+        Deletes objects available in the Palace
+    """
     PalaceRoom = kwargs['instance']
     storage, path = PalaceRoom.backgroundImage.storage, PalaceRoom.backgroundImage.path
     storage.delete(path)
 
 @receiver(post_delete, sender=PalaceObject)
 def PalaceObject_post_delete_handler(sender, **kwargs):
+    """
+        Delete objects inside a room
+    """
     PalaceObject = kwargs['instance']
     storage, path = PalaceObject.objectImage.storage, PalaceObject.objectImage.path
     storage.delete(path)
