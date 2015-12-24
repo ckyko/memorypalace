@@ -1,5 +1,5 @@
-Login/Register
-==============
+Login/Register System
+=====================
 
 Subsection
 ----------
