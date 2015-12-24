@@ -204,7 +204,7 @@ $(document).ready(function(){
           $(($delTarget).addClass('permaBorder'));
           if($('#delete-draggable').hasClass('disabled')) {
             $('#delete-draggable').removeClass('disabled');
-            $("#delete-draggable").prop("href", "/deleteImageObject"+window.location.search+"&objectID="+e.target.id)
+            $("#delete-draggable").prop("href", "/deleteImageObject"+window.location.search+"&roomobjectID="+e.target.id)
           }
         }
         else if(!$(e.target).hasClass('draggable')){
@@ -220,7 +220,7 @@ $(document).ready(function(){
             e.preventDefault();
           });
           var root = location.protocol + '//' + location.host;
-          window.location.href = root+"/deleteImageObject"+window.location.search+"&objectID="+e.target.id;
+          window.location.href = root+"/deleteImageObject"+window.location.search+"&palaceobjectID="+e.target.id;
         }
       });
 
