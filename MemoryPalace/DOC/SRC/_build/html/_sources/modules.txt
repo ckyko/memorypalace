@@ -1,7 +1,10 @@
 MemoryPalace
 ============
 
-.. toctree::
-   :maxdepth: 10
+.. automodule::
+Models
+   :members:
+    
 
+   
    MemoryPalace
