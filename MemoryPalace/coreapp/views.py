@@ -291,15 +291,18 @@ def deletePalace(req):
     return redirect('/palace_library/#Private')
 
 
-def deleteImageObject(req):
-    if(req.GET.get('roomobjectID', '')):#check if delete call for room object
-        u = RoomObject.objects.filter(id=req.GET.get('roomobjectID', ''))
-        u.delete()
-    elif(req.GET.get('palaceobjectID', '')):#check if delete call for palace object
-        u = PalaceObject.objects.filter(id=req.GET.get('palaceobjectID', ''))
-        if(PalaceObject.objects.filter(public=0)):#check if delete call is for a user uploaded object and not an public object
-            u.delete()
+def deleteRoomImageObject(req):
+    u = RoomObject.objects.filter(id=req.GET.get('roomobjectID', ''))
+    u.delete()
     return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', '')+ '&roomName=' +req.GET.get('roomName', ''))
+
+def deletePalaceImageObject(req):
+    u = PalaceObject.objects.filter(id=req.GET.get('palaceobjectID', ''),public=0)
+    u.delete()
+    if(req.GET.get('roomName', '')):
+        return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', '')+ '&roomName=' +req.GET.get('roomName', ''))
+    else:
+        return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', ''))
 
 
 def deleteRoom(req):
