@@ -25,6 +25,10 @@ This is possible with Memory Palaces.
 What are Memory Palaces?
 ------------------------
 
+.. image:: _static/images/palacebrain.jpg
+   :scale: 60%
+   :align: right
+
 In the days before computers were common household items, even as far back
 as in the days of ancient Rome, people utilized memory training techniques
 to keep their minds sharp and memories organized. One of the most popular
