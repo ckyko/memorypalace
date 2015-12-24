@@ -292,18 +292,13 @@ def deletePalace(req):
 
 
 def deleteImageObject(req):
-    try:
-        if(PalaceObject.objects.filter(id=req.GET.get('objectID', '')) and PalaceObject.objects.filter(public=0)):#if delete called on palace object and palace object isn't public
-            u = PalaceObject.objects.filter(id=req.GET.get('objectID', ''))
-        elif(RoomObject.objects.filter(id=req.GET.get('objectID', ''))):#if delete called on room object
-            u = RoomObject.objects.filter(id=req.GET.get('objectID', ''))
-    except User.DoesNotExist:
-        pass
-    else:
-        try:
-            u.delete()#try delete if u exists
-        except:
-            pass#pass on exceptional cases i.e when object is public
+    if(req.GET.get('roomobjectID', '')):#check if delete call for room object
+        u = RoomObject.objects.filter(id=req.GET.get('roomobjectID', ''))
+        u.delete()
+    elif(req.GET.get('palaceobjectID', '')):#check if delete call for palace object
+        u = PalaceObject.objects.filter(id=req.GET.get('palaceobjectID', ''))
+        if(PalaceObject.objects.filter(public=0)):#check if delete call is for a user uploaded object and not an public object
+            u.delete()
     return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', '')+ '&roomName=' +req.GET.get('roomName', ''))
 
 

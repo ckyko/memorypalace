@@ -194,9 +194,9 @@ class NewVisitorTest(unittest.TestCase):
         #Call Room_add function
         self.Room_add()
         #Call Room_delete function
-        #self.Room_delete()
+        self.Room_delete()
         #Call Palace_delete function
-        #self.Palace_delete()
+        self.Palace_delete()
         #Call logout function
         self.logout()
 
