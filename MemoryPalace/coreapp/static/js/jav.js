@@ -180,12 +180,28 @@ $(document).ready(function(){
 
 
     //Add a caption to the image.
-    $(document).on('dblclick', '.draggable', function() {
+    $(document).on('dblclick', '.draggable', function(event) {
         $('#modal_caption').openModal();
         $('#modal_caption_done').click(function(){
         var caption = $("#modal_caption_id").val();
         //var caption = prompt("Enter a caption for this image.");
-        $('.draggable').attr('title', caption);
+        $(event.target).attr('title', caption);
+         var target = event.target,
+         id = target.getAttribute('id'),
+         position_x = target.getAttribute('data-x'),
+         position_y = target.getAttribute('data-y'),
+         title = target.getAttribute('title');
+         console.log(title);
+
+         var height = $('#'+id).css('height');
+         var width = $('#'+id).css('width');
+
+      $.get("/update/",{'id': id, 'title': title, 'position_x': position_x,
+      'position_y':position_y, 'height':height, 'width':width }, function(ret){
+
+        })
+
+
         });
 
 	/*Materialize tooltip. Having some trouble with this still.
