@@ -262,11 +262,11 @@ def createPalace(req):
                 # get number of room
                 #numOfRooms = data['CreatePalaceForm'].cleaned_data['numOfRooms']
                 # get public or not
-                public = data['CreatePalaceForm'].cleaned_data['public']
+                #public = data['CreatePalaceForm'].cleaned_data['public']
                 palace = UserPalace()                    # create form instance
                 palace.palaceName = palaceName           # put user information
                 # palace.numOfRooms = numOfRooms
-                palace.public = public
+                #palace.public = public
                 palace.user = req.user             # get user and put in form
                 palace.save()                      # save form to database
                 data['CreatePalaceForm'] = CreatePalaceForm()# reset form avoid duplication
