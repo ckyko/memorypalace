@@ -9,6 +9,9 @@ This is the only serializer needed considering we just need the
 palace objects to dyanamically update.
 """
 class PalaceObjectSerializer(serializers.ModelSerializer):
+    """
+    Serializes PalaceObjects to easily save them
+    """
     class Meta:
         model = PalaceObject
         fields = ('user', 'userPalace', 'palaceRoom', 'description',
