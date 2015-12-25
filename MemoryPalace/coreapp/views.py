@@ -439,10 +439,26 @@ def update(req):
         width = req.GET.get("width")
         title = req.GET.get("title")
         num_id = int(id)                 # change type of id to int
+        if '.' in position_x:
+            position_x_list = position_x.split('.')
+            position_x = position_x_list[0]
+        if '.' in position_y:
+            position_y_list = position_y.split('.')
+            position_y = position_y_list[0]
+        if '.' in height:
+            height_list = height.split('.')
+            height = height_list[0]
+        else:
+            height = height[:-2]
+        if '.' in width:
+            width_list = width.split('.')
+            width = width_list[0]
+        else:
+            width = width[:-2]
         num_position_x = int(position_x)
         num_position_y = int(position_y)
-        num_height = int(height[:-2])
-        num_width = int(width[:-2])
+        num_height = int(height)
+        num_width = int(width)
         objects = RoomObject.objects.filter(id=num_id)  # get objects by id
         object = objects[0]
         object.position_x = num_position_x         # update object information
