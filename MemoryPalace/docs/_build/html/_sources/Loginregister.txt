@@ -114,3 +114,22 @@ the function log_in():
             data['errors'] = None
             return redirect('/#modal_login')
 
+Log Out
+~~~~~~~
+
+To log out, just click on the link that appears when you hover over your
+username on the top right part of the site. The log out behavior is defined
+by the log_out() function.
+
+::
+
+    def log_out(req):
+        """
+        This is log out function.
+
+        """
+        data = {'title': 'MemoryPalace'}
+        if req.user.is_authenticated():        # check login already or not
+            logout(req)                        # log out user
+        return HttpResponseRedirect('/')
+

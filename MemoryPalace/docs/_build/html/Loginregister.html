@@ -147,6 +147,23 @@ the function log_in():</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="log-out">
+<h3>Log Out<a class="headerlink" href="#log-out" title="Permalink to this headline">¶</a></h3>
+<p>To log out, just click on the link that appears when you hover over your
+username on the top right part of the site. The log out behavior is defined
+by the log_out() function.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">log_out</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is log out function.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;MemoryPalace&#39;</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>        <span class="c"># check login already or not</span>
+        <span class="n">logout</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>                        <span class="c"># log out user</span>
+    <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
@@ -162,6 +179,7 @@ the function log_in():</p>
 <li><a class="reference internal" href="#features-functions">Features/Functions</a><ul>
 <li><a class="reference internal" href="#register">Register</a></li>
 <li><a class="reference internal" href="#log-in">Log In</a></li>
+<li><a class="reference internal" href="#log-out">Log Out</a></li>
 </ul>
 </li>
 </ul>
