@@ -6,11 +6,11 @@ from django.http import JsonResponse
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
 from .forms import CreatePalaceForm, CreateRoomForm, UploadImageForm
 from .models import UserPalace, PalaceRoom, PalaceObject, RoomObject
 from coreapp.serializers import PalaceObjectSerializer
-from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 # from django.core.urlresolvers import reverse
 
@@ -115,6 +115,9 @@ def palace_library(req):
         return render(req, 'palace_library.html', data)
 
 def testing(req):
+    """
+    Runs test and renders test.html
+    """
     data = {'title': 'MemoryPalace',
             'CreatePalaceForm':CreatePalaceForm(),
             'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
@@ -294,13 +297,14 @@ def deleteRoomImageObject(req):
     u = RoomObject.objects.filter(id=req.GET.get('roomobjectID', ''))
     u.delete()
     return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', '')
-    		    + '&roomName=' +req.GET.get('roomName', ''))
+    		        + '&roomName=' +req.GET.get('roomName', ''))
 
 def deletePalaceImageObject(req):
-    u = PalaceObject.objects.filter(id=req.GET.get('palaceobjectID', ''),public=0)
+    u = PalaceObject.objects.filter(id=req.GET.get('palaceobjectID', ''), public=0)
     u.delete()
     if(req.GET.get('roomName', '')):
-        return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', '')+ '&roomName=' +req.GET.get('roomName', ''))
+        return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', '')
+                        + '&roomName=' +req.GET.get('roomName', ''))
     else:
         return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', ''))
 
@@ -372,7 +376,7 @@ def upload_image(req):
     """
     if req.is_ajax():
         palace_id = req.POST.get("palace_id")
-        print(palace_id)
+        print palace_id
         palace_id_number = int(palace_id)
         form = UploadImageForm(data=req.POST, files=req.FILES)
         if form.is_valid():
@@ -473,9 +477,9 @@ def update(req):
         return HttpResponseRedirect('/')
 
 class JSONResponse(HttpResponse):
-
-    # An HttpResponse that renders its content into JSON.
-
+    """
+    An HttpResponse that renders its content into JSON.
+    """
     def __init__(self, data, **kwargs):
         content = JSONRenderer().render(data)
         kwargs['content_type'] = 'application/json'
@@ -483,9 +487,9 @@ class JSONResponse(HttpResponse):
 
 @csrf_exempt
 def snippet_detail(request, pk):
-
-    # Retrieve, update or delete a code snippet.
-
+    """
+    Retrieve, update or delete a code snippet.
+    """
     try:
         pObj = PalaceObject.objects.get(roomName=pk)
     except PalaceObject.DoesNotExist:
@@ -509,9 +513,9 @@ def snippet_detail(request, pk):
 
 @csrf_exempt
 def snippet_list(request):
-
-    # List all code snippets, or create a new snippet.
-
+    """
+    List all code snippets, or create a new snippet.
+    """
     if request.method == 'GET':
         snippets = PalaceObject.objects.all()
         serializer = PalaceObjectSerializer(snippets, many=True)

@@ -1,3 +1,7 @@
+"""
+test_models
+Tests the database models of the project
+"""
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from coreapp.models import UserPalace, PalaceRoom, PalaceObject, RoomObject
@@ -9,7 +13,7 @@ class UserPalaceDataBaseTestCase(TestCase):
     Tests wheather the dastabase adds the models as its supposed to
     """
     def setUp(self):
-    	"""
+        """
         Inputs tests data for the test
         :return:
         """
