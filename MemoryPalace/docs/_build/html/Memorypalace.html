@@ -49,6 +49,7 @@ larger container that implements both.</p>
 <ul class="simple">
 <li>Create New Room</li>
 <li>Delete Existing Room</li>
+<li>Upload New Room Object</li>
 <li>Create New Room Object</li>
 <li>Delete Existing Room Object</li>
 <li>Drag Room Object</li>
@@ -58,8 +59,9 @@ larger container that implements both.</p>
 <h3>Create New Room<a class="headerlink" href="#create-new-room" title="Permalink to this headline">¶</a></h3>
 <p>Creating a new room is similar to creating a new palace as in the Library
 page. The square &#8216;+&#8217; box opens up a modal that allows the user to upload an
-image to use for the room and enter a name for the room. The createRoom()
-function defines this behavior as follows:</p>
+image to use for the room and enter a name for the room. The new room
+appears to the right of the &#8216;+&#8217; and clicking it will apply it to the room
+area above. The createRoom() function defines this behavior as follows:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">createRoom</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function give create room form page.</span>
@@ -124,6 +126,85 @@ page. The functionality is defined by the deleteRoom() function as follows:</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="upload-new-room-object">
+<h3>Upload New Room Object<a class="headerlink" href="#upload-new-room-object" title="Permalink to this headline">¶</a></h3>
+<p>Before we can add the image objects to the room, we first need to upload
+them. This is done by the function upload_image(), as shown below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@csrf_exempt</span>
+<span class="k">def</span> <span class="nf">upload_image</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will called when upload image.</span>
+<span class="sd">    It will create PalaceObject and save.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">is_ajax</span><span class="p">():</span>
+        <span class="n">palace_id</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;palace_id&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">palace_id</span><span class="p">)</span>
+        <span class="n">palace_id_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">palace_id</span><span class="p">)</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">UploadImageForm</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">FILES</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">userPalace</span> <span class="o">=</span> <span class="n">UserPalace</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">palace_id_number</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">userPalace</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;UserPalace get&quot;</span>
+                <span class="n">image_file</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;objectImage&#39;</span><span class="p">]</span>
+                <span class="nb">object</span> <span class="o">=</span> <span class="n">PalaceObject</span><span class="p">()</span>
+                <span class="nb">object</span><span class="o">.</span><span class="n">objectImage</span> <span class="o">=</span> <span class="n">image_file</span>
+                <span class="k">for</span> <span class="n">palace</span> <span class="ow">in</span> <span class="n">userPalace</span><span class="p">:</span>
+                    <span class="nb">object</span><span class="o">.</span><span class="n">userPalace</span> <span class="o">=</span> <span class="n">palace</span>
+                <span class="nb">object</span><span class="o">.</span><span class="n">objectName</span> <span class="o">=</span> <span class="s">&#39;testing&#39;</span>
+                <span class="nb">object</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                <span class="nb">id</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="n">id</span>
+                <span class="n">url</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="n">objectImage</span><span class="o">.</span><span class="n">url</span>
+                <span class="n">object_name_list</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="nb">object</span><span class="o">.</span><span class="n">objectName</span> <span class="o">=</span> <span class="n">object_name_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="nb">object</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                <span class="n">src</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="n">objectName</span>
+                <span class="n">my_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="nb">id</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">:</span> <span class="n">src</span><span class="p">}</span>
+                <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">(</span><span class="n">my_dict</span><span class="p">,</span> <span class="n">safe</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;room not fond&quot;</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;invalid&#39;</span>
+            <span class="k">print</span> <span class="n">form</span><span class="o">.</span><span class="n">errors</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-new-room-object">
+<h3>Create New Room Object<a class="headerlink" href="#create-new-room-object" title="Permalink to this headline">¶</a></h3>
+<p>The function create_room_object(), shown below, is used to add the already
+uploaded objects from the vertical scroll box to the room.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">create_room_object</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This Function is for adding the room object. When the user click object in vertscrollbox,</span>
+<span class="sd">    this function will called.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">is_ajax</span><span class="p">():</span>
+        <span class="nb">id</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">)</span>     <span class="c"># get id from req</span>
+        <span class="n">id_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+        <span class="n">palace_object_list</span> <span class="o">=</span> <span class="n">PalaceObject</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">id_number</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">)</span>
+        <span class="n">room_name</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;room_name&quot;</span><span class="p">)</span>
+        <span class="n">room_list</span> <span class="o">=</span> <span class="n">PalaceRoom</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">roomName</span><span class="o">=</span><span class="n">room_name</span><span class="p">)</span>
+        <span class="n">room_object</span> <span class="o">=</span> <span class="n">RoomObject</span><span class="p">()</span>
+        <span class="n">room_object</span><span class="o">.</span><span class="n">palaceObject</span> <span class="o">=</span> <span class="n">palace_object_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">room_object</span><span class="o">.</span><span class="n">palaceRoom</span> <span class="o">=</span> <span class="n">room_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">room_object</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="n">room_object</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="n">room_object_id</span> <span class="o">=</span> <span class="n">room_object</span><span class="o">.</span><span class="n">id</span>
+        <span class="n">my_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="n">room_object_id</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">(</span><span class="n">my_dict</span><span class="p">,</span> <span class="n">safe</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="delete-existing-room-object">
+<h3>Delete Existing Room Object<a class="headerlink" href="#delete-existing-room-object" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="drag-resize-room-object">
+<h3>Drag/Resize Room Object<a class="headerlink" href="#drag-resize-room-object" title="Permalink to this headline">¶</a></h3>
+</div>
 </div>
 </div>
 
@@ -139,6 +220,10 @@ page. The functionality is defined by the deleteRoom() function as follows:</p>
 <li><a class="reference internal" href="#features-functions">Features/Functions</a><ul>
 <li><a class="reference internal" href="#create-new-room">Create New Room</a></li>
 <li><a class="reference internal" href="#delete-existing-room">Delete Existing Room</a></li>
+<li><a class="reference internal" href="#upload-new-room-object">Upload New Room Object</a></li>
+<li><a class="reference internal" href="#create-new-room-object">Create New Room Object</a></li>
+<li><a class="reference internal" href="#delete-existing-room-object">Delete Existing Room Object</a></li>
+<li><a class="reference internal" href="#drag-resize-room-object">Drag/Resize Room Object</a></li>
 </ul>
 </li>
 </ul>
