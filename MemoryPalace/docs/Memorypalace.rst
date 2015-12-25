@@ -2,9 +2,9 @@ Memory Palace Page
 ==================
 
 The Memory Palace page is where all of the palace functionality takes place.
-It is made up of a vertical rectangular container that holds the palace
-objects, a horizontal rectangular container that holds the rooms, and a
-larger container that implements both.
+It is made up of a vertical scroll box that holds the palace objects, a
+horizontal scroll box that holds the rooms, and a larger container that
+implements/holds both.
 
 Features/Functions
 ------------------
@@ -16,6 +16,10 @@ Features/Functions
 - Delete Existing Room Object
 - Drag Room Object
 - Resize Room Object
+- Save Values
+
+*NOTE: Room refers to the actual image of the room and room object refers to
+the images that occupy the room.*
 
 Create New Room
 ~~~~~~~~~~~~~~~
@@ -174,6 +178,25 @@ uploaded objects from the vertical scroll box to the room.
 Delete Existing Room Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+This function (deleteImageObject()) is used to delete the room object from
+the room and also from the vertical scroll box.
+
+::
+
+    def deleteImageObject(req):
+        try:
+            if(PalaceObject.objects.filter(id=req.GET.get('objectID', '')) and PalaceObject.objects.filter(public=0)):#if delete called on palace object and palace object isn't public
+                u = PalaceObject.objects.filter(id=req.GET.get('objectID', ''))
+            elif(RoomObject.objects.filter(id=req.GET.get('objectID', ''))):#if delete called on room object
+                u = RoomObject.objects.filter(id=req.GET.get('objectID', ''))
+        except User.DoesNotExist:
+            pass
+        else:
+            try:
+                u.delete()#try delete if u exists
+            except:
+                pass#pass on exceptional cases i.e when object is public
+        return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', '')+ '&roomName=' +req.GET.get('roomName', ''))
 
 
 Drag/Resize Room Object
