@@ -72,3 +72,21 @@ function defines this behavior as follows:
                 data['CreateRoomForm'] = CreateRoomForm()
                 return redirect('/MemoryPalace/createRoom?palaceName=' + palaceName)
 
+Delete Existing Room
+~~~~~~~~~~~~~~~~~~~~
+
+Deleting the rooms is similar to deleting the palaces as in the Library
+page. The functionality is defined by the deleteRoom() function as follows:
+
+::
+
+    def deleteRoom(req):
+        try:
+            palaceName=req.GET.get('palaceName', '')
+            u = PalaceRoom.objects.filter(roomName=req.GET.get('roomName', ''))
+        except User.DoesNotExist:
+            pass
+        else:
+            u.delete()
+        return redirect('/MemoryPalace?palaceName='+ palaceName)
+

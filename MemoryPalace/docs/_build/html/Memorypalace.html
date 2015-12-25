@@ -108,6 +108,22 @@ function defines this behavior as follows:</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="delete-existing-room">
+<h3>Delete Existing Room<a class="headerlink" href="#delete-existing-room" title="Permalink to this headline">¶</a></h3>
+<p>Deleting the rooms is similar to deleting the palaces as in the Library
+page. The functionality is defined by the deleteRoom() function as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">deleteRoom</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">palaceName</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;palaceName&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">PalaceRoom</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">roomName</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;roomName&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">))</span>
+    <span class="k">except</span> <span class="n">User</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">u</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;/MemoryPalace?palaceName=&#39;</span><span class="o">+</span> <span class="n">palaceName</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
@@ -122,6 +138,7 @@ function defines this behavior as follows:</p>
 <li><a class="reference internal" href="#">Memory Palace Page</a><ul>
 <li><a class="reference internal" href="#features-functions">Features/Functions</a><ul>
 <li><a class="reference internal" href="#create-new-room">Create New Room</a></li>
+<li><a class="reference internal" href="#delete-existing-room">Delete Existing Room</a></li>
 </ul>
 </li>
 </ul>
