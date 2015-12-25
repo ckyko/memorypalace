@@ -31,7 +31,7 @@ interact('.draggable')
 
       $.get("/update/",{'id': id, 'title': title, 'position_x': position_x,
       'position_y':position_y, 'height':height, 'width':width }, function(ret){
-//            alert("success...");
+
         })
 
 
@@ -59,7 +59,20 @@ interact('.draggable')
 	//*** RESIZING CODE ***
 	  .resizable({
 	    preserveAspectRatio: true,
-	    edges: { left: true, right: true, bottom: true, top: true }
+	    edges: { left: true, right: true, bottom: true, top: true },
+	    onend: function(event){
+             var target = event.target,
+             id = target.getAttribute('id'),
+             position_x = target.getAttribute('data-x'),
+             position_y = target.getAttribute('data-y'),
+             title = target.getAttribute('title');
+             var height = $('#'+id).css('height');
+             var width = $('#'+id).css('width');
+
+          $.get("/update/",{'id': id, 'title': title, 'position_x': position_x,
+          'position_y':position_y, 'height':height, 'width':width }, function(ret){
+            })
+	    }
 	  })
 	  .on('resizemove', function (event) {
 	    var target = event.target,
@@ -180,8 +193,23 @@ $(document).ready(function(){
 
 
     //Add a caption to the image.
-    $(document).on('dblclick', '.draggable', function(e) {
+    $(document).on('dblclick', '.draggable', function(event) {
         var caption = prompt("Enter a caption for this image.");
+        $(event.target).attr('title', caption);
+         var target = event.target,
+         id = target.getAttribute('id'),
+         position_x = target.getAttribute('data-x'),
+         position_y = target.getAttribute('data-y'),
+         title = target.getAttribute('title');
+         console.log(title);
+
+         var height = $('#'+id).css('height');
+         var width = $('#'+id).css('width');
+
+          $.get("/update/",{'id': id, 'title': title, 'position_x': position_x,
+          'position_y':position_y, 'height':height, 'width':width }, function(ret){
+
+            })
         $('#'+e.target.id).attr('title', caption);
     });
 
