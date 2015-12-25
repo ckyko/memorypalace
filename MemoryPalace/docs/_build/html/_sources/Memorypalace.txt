@@ -11,6 +11,7 @@ Features/Functions
 
 - Create New Room
 - Delete Existing Room
+- Upload New Room Object
 - Create New Room Object
 - Delete Existing Room Object
 - Drag Room Object
@@ -21,8 +22,9 @@ Create New Room
 
 Creating a new room is similar to creating a new palace as in the Library
 page. The square '+' box opens up a modal that allows the user to upload an
-image to use for the room and enter a name for the room. The createRoom()
-function defines this behavior as follows:
+image to use for the room and enter a name for the room. The new room
+appears to the right of the '+' and clicking it will apply it to the room
+area above. The createRoom() function defines this behavior as follows:
 
 ::
 
@@ -89,4 +91,92 @@ page. The functionality is defined by the deleteRoom() function as follows:
         else:
             u.delete()
         return redirect('/MemoryPalace?palaceName='+ palaceName)
+
+Upload New Room Object
+~~~~~~~~~~~~~~~~~~~~~~
+
+Before we can add the image objects to the room, we first need to upload
+them. This is done by the function upload_image(), as shown below:
+
+::
+
+    @csrf_exempt
+    def upload_image(req):
+        """
+        This function will called when upload image.
+        It will create PalaceObject and save.
+        """
+        if req.is_ajax():
+            palace_id = req.POST.get("palace_id")
+            print(palace_id)
+            palace_id_number = int(palace_id)
+            form = UploadImageForm(data=req.POST, files=req.FILES)
+            if form.is_valid():
+                userPalace = UserPalace.objects.filter(id=palace_id_number)
+
+                if userPalace:
+                    print "UserPalace get"
+                    image_file = form.cleaned_data['objectImage']
+                    object = PalaceObject()
+                    object.objectImage = image_file
+                    for palace in userPalace:
+                        object.userPalace = palace
+                    object.objectName = 'testing'
+                    object.save()
+                    id = object.id
+                    url = object.objectImage.url
+                    object_name_list = url.split('/', 2)
+                    object.objectName = object_name_list[2]
+                    object.save()
+                    src = object.objectName
+                    my_dict = {'id': id, 'url': src}
+                    return JsonResponse(my_dict, safe=False)
+                else:
+                    print "room not fond"
+
+            else:
+                print 'invalid'
+                print form.errors
+        else:
+            return HttpResponseRedirect('/')
+
+
+Create New Room Object
+~~~~~~~~~~~~~~~~~~~~~~
+
+The function create_room_object(), shown below, is used to add the already
+uploaded objects from the vertical scroll box to the room.
+
+::
+
+    def create_room_object(req):
+        """
+        This Function is for adding the room object. When the user click object in vertscrollbox,
+        this function will called.
+        """
+        if req.is_ajax():
+            id = req.GET.get("id")     # get id from req
+            id_number = int(id)
+            palace_object_list = PalaceObject.objects.filter(id=id_number)
+            url = req.GET.get("url")
+            room_name = req.GET.get("room_name")
+            room_list = PalaceRoom.objects.filter(roomName=room_name)
+            room_object = RoomObject()
+            room_object.palaceObject = palace_object_list[0]
+            room_object.palaceRoom = room_list[0]
+            room_object.url = url
+            room_object.save()
+            room_object_id = room_object.id
+            my_dict = {'id': room_object_id}
+            return JsonResponse(my_dict, safe=False)
+
+
+Delete Existing Room Object
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+Drag/Resize Room Object
+~~~~~~~~~~~~~~~~~~~~~~~
+
 
