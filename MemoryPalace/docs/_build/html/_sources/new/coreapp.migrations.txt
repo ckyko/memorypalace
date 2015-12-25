@@ -1,0 +1,30 @@
+coreapp.migrations package
+==========================
+
+Submodules
+----------
+
+coreapp.migrations.0001_initial module
+--------------------------------------
+
+.. automodule:: coreapp.migrations.0001_initial
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+coreapp.migrations.0002_auto_20151224_0025 module
+-------------------------------------------------
+
+.. automodule:: coreapp.migrations.0002_auto_20151224_0025
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: coreapp.migrations
+    :members:
+    :undoc-members:
+    :show-inheritance:

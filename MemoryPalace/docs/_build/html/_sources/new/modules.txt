@@ -1,0 +1,7 @@
+coreapp
+=======
+
+.. toctree::
+   :maxdepth: 4
+
+   coreapp
