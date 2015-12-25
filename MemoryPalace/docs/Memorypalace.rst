@@ -313,3 +313,40 @@ similar, they were combined into 1, as can be seen below:
 
 Save Values
 ~~~~~~~~~~~
+
+In order to save a room of a palace the way it is, it is necessary to grab
+all of the relevant information regarding the room objects. This includes
+the x and y coordinates, their width and height, and their caption. This is
+done in the update() function, as shown below:
+
+::
+
+    @csrf_exempt
+    def update(req):
+        """
+        This function is for updata room object information.
+        """
+        if req.is_ajax():
+            id = req.GET.get("id")     # get id from req
+            position_x = req.GET.get("position_x")
+            position_y = req.GET.get("position_y")
+            height = req.GET.get("height")    # get height from req
+            width = req.GET.get("width")
+            title = req.GET.get("title")
+            num_id = int(id)                 # change type of id to int
+            num_position_x = int(position_x)
+            num_position_y = int(position_y)
+            num_height = int(height[:-2])
+            num_width = int(width[:-2])
+            objects = RoomObject.objects.filter(id=num_id)  # get objects by id
+            object = objects[0]
+            object.position_x = num_position_x         # update object information
+            object.position_y = num_position_y
+            object.height = num_height
+            object.width = num_width
+            object.note = title
+            object.save()                       # save object information
+
+        else:
+            return HttpResponseRedirect('/')
+
