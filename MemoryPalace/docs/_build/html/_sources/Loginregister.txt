@@ -1,5 +1,17 @@
-Login/Register System
-=====================
+Register/Log in/Log out System
+==============================
 
-Subsection
-----------
+The whole Register/Log in/Log out system is implemented in a small modal
+that is linked to on the top right section of the site.
+
+Features/Functions
+------------------
+
+- Register
+- Log in
+- Log out
+
+Register
+~~~~~~~~
+
+
