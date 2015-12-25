@@ -71,3 +71,46 @@ in the register() function, as shown below:
         else:
             return redirect('/#modal_register')
 
+Log In
+~~~~~~
+
+Logging in is almost exactly the same as registering, except that you stay
+on the Login tab, enter your credentials, and click Login. It is defined by
+the function log_in():
+
+::
+
+    def log_in(req):
+        """
+        This is login function.
+        this function will return the login form if user didn't click submit.
+        if user fill in all information correct and click submit, it will log in
+        user and redirect to index page.
+        """
+        data = {'title': 'MemoryPalace',
+            'CreatePalaceForm':CreatePalaceForm(),
+            'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+        errors = []
+        temp = data
+        if req.method == "POST":      # check if user submit or not
+            name = req.POST.get('username', '')    # get username
+            password = req.POST.get('password', '')
+            user = authenticate(username=name, password=password)  # check username
+                                                                   # and password
+            if user is not None:
+                if user.is_active:                    # check user is active or not
+                    login(req, user)
+                    # req.session['username'] = name
+                    return HttpResponseRedirect(req.META.get('HTTP_REFERER'))#redirect to the page whilst clicking on the modal
+                else:
+                    errors.append('Disabled account')
+                    temp['errors'] = errors
+                    return redirect('/#modal_login')
+            else:                             # if username or password is invalid
+                errors.append('Invalid Username or Password')
+                temp['errors'] = errors
+                return redirect('/#modal_login')
+        else:
+            data['errors'] = None
+            return redirect('/#modal_login')
+
