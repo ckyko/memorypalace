@@ -213,7 +213,6 @@ $(document).ready(function(){
           'position_y':position_y, 'height':height, 'width':width }, function(ret){
 
             })
-
         });
 
 	/*Materialize tooltip. Having some trouble with this still.
@@ -230,10 +229,8 @@ $(document).ready(function(){
         if($(e.target).hasClass('draggable')) {
           $('.draggable').removeClass('permaBorder');
           $(($delTarget).addClass('permaBorder'));
-          if($('#delete-draggable').hasClass('disabled')) {
-            $('#delete-draggable').removeClass('disabled');
-            $("#delete-draggable").prop("href", "/deleteRoomImageObject"+window.location.search+"&roomobjectID="+e.target.id)
-          }
+          $('#delete-draggable').toggleClass('disabled');
+          $("#delete-draggable").prop("href", "/deleteRoomImageObject"+window.location.search+"&roomobjectID="+e.target.id)
         }
         else if(!$(e.target).hasClass('draggable')){
           $('.draggable').removeClass('permaBorder');

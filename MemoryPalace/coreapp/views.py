@@ -294,19 +294,16 @@ def deleteRoomImageObject(req):
     u = RoomObject.objects.filter(id=req.GET.get('roomobjectID', ''))
     u.delete()
     return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', '')
-                    + '&roomName=' +req.GET.get('roomName', ''))
+    		    + '&roomName=' +req.GET.get('roomName', ''))
 
 def deletePalaceImageObject(req):
-    """
-    Delete image attached to the palace
-    """
-    u = PalaceObject.objects.filter(id=req.GET.get('palaceobjectID', ''), public=0)
+    u = PalaceObject.objects.filter(id=req.GET.get('palaceobjectID', ''),public=0)
     u.delete()
     if(req.GET.get('roomName', '')):
-        return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', '')+ '&roomName='
-                        +req.GET.get('roomName', ''))
+        return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', '')+ '&roomName=' +req.GET.get('roomName', ''))
     else:
         return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', ''))
+
 
 def deleteRoom(req):
     """
