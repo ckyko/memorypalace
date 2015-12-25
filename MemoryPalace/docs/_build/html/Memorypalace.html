@@ -40,6 +40,75 @@
             
   <div class="section" id="memory-palace-page">
 <h1>Memory Palace Page<a class="headerlink" href="#memory-palace-page" title="Permalink to this headline">¶</a></h1>
+<p>The Memory Palace page is where all of the palace functionality takes place.
+It is made up of a vertical rectangular container that holds the palace
+objects, a horizontal rectangular container that holds the rooms, and a
+larger container that implements both.</p>
+<div class="section" id="features-functions">
+<h2>Features/Functions<a class="headerlink" href="#features-functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Create New Room</li>
+<li>Delete Existing Room</li>
+<li>Create New Room Object</li>
+<li>Delete Existing Room Object</li>
+<li>Drag Room Object</li>
+<li>Resize Room Object</li>
+</ul>
+<div class="section" id="create-new-room">
+<h3>Create New Room<a class="headerlink" href="#create-new-room" title="Permalink to this headline">¶</a></h3>
+<p>Creating a new room is similar to creating a new palace as in the Library
+page. The square &#8216;+&#8217; box opens up a modal that allows the user to upload an
+image to use for the room and enter a name for the room. The createRoom()
+function defines this behavior as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">createRoom</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function give create room form page.</span>
+<span class="sd">    the url for this function is ../createRoom</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;MemoryPalace&#39;</span><span class="p">,</span>
+        <span class="s">&#39;CreatePalaceForm&#39;</span><span class="p">:</span><span class="n">CreatePalaceForm</span><span class="p">(),</span>
+        <span class="s">&#39;CreateRoomForm&#39;</span><span class="p">:</span><span class="n">CreateRoomForm</span><span class="p">(),</span> <span class="s">&#39;objectForm&#39;</span><span class="p">:</span> <span class="n">UploadImageForm</span><span class="p">()}</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>        <span class="c"># check login already or not</span>
+        <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">palaceName</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;palaceName&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;POST&quot;</span><span class="p">:</span>            <span class="c"># if user submit the form</span>
+            <span class="n">input_user</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span>            <span class="c"># get user</span>
+
+            <span class="c"># get all user palace</span>
+            <span class="n">user_palace</span> <span class="o">=</span> <span class="n">UserPalace</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">input_user</span><span class="p">)</span>
+            <span class="n">this_palace</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">for</span> <span class="n">palace</span> <span class="ow">in</span> <span class="n">user_palace</span><span class="p">:</span>          <span class="c"># get user palace</span>
+                <span class="k">if</span> <span class="n">palace</span><span class="o">.</span><span class="n">palaceName</span> <span class="o">==</span> <span class="n">palaceName</span><span class="p">:</span>
+                    <span class="n">this_palace</span> <span class="o">=</span> <span class="n">palace</span>
+            <span class="c"># the_palace = PalaceRoom.objects.filter(userPalace=this_palace)</span>
+
+            <span class="c"># pass information to form</span>
+            <span class="n">data</span><span class="p">[</span><span class="s">&#39;CreateRoomForm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">CreateRoomForm</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="n">req</span><span class="o">.</span><span class="n">FILES</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;CreateRoomForm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+                <span class="n">roomName</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;CreateRoomForm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;roomName&#39;</span><span class="p">]</span>
+                <span class="n">background_image</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;CreateRoomForm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;backgroundImage&#39;</span><span class="p">]</span>
+                <span class="n">room</span> <span class="o">=</span> <span class="n">PalaceRoom</span><span class="p">()</span>              <span class="c"># create room object instance</span>
+                <span class="n">room</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">input_user</span>
+                <span class="n">room</span><span class="o">.</span><span class="n">userPalace</span> <span class="o">=</span> <span class="n">this_palace</span>
+                <span class="n">room</span><span class="o">.</span><span class="n">roomName</span> <span class="o">=</span> <span class="n">roomName</span>
+                <span class="n">room</span><span class="o">.</span><span class="n">backgroundImage</span> <span class="o">=</span> <span class="n">background_image</span>
+                <span class="n">room</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>                  <span class="c"># save room to database</span>
+                <span class="n">data</span><span class="p">[</span><span class="s">&#39;CreateRoomForm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">CreateRoomForm</span><span class="p">()</span><span class="c"># reset form avoid duplication</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;/MemoryPalace?palaceName=&#39;</span> <span class="o">+</span> <span class="n">palaceName</span> <span class="o">+</span>
+                                <span class="s">&#39;&amp;roomName=&#39;</span> <span class="o">+</span> <span class="n">roomName</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="s">&#39;CreateRoomForm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">CreateRoomForm</span><span class="p">()</span><span class="c"># reset form avoid duplication</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;/MemoryPalace/createRoom?palaceName=&#39;</span> <span class="o">+</span>
+                                <span class="n">palaceName</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s">&#39;CreateRoomForm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">CreateRoomForm</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;/MemoryPalace/createRoom?palaceName=&#39;</span> <span class="o">+</span> <span class="n">palaceName</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
 
@@ -47,7 +116,18 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Memory Palace Page</a><ul>
+<li><a class="reference internal" href="#features-functions">Features/Functions</a><ul>
+<li><a class="reference internal" href="#create-new-room">Create New Room</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
