@@ -213,6 +213,24 @@ $(document).ready(function(){
         $('#'+e.target.id).attr('title', caption);
     });
 
+    var timeout_id = 0,
+      hold_time = 1000,
+      hold_menu = $('#modal_caption'),
+      hold_trigger = $('.draggable'),
+      title = "test";
+      hold_menu.hide();
+
+      hold_trigger.mousedown(function(e) {
+          title = e.target.title;
+          timeout_id = setTimeout(menu_toggle, hold_time);
+      }).bind('mouseup mouseleave', function() {
+          clearTimeout(timeout_id);
+      });
+
+      function menu_toggle() {
+        $("#caption_desc").replaceWith("<p id='caption_desc'>"+title+"</p>");
+        hold_menu.openModal();
+      }
     $('#roombg').on('click', function(e) {
         var $delTarget = $(e.target);
         if($(e.target).hasClass('draggable')) {
