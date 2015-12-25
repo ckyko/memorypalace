@@ -1,0 +1,446 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Memory Palace Page &mdash; Memory Palaces 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Memory Palaces 1.0 documentation" href="index.html" />
+    <link rel="next" title="Login/Register System" href="Loginregister.html" />
+    <link rel="prev" title="Library Page" href="Library.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="memory-palace-page">
+<h1>Memory Palace Page<a class="headerlink" href="#memory-palace-page" title="Permalink to this headline">¶</a></h1>
+<p>The Memory Palace page is where all of the palace functionality takes place.
+It is made up of a vertical scroll box that holds the palace objects, a
+horizontal scroll box that holds the rooms, and a larger container that
+implements/holds both.</p>
+<div class="section" id="features-functions">
+<h2>Features/Functions<a class="headerlink" href="#features-functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Create New Room</li>
+<li>Delete Existing Room</li>
+<li>Upload New Room Object</li>
+<li>Create New Room Object</li>
+<li>Delete Existing Room Object</li>
+<li>Drag Room Object</li>
+<li>Resize Room Object</li>
+<li>Save Values</li>
+</ul>
+<p><em>NOTE: Room refers to the actual image of the room and room object refers to
+the images that occupy the room.</em></p>
+<div class="section" id="create-new-room">
+<h3>Create New Room<a class="headerlink" href="#create-new-room" title="Permalink to this headline">¶</a></h3>
+<p>Creating a new room is similar to creating a new palace as in the Library
+page. The square &#8216;+&#8217; box opens up a modal that allows the user to upload an
+image to use for the room and enter a name for the room. The new room
+appears to the right of the &#8216;+&#8217; and clicking it will apply it to the room
+area above. The createRoom() function defines this behavior as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">createRoom</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function give create room form page.</span>
+<span class="sd">    the url for this function is ../createRoom</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;MemoryPalace&#39;</span><span class="p">,</span>
+        <span class="s">&#39;CreatePalaceForm&#39;</span><span class="p">:</span><span class="n">CreatePalaceForm</span><span class="p">(),</span>
+        <span class="s">&#39;CreateRoomForm&#39;</span><span class="p">:</span><span class="n">CreateRoomForm</span><span class="p">(),</span> <span class="s">&#39;objectForm&#39;</span><span class="p">:</span> <span class="n">UploadImageForm</span><span class="p">()}</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>        <span class="c"># check login already or not</span>
+        <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">palaceName</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;palaceName&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;POST&quot;</span><span class="p">:</span>            <span class="c"># if user submit the form</span>
+            <span class="n">input_user</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span>            <span class="c"># get user</span>
+
+            <span class="c"># get all user palace</span>
+            <span class="n">user_palace</span> <span class="o">=</span> <span class="n">UserPalace</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">input_user</span><span class="p">)</span>
+            <span class="n">this_palace</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">for</span> <span class="n">palace</span> <span class="ow">in</span> <span class="n">user_palace</span><span class="p">:</span>          <span class="c"># get user palace</span>
+                <span class="k">if</span> <span class="n">palace</span><span class="o">.</span><span class="n">palaceName</span> <span class="o">==</span> <span class="n">palaceName</span><span class="p">:</span>
+                    <span class="n">this_palace</span> <span class="o">=</span> <span class="n">palace</span>
+            <span class="c"># the_palace = PalaceRoom.objects.filter(userPalace=this_palace)</span>
+
+            <span class="c"># pass information to form</span>
+            <span class="n">data</span><span class="p">[</span><span class="s">&#39;CreateRoomForm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">CreateRoomForm</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="n">req</span><span class="o">.</span><span class="n">FILES</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;CreateRoomForm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+                <span class="n">roomName</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;CreateRoomForm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;roomName&#39;</span><span class="p">]</span>
+                <span class="n">background_image</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;CreateRoomForm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;backgroundImage&#39;</span><span class="p">]</span>
+                <span class="n">room</span> <span class="o">=</span> <span class="n">PalaceRoom</span><span class="p">()</span>              <span class="c"># create room object instance</span>
+                <span class="n">room</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">input_user</span>
+                <span class="n">room</span><span class="o">.</span><span class="n">userPalace</span> <span class="o">=</span> <span class="n">this_palace</span>
+                <span class="n">room</span><span class="o">.</span><span class="n">roomName</span> <span class="o">=</span> <span class="n">roomName</span>
+                <span class="n">room</span><span class="o">.</span><span class="n">backgroundImage</span> <span class="o">=</span> <span class="n">background_image</span>
+                <span class="n">room</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>                  <span class="c"># save room to database</span>
+                <span class="n">data</span><span class="p">[</span><span class="s">&#39;CreateRoomForm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">CreateRoomForm</span><span class="p">()</span><span class="c"># reset form avoid duplication</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;/MemoryPalace?palaceName=&#39;</span> <span class="o">+</span> <span class="n">palaceName</span> <span class="o">+</span>
+                                <span class="s">&#39;&amp;roomName=&#39;</span> <span class="o">+</span> <span class="n">roomName</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="s">&#39;CreateRoomForm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">CreateRoomForm</span><span class="p">()</span><span class="c"># reset form avoid duplication</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;/MemoryPalace/createRoom?palaceName=&#39;</span> <span class="o">+</span>
+                                <span class="n">palaceName</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s">&#39;CreateRoomForm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">CreateRoomForm</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;/MemoryPalace/createRoom?palaceName=&#39;</span> <span class="o">+</span> <span class="n">palaceName</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="delete-existing-room">
+<h3>Delete Existing Room<a class="headerlink" href="#delete-existing-room" title="Permalink to this headline">¶</a></h3>
+<p>Deleting the rooms is similar to deleting the palaces as in the Library
+page. The functionality is defined by the deleteRoom() function as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">deleteRoom</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">palaceName</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;palaceName&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">PalaceRoom</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">roomName</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;roomName&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">))</span>
+    <span class="k">except</span> <span class="n">User</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">u</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;/MemoryPalace?palaceName=&#39;</span><span class="o">+</span> <span class="n">palaceName</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="upload-new-room-object">
+<h3>Upload New Room Object<a class="headerlink" href="#upload-new-room-object" title="Permalink to this headline">¶</a></h3>
+<p>Before we can add the image objects to the room, we first need to upload
+them. This is done by the function upload_image(), as shown below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@csrf_exempt</span>
+<span class="k">def</span> <span class="nf">upload_image</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function will called when upload image.</span>
+<span class="sd">    It will create PalaceObject and save.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">is_ajax</span><span class="p">():</span>
+        <span class="n">palace_id</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;palace_id&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">palace_id</span><span class="p">)</span>
+        <span class="n">palace_id_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">palace_id</span><span class="p">)</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">UploadImageForm</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">FILES</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">userPalace</span> <span class="o">=</span> <span class="n">UserPalace</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">palace_id_number</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">userPalace</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;UserPalace get&quot;</span>
+                <span class="n">image_file</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;objectImage&#39;</span><span class="p">]</span>
+                <span class="nb">object</span> <span class="o">=</span> <span class="n">PalaceObject</span><span class="p">()</span>
+                <span class="nb">object</span><span class="o">.</span><span class="n">objectImage</span> <span class="o">=</span> <span class="n">image_file</span>
+                <span class="k">for</span> <span class="n">palace</span> <span class="ow">in</span> <span class="n">userPalace</span><span class="p">:</span>
+                    <span class="nb">object</span><span class="o">.</span><span class="n">userPalace</span> <span class="o">=</span> <span class="n">palace</span>
+                <span class="nb">object</span><span class="o">.</span><span class="n">objectName</span> <span class="o">=</span> <span class="s">&#39;testing&#39;</span>
+                <span class="nb">object</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                <span class="nb">id</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="n">id</span>
+                <span class="n">url</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="n">objectImage</span><span class="o">.</span><span class="n">url</span>
+                <span class="n">object_name_list</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="nb">object</span><span class="o">.</span><span class="n">objectName</span> <span class="o">=</span> <span class="n">object_name_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="nb">object</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                <span class="n">src</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="n">objectName</span>
+                <span class="n">my_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="nb">id</span><span class="p">,</span> <span class="s">&#39;url&#39;</span><span class="p">:</span> <span class="n">src</span><span class="p">}</span>
+                <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">(</span><span class="n">my_dict</span><span class="p">,</span> <span class="n">safe</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;room not fond&quot;</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;invalid&#39;</span>
+            <span class="k">print</span> <span class="n">form</span><span class="o">.</span><span class="n">errors</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-new-room-object">
+<h3>Create New Room Object<a class="headerlink" href="#create-new-room-object" title="Permalink to this headline">¶</a></h3>
+<p>The function create_room_object(), shown below, is used to add the already
+uploaded objects from the vertical scroll box to the room.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">create_room_object</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This Function is for adding the room object. When the user click object in vertscrollbox,</span>
+<span class="sd">    this function will called.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">is_ajax</span><span class="p">():</span>
+        <span class="nb">id</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">)</span>     <span class="c"># get id from req</span>
+        <span class="n">id_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+        <span class="n">palace_object_list</span> <span class="o">=</span> <span class="n">PalaceObject</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">id_number</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">)</span>
+        <span class="n">room_name</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;room_name&quot;</span><span class="p">)</span>
+        <span class="n">room_list</span> <span class="o">=</span> <span class="n">PalaceRoom</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">roomName</span><span class="o">=</span><span class="n">room_name</span><span class="p">)</span>
+        <span class="n">room_object</span> <span class="o">=</span> <span class="n">RoomObject</span><span class="p">()</span>
+        <span class="n">room_object</span><span class="o">.</span><span class="n">palaceObject</span> <span class="o">=</span> <span class="n">palace_object_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">room_object</span><span class="o">.</span><span class="n">palaceRoom</span> <span class="o">=</span> <span class="n">room_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">room_object</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="n">room_object</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="n">room_object_id</span> <span class="o">=</span> <span class="n">room_object</span><span class="o">.</span><span class="n">id</span>
+        <span class="n">my_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="n">room_object_id</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">(</span><span class="n">my_dict</span><span class="p">,</span> <span class="n">safe</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="delete-existing-room-object">
+<h3>Delete Existing Room Object<a class="headerlink" href="#delete-existing-room-object" title="Permalink to this headline">¶</a></h3>
+<p>This function (deleteImageObject()) is used to delete the room object from
+the room and also from the vertical scroll box.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">deleteImageObject</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">PalaceObject</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;objectID&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">))</span> <span class="ow">and</span> <span class="n">PalaceObject</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">public</span><span class="o">=</span><span class="mi">0</span><span class="p">)):</span><span class="c">#if delete called on palace object and palace object isn&#39;t public</span>
+            <span class="n">u</span> <span class="o">=</span> <span class="n">PalaceObject</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;objectID&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">))</span>
+        <span class="k">elif</span><span class="p">(</span><span class="n">RoomObject</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;objectID&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">))):</span><span class="c">#if delete called on room object</span>
+            <span class="n">u</span> <span class="o">=</span> <span class="n">RoomObject</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;objectID&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">))</span>
+    <span class="k">except</span> <span class="n">User</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">u</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span><span class="c">#try delete if u exists</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span><span class="c">#pass on exceptional cases i.e when object is public</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;/MemoryPalace?palaceName=&#39;</span><span class="o">+</span><span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;palaceName&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span><span class="o">+</span> <span class="s">&#39;&amp;roomName=&#39;</span> <span class="o">+</span><span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;roomName&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="drag-resize-room-object">
+<h3>Drag/Resize Room Object<a class="headerlink" href="#drag-resize-room-object" title="Permalink to this headline">¶</a></h3>
+<p>The objects have drag and drop and resize functionality, which is
+implemented in javascript. Since the code for these 2 functions was so
+similar, they were combined into 1, as can be seen below:</p>
+<div class="highlight-js"><div class="highlight"><pre><span class="c1">//*** DRAGGING CODE ***</span>
+<span class="c1">// target elements with the &quot;draggable&quot; class</span>
+<span class="nx">interact</span><span class="p">(</span><span class="s1">&#39;.draggable&#39;</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">draggable</span><span class="p">({</span>
+    <span class="c1">// enable inertial throwing</span>
+    <span class="nx">inertia</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="c1">// keep the element within the area of it&#39;s parent</span>
+    <span class="nx">restrict</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">restriction</span><span class="o">:</span> <span class="s2">&quot;parent&quot;</span><span class="p">,</span>
+      <span class="nx">endOnly</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nx">elementRect</span><span class="o">:</span> <span class="p">{</span> <span class="nx">top</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">left</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">bottom</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">right</span><span class="o">:</span> <span class="mi">1</span> <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="c1">// enable autoScroll</span>
+    <span class="nx">autoScroll</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+
+    <span class="c1">// call this function on every dragmove event</span>
+    <span class="nx">onmove</span><span class="o">:</span> <span class="nx">dragMoveListener</span><span class="p">,</span>
+    <span class="c1">// call this function on every dragend event</span>
+    <span class="nx">onend</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">textEl</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">);</span>
+<span class="c1">//      alert(&quot;get in&quot;);</span>
+<span class="c1">//      sentData(event);</span>
+        <span class="kd">var</span> <span class="nx">target</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">,</span>
+         <span class="nx">id</span> <span class="o">=</span> <span class="nx">target</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">),</span>
+         <span class="nx">position_x</span> <span class="o">=</span> <span class="nx">target</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;data-x&#39;</span><span class="p">),</span>
+         <span class="nx">position_y</span> <span class="o">=</span> <span class="nx">target</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;data-y&#39;</span><span class="p">),</span>
+         <span class="nx">title</span> <span class="o">=</span> <span class="nx">target</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">);</span>
+
+         <span class="kd">var</span> <span class="nx">height</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="o">+</span><span class="nx">id</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">);</span>
+         <span class="kd">var</span> <span class="nx">width</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="o">+</span><span class="nx">id</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">);</span>
+
+      <span class="nx">$</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;/update/&quot;</span><span class="p">,{</span><span class="s1">&#39;id&#39;</span><span class="o">:</span> <span class="nx">id</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="o">:</span> <span class="nx">title</span><span class="p">,</span> <span class="s1">&#39;position_x&#39;</span><span class="o">:</span> <span class="nx">position_x</span><span class="p">,</span>
+      <span class="s1">&#39;position_y&#39;</span><span class="o">:</span><span class="nx">position_y</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="o">:</span><span class="nx">height</span><span class="p">,</span> <span class="s1">&#39;width&#39;</span><span class="o">:</span><span class="nx">width</span> <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ret</span><span class="p">){</span>
+<span class="c1">//            alert(&quot;success...&quot;);</span>
+        <span class="p">})</span>
+
+
+<span class="c1">//        $.ajax({</span>
+<span class="c1">//            url:&quot;/update/&quot;,</span>
+<span class="c1">//            type: &quot;POST&quot;,</span>
+<span class="c1">//            data: {&#39;id&#39;: id, &#39;position_x&#39;: position_x, &#39;position_y&#39;:position_y, &#39;height&#39;:height, &#39;width&#39;: &#39;width&#39; },</span>
+<span class="c1">//            success:function(response){ alert(&quot;success...&quot;); },</span>
+<span class="c1">//            complete:function(){},</span>
+<span class="c1">//            error:function (xhr, textStatus, thrownError){</span>
+<span class="c1">//                alert(&quot;error doing something&quot;);</span>
+<span class="c1">//            }</span>
+<span class="c1">//        });</span>
+
+
+
+      <span class="nx">textEl</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">textEl</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span>
+        <span class="s1">&#39;moved a distance of &#39;</span>
+        <span class="o">+</span> <span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">sqrt</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">dx</span> <span class="o">*</span> <span class="nx">event</span><span class="p">.</span><span class="nx">dx</span> <span class="o">+</span>
+                     <span class="nx">event</span><span class="p">.</span><span class="nx">dy</span> <span class="o">*</span> <span class="nx">event</span><span class="p">.</span><span class="nx">dy</span><span class="p">)</span><span class="o">|</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">})</span>
+<span class="c1">//*** THE REST OF THE DRAGGING CODE CONTINUES AFTER THE END OF THE RESIZING CODE ***</span>
+
+    <span class="c1">//*** RESIZING CODE ***</span>
+      <span class="p">.</span><span class="nx">resizable</span><span class="p">({</span>
+        <span class="nx">preserveAspectRatio</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nx">edges</span><span class="o">:</span> <span class="p">{</span> <span class="nx">left</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">right</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">bottom</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">top</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}</span>
+      <span class="p">})</span>
+      <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;resizemove&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">target</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">,</span>
+        <span class="nx">x</span> <span class="o">=</span> <span class="p">(</span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;data-x&#39;</span><span class="p">))</span> <span class="o">||</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="nx">y</span> <span class="o">=</span> <span class="p">(</span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;data-y&#39;</span><span class="p">))</span> <span class="o">||</span> <span class="mi">0</span><span class="p">);</span>
+
+        <span class="c1">// update the element&#39;s style</span>
+        <span class="nx">target</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span>  <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">rect</span><span class="p">.</span><span class="nx">width</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">;</span>
+        <span class="nx">target</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">rect</span><span class="p">.</span><span class="nx">height</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">;</span>
+
+        <span class="c1">// translate when resizing from top or left edges</span>
+        <span class="nx">x</span> <span class="o">+=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">deltaRect</span><span class="p">.</span><span class="nx">left</span><span class="p">;</span>
+        <span class="nx">y</span> <span class="o">+=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">deltaRect</span><span class="p">.</span><span class="nx">top</span><span class="p">;</span>
+
+        <span class="nx">target</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">webkitTransform</span> <span class="o">=</span> <span class="nx">target</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">transform</span> <span class="o">=</span>
+        <span class="s1">&#39;translate(&#39;</span> <span class="o">+</span> <span class="nx">x</span> <span class="o">+</span> <span class="s1">&#39;px,&#39;</span> <span class="o">+</span> <span class="nx">y</span> <span class="o">+</span> <span class="s1">&#39;px)&#39;</span><span class="p">;</span>
+
+        <span class="nx">target</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;data-x&#39;</span><span class="p">,</span> <span class="nx">x</span><span class="p">);</span>
+        <span class="nx">target</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;data-y&#39;</span><span class="p">,</span> <span class="nx">y</span><span class="p">);</span>
+        <span class="nx">target</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">rect</span><span class="p">.</span><span class="nx">width</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;×&#39;</span> <span class="o">+</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">rect</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+      <span class="p">});</span>
+    <span class="c1">//*** END RESIZING CODE ***</span>
+
+<span class="c1">//*** CONTINUE DRAGGING CODE ***</span>
+  <span class="kd">function</span> <span class="nx">dragMoveListener</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">target</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">,</span>
+        <span class="c1">// keep the dragged position in the data-x/data-y attributes</span>
+        <span class="nx">x</span> <span class="o">=</span> <span class="p">(</span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;data-x&#39;</span><span class="p">))</span> <span class="o">||</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">dx</span><span class="p">,</span>
+        <span class="nx">y</span> <span class="o">=</span> <span class="p">(</span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;data-y&#39;</span><span class="p">))</span> <span class="o">||</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">dy</span><span class="p">;</span>
+
+    <span class="c1">// translate the element</span>
+    <span class="nx">target</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">webkitTransform</span> <span class="o">=</span>
+    <span class="nx">target</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">transform</span> <span class="o">=</span>
+      <span class="s1">&#39;translate(&#39;</span> <span class="o">+</span> <span class="nx">x</span> <span class="o">+</span> <span class="s1">&#39;px, &#39;</span> <span class="o">+</span> <span class="nx">y</span> <span class="o">+</span> <span class="s1">&#39;px)&#39;</span><span class="p">;</span>
+
+    <span class="c1">// update the posiion attributes</span>
+    <span class="nx">target</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;data-x&#39;</span><span class="p">,</span> <span class="nx">x</span><span class="p">);</span>
+    <span class="nx">target</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;data-y&#39;</span><span class="p">,</span> <span class="nx">y</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="save-values">
+<h3>Save Values<a class="headerlink" href="#save-values" title="Permalink to this headline">¶</a></h3>
+<p>In order to save a room of a palace the way it is, it is necessary to grab
+all of the relevant information regarding the room objects. This includes
+the x and y coordinates, their width and height, and their caption. This is
+done in the update() function, as shown below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@csrf_exempt</span>
+<span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function is for updata room object information.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">is_ajax</span><span class="p">():</span>
+        <span class="nb">id</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">)</span>     <span class="c"># get id from req</span>
+        <span class="n">position_x</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;position_x&quot;</span><span class="p">)</span>
+        <span class="n">position_y</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;position_y&quot;</span><span class="p">)</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;height&quot;</span><span class="p">)</span>    <span class="c"># get height from req</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;width&quot;</span><span class="p">)</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;title&quot;</span><span class="p">)</span>
+        <span class="n">num_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>                 <span class="c"># change type of id to int</span>
+        <span class="n">num_position_x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">position_x</span><span class="p">)</span>
+        <span class="n">num_position_y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">position_y</span><span class="p">)</span>
+        <span class="n">num_height</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">height</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">num_width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">width</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">objects</span> <span class="o">=</span> <span class="n">RoomObject</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">num_id</span><span class="p">)</span>  <span class="c"># get objects by id</span>
+        <span class="nb">object</span> <span class="o">=</span> <span class="n">objects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">object</span><span class="o">.</span><span class="n">position_x</span> <span class="o">=</span> <span class="n">num_position_x</span>         <span class="c"># update object information</span>
+        <span class="nb">object</span><span class="o">.</span><span class="n">position_y</span> <span class="o">=</span> <span class="n">num_position_y</span>
+        <span class="nb">object</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">num_height</span>
+        <span class="nb">object</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">num_width</span>
+        <span class="nb">object</span><span class="o">.</span><span class="n">note</span> <span class="o">=</span> <span class="n">title</span>
+        <span class="nb">object</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>                       <span class="c"># save object information</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Memory Palace Page</a><ul>
+<li><a class="reference internal" href="#features-functions">Features/Functions</a><ul>
+<li><a class="reference internal" href="#create-new-room">Create New Room</a></li>
+<li><a class="reference internal" href="#delete-existing-room">Delete Existing Room</a></li>
+<li><a class="reference internal" href="#upload-new-room-object">Upload New Room Object</a></li>
+<li><a class="reference internal" href="#create-new-room-object">Create New Room Object</a></li>
+<li><a class="reference internal" href="#delete-existing-room-object">Delete Existing Room Object</a></li>
+<li><a class="reference internal" href="#drag-resize-room-object">Drag/Resize Room Object</a></li>
+<li><a class="reference internal" href="#save-values">Save Values</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="Library.html" title="previous chapter">Library Page</a></li>
+      <li>Next: <a href="Loginregister.html" title="next chapter">Login/Register System</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Memorypalace.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Satya Gupta, Kaiying Chen, Enan Rahman, Imer Jance, Hensley Tavares.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/Memorypalace.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
