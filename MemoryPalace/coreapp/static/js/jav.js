@@ -31,7 +31,7 @@ interact('.draggable')
 
       $.get("/update/",{'id': id, 'title': title, 'position_x': position_x,
       'position_y':position_y, 'height':height, 'width':width }, function(ret){
-//            alert("success...");
+
         })
 
 
@@ -59,7 +59,20 @@ interact('.draggable')
 	//*** RESIZING CODE ***
 	  .resizable({
 	    preserveAspectRatio: true,
-	    edges: { left: true, right: true, bottom: true, top: true }
+	    edges: { left: true, right: true, bottom: true, top: true },
+	    onend: function(event){
+             var target = event.target,
+             id = target.getAttribute('id'),
+             position_x = target.getAttribute('data-x'),
+             position_y = target.getAttribute('data-y'),
+             title = target.getAttribute('title');
+             var height = $('#'+id).css('height');
+             var width = $('#'+id).css('width');
+
+          $.get("/update/",{'id': id, 'title': title, 'position_x': position_x,
+          'position_y':position_y, 'height':height, 'width':width }, function(ret){
+            })
+	    }
 	  })
 	  .on('resizemove', function (event) {
 	    var target = event.target,
@@ -180,12 +193,26 @@ $(document).ready(function(){
 
 
     //Add a caption to the image.
-    $(document).on('dblclick', '.draggable', function() {
+    $(document).on('dblclick', '.draggable', function(event) {
         $('#modal_caption').openModal();
         $('#modal_caption_done').click(function(){
         var caption = $("#modal_caption_id").val();
         //var caption = prompt("Enter a caption for this image.");
-        $('.draggable').attr('title', caption);
+        $(event.target).attr('title', caption);
+         var target = event.target,
+         id = target.getAttribute('id'),
+         position_x = target.getAttribute('data-x'),
+         position_y = target.getAttribute('data-y'),
+         title = target.getAttribute('title');
+         console.log(title);
+
+         var height = $('#'+id).css('height');
+         var width = $('#'+id).css('width');
+
+          $.get("/update/",{'id': id, 'title': title, 'position_x': position_x,
+          'position_y':position_y, 'height':height, 'width':width }, function(ret){
+
+            })
         });
 
 	/*Materialize tooltip. Having some trouble with this still.
@@ -202,10 +229,8 @@ $(document).ready(function(){
         if($(e.target).hasClass('draggable')) {
           $('.draggable').removeClass('permaBorder');
           $(($delTarget).addClass('permaBorder'));
-          if($('#delete-draggable').hasClass('disabled')) {
-            $('#delete-draggable').removeClass('disabled');
-            $("#delete-draggable").prop("href", "/deleteImageObject"+window.location.search+"&objectID="+e.target.id)
-          }
+          $('#delete-draggable').toggleClass('disabled');
+          $("#delete-draggable").prop("href", "/deleteRoomImageObject"+window.location.search+"&roomobjectID="+e.target.id)
         }
         else if(!$(e.target).hasClass('draggable')){
           $('.draggable').removeClass('permaBorder');
@@ -220,7 +245,7 @@ $(document).ready(function(){
             e.preventDefault();
           });
           var root = location.protocol + '//' + location.host;
-          window.location.href = root+"/deleteImageObject"+window.location.search+"&objectID="+e.target.id;
+          window.location.href = root+"/deletePalaceImageObject"+window.location.search+"&palaceobjectID="+e.target.id;
         }
       });
 

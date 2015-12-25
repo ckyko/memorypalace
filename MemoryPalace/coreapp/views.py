@@ -1,16 +1,18 @@
+"""
+    Views.py
+    This is where all the webpage views are
+"""
 from django.http import JsonResponse
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .forms import CreatePalaceForm, CreateRoomForm, UploadImageForm
-from .models import UserPalace, PalaceRoom, PalaceObject, RoomObject
-from serializers import PalaceObjectSerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
+from .forms import CreatePalaceForm, CreateRoomForm, UploadImageForm
+from .models import UserPalace, PalaceRoom, PalaceObject, RoomObject
+from coreapp.serializers import PalaceObjectSerializer
 from django.views.decorators.csrf import csrf_exempt
 # from django.core.urlresolvers import reverse
-
-
 
 
 def index(req):
@@ -23,31 +25,28 @@ def index(req):
     :return: index page
     """
     data = {'title': 'MemoryPalace',
-        'CreatePalaceForm':CreatePalaceForm(),
-        'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+            'CreatePalaceForm':CreatePalaceForm(),
+            'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
 
     return render(req, 'home.html', data)
-
 
 def about(req):
     """
     this function return about page
     """
     data = {'title': 'MemoryPalace',
-        'CreatePalaceForm':CreatePalaceForm(),
-        'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+            'CreatePalaceForm':CreatePalaceForm(),
+            'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
     return render(req, 'about.html', data)
-
 
 def contact(req):
     """
     this function return contact page
     """
     data = {'title': 'MemoryPalace',
-        'CreatePalaceForm':CreatePalaceForm(),
-        'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+            'CreatePalaceForm':CreatePalaceForm(),
+            'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
     return render(req, 'contact.html', data)
-
 
 def log_in(req):
     """
@@ -57,8 +56,8 @@ def log_in(req):
     user and redirect to index page.
     """
     data = {'title': 'MemoryPalace',
-        'CreatePalaceForm':CreatePalaceForm(),
-        'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+            'CreatePalaceForm':CreatePalaceForm(),
+            'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
     errors = []
     temp = data
     if req.method == "POST":      # check if user submit or not
@@ -70,7 +69,8 @@ def log_in(req):
             if user.is_active:                    # check user is active or not
                 login(req, user)
                 # req.session['username'] = name
-                return HttpResponseRedirect(req.META.get('HTTP_REFERER'))#redirect to the page whilst clicking on the modal
+                #redirect to the page whilst clicking on the modal
+                return HttpResponseRedirect(req.META.get('HTTP_REFERER'))
             else:
                 errors.append('Disabled account')
                 temp['errors'] = errors
@@ -83,7 +83,6 @@ def log_in(req):
         data['errors'] = None
         return redirect('/#modal_login')
 
-
 def log_out(req):
     """
     This is log out function.
@@ -94,7 +93,6 @@ def log_out(req):
         logout(req)                        # log out user
     return HttpResponseRedirect('/')
 
-
 def palace_library(req):
     """
     This function give palace library function.
@@ -103,8 +101,8 @@ def palace_library(req):
     with user information.
     """
     data = {'title': 'MemoryPalace',
-    'CreatePalaceForm':CreatePalaceForm(),
-    'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+            'CreatePalaceForm':CreatePalaceForm(),
+            'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
     if not req.user.is_authenticated():        # check login already or not
         data['user_palace'] = None
         return render(req, 'palace_library.html', data)
@@ -116,14 +114,15 @@ def palace_library(req):
         data['user_palace'] = user_palace
         return render(req, 'palace_library.html', data)
 
-
 def testing(req):
+    """
+    Runs test and renders test.html
+    """
     data = {'title': 'MemoryPalace',
-        'CreatePalaceForm':CreatePalaceForm(),
-        'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+            'CreatePalaceForm':CreatePalaceForm(),
+            'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
     data['test'] = "images/memory_objects/char2.png"
     return render(req, 'test.html', data)
-
 
 def register(req):
     """
@@ -132,8 +131,8 @@ def register(req):
     database and redirect to index page.
     """
     data = {'title': 'MemoryPalace',
-    'CreatePalaceForm':CreatePalaceForm(),
-    'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+            'CreatePalaceForm':CreatePalaceForm(),
+            'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
     errors = []
     temp = data
     ##############################################################
@@ -174,7 +173,6 @@ def register(req):
     else:
         return redirect('/#modal_register')
 
-
 def MemoryPalace(req):
     """
         This function response Memory palace room page.
@@ -183,9 +181,10 @@ def MemoryPalace(req):
         if user is login and specify which room, it will open user's room. it means pass
         all user's room information to page
     """
+
     data = {'title': 'MemoryPalace',
-        'CreatePalaceForm':CreatePalaceForm(),
-        'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+            'CreatePalaceForm':CreatePalaceForm(),
+            'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
     if req.user.is_authenticated():   # check login already or not
         data['room'] = None
         data['user_room'] = None
@@ -237,7 +236,6 @@ def MemoryPalace(req):
         data['user_palace'] = None
         return render(req, 'memory_palace.html', data)
 
-
 def createPalace(req):
     """
     This function response create palace form page.
@@ -248,9 +246,9 @@ def createPalace(req):
     :return:
     """
     data = {'title': 'MemoryPalace', 'header': 'Login | Register',
-    'headerLink': '#modal_register_login',
-    'CreatePalaceForm':CreatePalaceForm(),
-    'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+            'headerLink': '#modal_register_login',
+            'CreatePalaceForm':CreatePalaceForm(),
+            'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
     if not req.user.is_authenticated():   # check login already or not
         return HttpResponseRedirect('/')
     else:
@@ -280,8 +278,10 @@ def createPalace(req):
             data['CreatePalaceForm'] = CreatePalaceForm()
             return redirect('/palace_library/#modal_createPalace')
 
-
 def deletePalace(req):
+    """
+    Delete existing palaces when the delete button is hit
+    """
     try:
         u = UserPalace.objects.filter(palaceName=req.GET.get('palaceName', ''))
     except User.DoesNotExist:
@@ -290,33 +290,37 @@ def deletePalace(req):
         u.delete()
     return redirect('/palace_library/#Private')
 
+def deleteRoomImageObject(req):
+    """
+    Deletes the selected image inside a room once the delete button is clicked
+    """
+    u = RoomObject.objects.filter(id=req.GET.get('roomobjectID', ''))
+    u.delete()
+    return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', '')
+    		        + '&roomName=' +req.GET.get('roomName', ''))
 
-def deleteImageObject(req):
-    try:
-        if(PalaceObject.objects.filter(id=req.GET.get('objectID', '')) and PalaceObject.objects.filter(public=0)):#if delete called on palace object and palace object isn't public
-            u = PalaceObject.objects.filter(id=req.GET.get('objectID', ''))
-        elif(RoomObject.objects.filter(id=req.GET.get('objectID', ''))):#if delete called on room object
-            u = RoomObject.objects.filter(id=req.GET.get('objectID', ''))
-    except User.DoesNotExist:
-        pass
+def deletePalaceImageObject(req):
+    u = PalaceObject.objects.filter(id=req.GET.get('palaceobjectID', ''), public=0)
+    u.delete()
+    if(req.GET.get('roomName', '')):
+        return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', '')
+                        + '&roomName=' +req.GET.get('roomName', ''))
     else:
-        try:
-            u.delete()#try delete if u exists
-        except:
-            pass#pass on exceptional cases i.e when object is public
-    return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', '')+ '&roomName=' +req.GET.get('roomName', ''))
+        return redirect('/MemoryPalace?palaceName='+req.GET.get('palaceName', ''))
 
 
 def deleteRoom(req):
+    """
+    Click the x on the room card to delete a room
+    """
     try:
-        palaceName=req.GET.get('palaceName', '')
+        palaceName = req.GET.get('palaceName', '')
         u = PalaceRoom.objects.filter(roomName=req.GET.get('roomName', ''))
     except User.DoesNotExist:
         pass
     else:
         u.delete()
     return redirect('/MemoryPalace?palaceName='+ palaceName)
-
 
 def createRoom(req):
     """
@@ -325,8 +329,8 @@ def createRoom(req):
 
     """
     data = {'title': 'MemoryPalace',
-        'CreatePalaceForm':CreatePalaceForm(),
-        'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+            'CreatePalaceForm':CreatePalaceForm(),
+            'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
     if not req.user.is_authenticated():        # check login already or not
         return HttpResponseRedirect('/')
     else:
@@ -364,7 +368,6 @@ def createRoom(req):
             data['CreateRoomForm'] = CreateRoomForm()
             return redirect('/MemoryPalace/createRoom?palaceName=' + palaceName)
 
-
 @csrf_exempt
 def upload_image(req):
     """
@@ -373,7 +376,7 @@ def upload_image(req):
     """
     if req.is_ajax():
         palace_id = req.POST.get("palace_id")
-        print(palace_id)
+        print palace_id
         palace_id_number = int(palace_id)
         form = UploadImageForm(data=req.POST, files=req.FILES)
         if form.is_valid():
@@ -427,7 +430,6 @@ def create_room_object(req):
         my_dict = {'id': room_object_id}
         return JsonResponse(my_dict, safe=False)
 
-
 @csrf_exempt
 def update(req):
     """
@@ -441,10 +443,26 @@ def update(req):
         width = req.GET.get("width")
         title = req.GET.get("title")
         num_id = int(id)                 # change type of id to int
+        if '.' in position_x:
+            position_x_list = position_x.split('.')
+            position_x = position_x_list[0]
+        if '.' in position_y:
+            position_y_list = position_y.split('.')
+            position_y = position_y_list[0]
+        if '.' in height:
+            height_list = height.split('.')
+            height = height_list[0]
+        else:
+            height = height[:-2]
+        if '.' in width:
+            width_list = width.split('.')
+            width = width_list[0]
+        else:
+            width = width[:-2]
         num_position_x = int(position_x)
         num_position_y = int(position_y)
-        num_height = int(height[:-2])
-        num_width = int(width[:-2])
+        num_height = int(height)
+        num_width = int(width)
         objects = RoomObject.objects.filter(id=num_id)  # get objects by id
         object = objects[0]
         object.position_x = num_position_x         # update object information
@@ -453,26 +471,25 @@ def update(req):
         object.width = num_width
         object.note = title
         object.save()                       # save object information
+        return JsonResponse({}, safe=False)
 
     else:
         return HttpResponseRedirect('/')
 
-
 class JSONResponse(HttpResponse):
-
-    # An HttpResponse that renders its content into JSON.
-
+    """
+    An HttpResponse that renders its content into JSON.
+    """
     def __init__(self, data, **kwargs):
         content = JSONRenderer().render(data)
         kwargs['content_type'] = 'application/json'
         super(JSONResponse, self).__init__(content, **kwargs)
 
-
 @csrf_exempt
 def snippet_detail(request, pk):
-
-    # Retrieve, update or delete a code snippet.
-
+    """
+    Retrieve, update or delete a code snippet.
+    """
     try:
         pObj = PalaceObject.objects.get(roomName=pk)
     except PalaceObject.DoesNotExist:
@@ -494,12 +511,11 @@ def snippet_detail(request, pk):
         pObj.delete()
         return HttpResponse(status=204)
 
-
 @csrf_exempt
 def snippet_list(request):
-
-    # List all code snippets, or create a new snippet.
-
+    """
+    List all code snippets, or create a new snippet.
+    """
     if request.method == 'GET':
         snippets = PalaceObject.objects.all()
         serializer = PalaceObjectSerializer(snippets, many=True)
