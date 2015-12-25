@@ -76,8 +76,8 @@ separate html files.</p>
 <div class="section" id="create-new-palace">
 <h3>Create New Palace<a class="headerlink" href="#create-new-palace" title="Permalink to this headline">¶</a></h3>
 <p>New palaces are created by clicking the large, square &#8216;+&#8217;. This brings up a
-modal that takes as input a string for the palace name. Hitting the submit
-button triggers the createPalace() function in views.py.</p>
+modal that takes as input a string for the palace name. The functionality of
+create new palace is determined by the createPalace() function in views.py.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">createPalace</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function response create palace form page.</span>
@@ -122,6 +122,22 @@ button triggers the createPalace() function in views.py.</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="delete-existing-palace">
+<h3>Delete Existing Palace<a class="headerlink" href="#delete-existing-palace" title="Permalink to this headline">¶</a></h3>
+<p>Existing palaces are removed by clicking on the red recycling bin icon on
+the card of the palace you would like to delete. The functionality is
+defined in views.py by the deletePalace() function.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">deletePalace</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">UserPalace</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">palaceName</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;palaceName&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">))</span>
+    <span class="k">except</span> <span class="n">User</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">u</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;/palace_library/#Private&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
@@ -137,6 +153,7 @@ button triggers the createPalace() function in views.py.</p>
 <li><a class="reference internal" href="#features-functions">Features/Functions</a><ul>
 <li><a class="reference internal" href="#tabbed-view">Tabbed View</a></li>
 <li><a class="reference internal" href="#create-new-palace">Create New Palace</a></li>
+<li><a class="reference internal" href="#delete-existing-palace">Delete Existing Palace</a></li>
 </ul>
 </li>
 </ul>
