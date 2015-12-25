@@ -9,7 +9,7 @@ Welcome to Memory Palaces's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 7
+   :maxdepth: 8
 
    Introduction
    Tools
