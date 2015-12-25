@@ -45,8 +45,8 @@ Create New Palace
 ~~~~~~~~~~~~~~~~~
 
 New palaces are created by clicking the large, square '+'. This brings up a
-modal that takes as input a string for the palace name. Hitting the submit
-button triggers the createPalace() function in views.py.
+modal that takes as input a string for the palace name. The functionality of
+create new palace is determined by the createPalace() function in views.py.
 
 ::
 
@@ -91,3 +91,21 @@ button triggers the createPalace() function in views.py.
             else:             # if not submit, we sent the form
                 data['CreatePalaceForm'] = CreatePalaceForm()
                 return redirect('/palace_library/#modal_createPalace')
+
+Delete Existing Palace
+~~~~~~~~~~~~~~~~~~~~~~
+
+Existing palaces are removed by clicking on the red recycling bin icon on
+the card of the palace you would like to delete. The functionality is
+defined in views.py by the deletePalace() function.
+
+::
+
+    def deletePalace(req):
+        try:
+            u = UserPalace.objects.filter(palaceName=req.GET.get('palaceName', ''))
+        except User.DoesNotExist:
+            pass
+        else:
+            u.delete()
+        return redirect('/palace_library/#Private')
