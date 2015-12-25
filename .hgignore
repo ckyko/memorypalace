@@ -11,3 +11,4 @@ syntax: glob
 *.idea/*
 *db.sqlite3
 000*
+*.coverage
