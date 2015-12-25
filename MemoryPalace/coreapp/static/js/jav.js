@@ -214,15 +214,17 @@ $(document).ready(function(){
     });
 
     var timeout_id = 0,
-      hold_time = 1000,
+      hold_time = 2000,
       hold_menu = $('#modal_caption'),
-      hold_trigger = $('.draggable'),
+      hold_trigger = $('#roombg'),
       title = "test";
       hold_menu.hide();
 
       hold_trigger.mousedown(function(e) {
+      if($(e.target).hasClass('draggable')) {
           title = e.target.title;
           timeout_id = setTimeout(menu_toggle, hold_time);
+        }
       }).bind('mouseup mouseleave', function() {
           clearTimeout(timeout_id);
       });
