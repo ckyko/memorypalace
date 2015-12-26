@@ -151,6 +151,17 @@ img.draggable:hover {
   height:300px;
   width:300px;
 }
+
+#modal_createPalace{
+  height:300px;
+  width:300px;
+}
+
+#modal_createRoom{
+  height:300px;
+  width:300px;
+}
+
 #modal_register_login{
   height:520px;
   width:350px;

@@ -194,10 +194,7 @@ $(document).ready(function(){
 
     //Add a caption to the image.
     $(document).on('dblclick', '.draggable', function(event) {
-        $('#modal_caption').openModal();
-        $('#modal_caption_done').click(function(){
-        var caption = $("#modal_caption_id").val();
-        //var caption = prompt("Enter a caption for this image.");
+        var caption = prompt("Enter a caption for this image.");
         $(event.target).attr('title', caption);
          var target = event.target,
          id = target.getAttribute('id'),
@@ -213,17 +210,29 @@ $(document).ready(function(){
           'position_y':position_y, 'height':height, 'width':width }, function(ret){
 
             })
-        });
-
-	/*Materialize tooltip. Having some trouble with this still.
-
-	$(this).attr('class', 'btn tooltipped');
-	$(this).attr('data-position', 'bottom');
-	$(this).attr('data-delay', '50');
-	$(this).attr('data-tooltip', caption);
-	*/
+        $('#'+e.target.id).attr('title', caption);
     });
 
+    var timeout_id = 0,
+      hold_time = 2000,
+      hold_menu = $('#modal_caption'),
+      hold_trigger = $('#roombg'),
+      title = "test";
+      hold_menu.hide();
+
+      hold_trigger.mousedown(function(e) {
+      if($(e.target).hasClass('draggable')) {
+          title = e.target.title;
+          timeout_id = setTimeout(menu_toggle, hold_time);
+        }
+      }).bind('mouseup mouseleave', function() {
+          clearTimeout(timeout_id);
+      });
+
+      function menu_toggle() {
+        $("#caption_desc").replaceWith("<p id='caption_desc'>"+title+"</p>");
+        hold_menu.openModal();
+      }
     $('#roombg').on('click', function(e) {
         var $delTarget = $(e.target);
         if($(e.target).hasClass('draggable')) {
