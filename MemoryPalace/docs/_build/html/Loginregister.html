@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Register/Log in/Log out System &mdash; Memory Palaces 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Memory Palaces 1.0 documentation" href="index.html" />
+    <link rel="prev" title="Memory Palace Page" href="Memorypalace.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="register-log-in-log-out-system">
+<h1>Register/Log in/Log out System<a class="headerlink" href="#register-log-in-log-out-system" title="Permalink to this headline">¶</a></h1>
+<p>The whole Register/Log in/Log out system is implemented in a small modal
+that is linked to on the top right section of the site.</p>
+<div class="section" id="features-functions">
+<h2>Features/Functions<a class="headerlink" href="#features-functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Register</li>
+<li>Log in</li>
+<li>Log out</li>
+</ul>
+<div class="section" id="register">
+<h3>Register<a class="headerlink" href="#register" title="Permalink to this headline">¶</a></h3>
+<p>To register, just click on the &#8220;Login | Register&#8221; link at the top right of
+the page. A modal will pop up with a tabbed view: one for Login and one for
+Register. Click on the Register tab and enter your credentials. Once you
+click the register button, you should be registered. Registration is coded
+in the register() function, as shown below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is register function. This function will give a register form first,</span>
+<span class="sd">    once user input the correct information, it will save user information to</span>
+<span class="sd">    database and redirect to index page.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;MemoryPalace&#39;</span><span class="p">,</span>
+    <span class="s">&#39;CreatePalaceForm&#39;</span><span class="p">:</span><span class="n">CreatePalaceForm</span><span class="p">(),</span>
+    <span class="s">&#39;CreateRoomForm&#39;</span><span class="p">:</span><span class="n">CreateRoomForm</span><span class="p">(),</span> <span class="s">&#39;objectForm&#39;</span><span class="p">:</span> <span class="n">UploadImageForm</span><span class="p">()}</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">data</span>
+    <span class="c">##############################################################</span>
+    <span class="c"># FOR FUNCTIONALITY TESTS</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;testuser&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">User</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">u</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+    <span class="c">##############################################################</span>
+    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&#39;POST&#39;</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;username&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>          <span class="c"># get username</span>
+        <span class="n">password1</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;password1&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>    <span class="c"># get password</span>
+        <span class="n">password2</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;password2&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>    <span class="c"># get conform password</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>                            <span class="c"># check length of username</span>
+            <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">u&#39;Username must be at least 5 character&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">password1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">:</span>                     <span class="c"># check length of password</span>
+            <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">u&#39;Password must be at least 6 character &#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">password1</span> <span class="o">!=</span> <span class="n">password2</span><span class="p">:</span>                 <span class="c"># confirm password</span>
+            <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">u&quot;Password doesn&#39;t match&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>                                   <span class="c"># check if username was used</span>
+                <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">u&#39;user name is used&#39;</span><span class="p">)</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s">&#39;errors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">errors</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;/#modal_register/&#39;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">User</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+                <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span>             <span class="c"># create a user</span>
+                    <span class="n">username</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                    <span class="n">password</span><span class="o">=</span><span class="n">password1</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/#modal_login&#39;</span><span class="p">)</span>
+        <span class="n">temp</span><span class="p">[</span><span class="s">&#39;errors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">errors</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;/#modal_register&#39;</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">errors</span><span class="p">[:]</span> <span class="c">#reset errors</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;/#modal_register&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="log-in">
+<h3>Log In<a class="headerlink" href="#log-in" title="Permalink to this headline">¶</a></h3>
+<p>Logging in is almost exactly the same as registering, except that you stay
+on the Login tab, enter your credentials, and click Login. It is defined by
+the function log_in():</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">log_in</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is login function.</span>
+<span class="sd">    this function will return the login form if user didn&#39;t click submit.</span>
+<span class="sd">    if user fill in all information correct and click submit, it will log in</span>
+<span class="sd">    user and redirect to index page.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;MemoryPalace&#39;</span><span class="p">,</span>
+        <span class="s">&#39;CreatePalaceForm&#39;</span><span class="p">:</span><span class="n">CreatePalaceForm</span><span class="p">(),</span>
+        <span class="s">&#39;CreateRoomForm&#39;</span><span class="p">:</span><span class="n">CreateRoomForm</span><span class="p">(),</span> <span class="s">&#39;objectForm&#39;</span><span class="p">:</span> <span class="n">UploadImageForm</span><span class="p">()}</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">data</span>
+    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;POST&quot;</span><span class="p">:</span>      <span class="c"># check if user submit or not</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;username&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>    <span class="c"># get username</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;password&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>  <span class="c"># check username</span>
+                                                               <span class="c"># and password</span>
+        <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">is_active</span><span class="p">:</span>                    <span class="c"># check user is active or not</span>
+                <span class="n">login</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+                <span class="c"># req.session[&#39;username&#39;] = name</span>
+                <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">META</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;HTTP_REFERER&#39;</span><span class="p">))</span><span class="c">#redirect to the page whilst clicking on the modal</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;Disabled account&#39;</span><span class="p">)</span>
+                <span class="n">temp</span><span class="p">[</span><span class="s">&#39;errors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">errors</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;/#modal_login&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>                             <span class="c"># if username or password is invalid</span>
+            <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;Invalid Username or Password&#39;</span><span class="p">)</span>
+            <span class="n">temp</span><span class="p">[</span><span class="s">&#39;errors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">errors</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;/#modal_login&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&#39;errors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;/#modal_login&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="log-out">
+<h3>Log Out<a class="headerlink" href="#log-out" title="Permalink to this headline">¶</a></h3>
+<p>To log out, just click on the link that appears when you hover over your
+username on the top right part of the site. The log out behavior is defined
+by the log_out() function.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">log_out</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is log out function.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;MemoryPalace&#39;</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>        <span class="c"># check login already or not</span>
+        <span class="n">logout</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>                        <span class="c"># log out user</span>
+    <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Register/Log in/Log out System</a><ul>
+<li><a class="reference internal" href="#features-functions">Features/Functions</a><ul>
+<li><a class="reference internal" href="#register">Register</a></li>
+<li><a class="reference internal" href="#log-in">Log In</a></li>
+<li><a class="reference internal" href="#log-out">Log Out</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="Memorypalace.html" title="previous chapter">Memory Palace Page</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Loginregister.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Satya Gupta, Kaiying Chen, Enan Rahman, Imer Jance, Hensley Tavares.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/Loginregister.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

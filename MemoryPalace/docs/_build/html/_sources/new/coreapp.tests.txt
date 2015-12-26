@@ -1,0 +1,38 @@
+coreapp.tests package
+=====================
+
+Submodules
+----------
+
+coreapp.tests.test_functionality module
+---------------------------------------
+
+.. automodule:: coreapp.tests.test_functionality
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+coreapp.tests.test_models module
+--------------------------------
+
+.. automodule:: coreapp.tests.test_models
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+coreapp.tests.test_views module
+-------------------------------
+
+.. automodule:: coreapp.tests.test_views
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: coreapp.tests
+    :members:
+    :undoc-members:
+    :show-inheritance:
