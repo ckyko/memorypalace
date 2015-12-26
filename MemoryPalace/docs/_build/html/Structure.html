@@ -57,16 +57,78 @@ framework and a PostgreSQL database.</p>
 <div class="section" id="frontend">
 <h3>Frontend<a class="headerlink" href="#frontend" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>HTML/CSS</li>
+<li>HTML/CSS/Materialize</li>
 <li>JavaScript/jQuery/Ajax</li>
 </ul>
 <p>On the front end, HTML and CSS are used to render content that function
-based on JavaScript and jQuery code. Ajax is used to communicate with the
-back end to send data back and forth.</p>
+based on JavaScript and jQuery code. In addition to this, Materialize, a
+front end framework, is used to implement some pre-made html and css
+components. Ajax is used to communicate with the back end to send data back
+and forth.</p>
 </div>
 </div>
-<div class="section" id="structure">
-<h2>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="structure-layout">
+<h2>Structure/Layout<a class="headerlink" href="#structure-layout" title="Permalink to this headline">¶</a></h2>
+<p>Django&#8217;s built in templating sytem is used for increased modularity. This is
+implemented in the following way:</p>
+<ol class="arabic simple">
+<li>The main index.html page is created with the layout of the site.</li>
+<li>One area in the body of the page is chosen where the content will be
+dsiplayed. We define this area by placing the following code wherever the
+content should go:</li>
+</ol>
+<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">block</span> <span class="nv">body</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li>Now we no longer need to implement all of the contents of the page, but
+instead just the content. This accomplished in any new html page as
+follows:</li>
+</ol>
+<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">extends</span> <span class="s2">&quot;index.html&quot;</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">block</span> <span class="nv">body</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">     ...CONTENT HERE...</span>
+<span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li>This has the effect of loading the html of index.html around our new
+page.</li>
+</ol>
+</div>
+<div class="section" id="page-functionality">
+<h2>Page Functionality<a class="headerlink" href="#page-functionality" title="Permalink to this headline">¶</a></h2>
+<p>Django is used to apply python code to any page that is accessed by the
+user. Each page has a function linked to it that executes when the page is
+accessed. The functions are defined in views.py and are linked to their
+respecive url in urls.py. An example is shown below:</p>
+<p>In this example, we look at the index page, which is the root page, so it is
+accessed at  domainname.com/&#8221;. In views.py, we have:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;MemoryPalace&#39;</span><span class="p">,</span>
+            <span class="s">&#39;CreatePalaceForm&#39;</span><span class="p">:</span><span class="n">CreatePalaceForm</span><span class="p">(),</span>
+            <span class="s">&#39;CreateRoomForm&#39;</span><span class="p">:</span><span class="n">CreateRoomForm</span><span class="p">(),</span> <span class="s">&#39;objectForm&#39;</span><span class="p">:</span> <span class="n">UploadImageForm</span><span class="p">()}</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s">&#39;home.html&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The only thing index() is responsible for is rendering the page home.html
+(not index.html, because of templating. Remember that index.html is included
+in every page as it is the base template. In this case, we want the index
+page with the home content) and providing it with &#8216;req&#8217; and &#8216;data&#8217;.</p>
+<p>This index() function is linked to the root page in urls.py as shown below:</p>
+<div class="highlight-python"><div class="highlight"><pre>urlpatterns = [
+    url(r&#39;^admin/&#39;, include(admin.site.urls)),
+    url(r&#39;^$&#39;, &#39;coreapp.views.index&#39;, name=&#39;index&#39;),
+                        .....
+    url(r&#39;^about/&#39;, &#39;coreapp.views.about&#39;, name=&#39;about&#39;),
+    url(r&#39;^api-auth/&#39;, include(&#39;rest_framework.urls&#39;, namespace=&#39;rest_framework&#39;)),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+</pre></div>
+</div>
+<p>Here, the line <em>url(r&#8217;^$&#8217;, &#8216;coreapp.views.index&#8217;, name=&#8217;index&#8217;),</em> represents
+the index() function and associates it with the appropriate url.</p>
 </div>
 </div>
 
@@ -84,7 +146,8 @@ back end to send data back and forth.</p>
 <li><a class="reference internal" href="#frontend">Frontend</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#structure">Structure</a></li>
+<li><a class="reference internal" href="#structure-layout">Structure/Layout</a></li>
+<li><a class="reference internal" href="#page-functionality">Page Functionality</a></li>
 </ul>
 </li>
 </ul>
