@@ -12,7 +12,6 @@ Contents:
    :maxdepth: 8
 
    Introduction
-   Tools
    Structure
    Homepage
    Library
