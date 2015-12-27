@@ -13,6 +13,7 @@ from .models import UserPalace, PalaceRoom, PalaceObject, RoomObject
 from coreapp.serializers import PalaceObjectSerializer
 from django.views.decorators.csrf import csrf_exempt
 # from django.core.urlresolvers import reverse
+from django.contrib import messages
 
 
 def index(req):
@@ -58,8 +59,6 @@ def log_in(req):
     data = {'title': 'MemoryPalace',
             'CreatePalaceForm':CreatePalaceForm(),
             'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
-    errors = []
-    temp = data
     if req.method == "POST":      # check if user submit or not
         name = req.POST.get('username', '')    # get username
         password = req.POST.get('password', '')
@@ -72,15 +71,15 @@ def log_in(req):
                 #redirect to the page whilst clicking on the modal
                 return HttpResponseRedirect(req.META.get('HTTP_REFERER'))
             else:
-                errors.append('Disabled account')
-                temp['errors'] = errors
+                errors = 'Disabled account'
+                messages.error(req, errors)
                 return redirect('/#modal_login')
         else:                             # if username or password is invalid
-            errors.append('Invalid Username or Password')
-            temp['errors'] = errors
+            errors = 'Invalid Username or Password'
+            messages.error(req, errors)
             return redirect('/#modal_login')
+            errors = ''
     else:
-        data['errors'] = None
         return redirect('/#modal_login')
 
 def log_out(req):
@@ -133,8 +132,6 @@ def register(req):
     data = {'title': 'MemoryPalace',
             'CreatePalaceForm':CreatePalaceForm(),
             'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
-    errors = []
-    temp = data
     ##############################################################
     # FOR FUNCTIONALITY TESTS
     try:
@@ -149,16 +146,15 @@ def register(req):
         password1 = req.POST.get('password1', '')    # get password
         password2 = req.POST.get('password2', '')    # get conform password
         if len(name) < 5:                            # check length of username
-            errors.append(u'Username must be at least 5 character')
+            errors = 'Username must be at least 5 character'
         elif len(password1) < 6:                     # check length of password
-            errors.append(u'Password must be at least 6 character ')
+            errors = 'Password must be at least 6 character '
         elif password1 != password2:                 # confirm password
-            errors.append(u"Password doesn't match")
+            errors = "Password doesn't match"
         else:
             try:                                   # check if username was used
                 user = User.objects.get(username=name)
-                errors.append(u'user name is used')
-                temp['errors'] = errors
+                errors = 'user name is used'
                 return redirect('/#modal_register/')
             except User.DoesNotExist:
                 user = User.objects.create_user(             # create a user
@@ -167,9 +163,9 @@ def register(req):
                     )
                 user.save()
                 return HttpResponseRedirect('/#modal_login')
-        temp['errors'] = errors
+        messages.error(req, errors)
         return redirect('/#modal_register')
-        del errors[:] #reset errors
+        errors = ''
     else:
         return redirect('/#modal_register')
 
