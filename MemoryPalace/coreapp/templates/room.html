@@ -1,0 +1,21 @@
+{% load staticfiles %}
+<div id="roombg" style="background-image: url('/{{ room.backgroundImage }}'); background-size: 1024px 720px;">
+
+{%for object in roomObj%}
+
+<img class="draggable" id="{{object.id}}" src="{{object.url}}"
+        style="transform:translate({{object.position_x}}px,{{object.position_y}}px);width:{{object.width}}px;
+    height:{{object.height}}px;" data-x="{{object.position_x}}" data-y="{{object.position_y}}"
+        title="{{object.note}}"/>
+
+
+{% endfor  %}
+  <div id="modal_caption" class="modal modal-fixed-footer">
+      <div class="modal-content center-align">
+        <p id="caption_desc"></p>
+      </div>
+      <div class="modal-footer">
+        <a id="modal_caption_done" class=" modal-action modal-close waves-effect waves-green btn-flat">Done</a>
+      </div>
+  </div>
+</div>
