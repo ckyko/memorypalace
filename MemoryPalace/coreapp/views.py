@@ -12,6 +12,9 @@ from coreapp.serializers import PalaceObjectSerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 # from django.core.urlresolvers import reverse
 
 
@@ -49,7 +52,21 @@ def contact(req):
     if req.user.is_authenticated():
         data['send_email'] = True
         if req.method == "POST":      # check if user submit or not
-            subject = req.POST.get('')
+            subject = req.POST.get('subject_text','')
+            message = req.POST.get('message_textarea','')
+            print(subject)
+            print(message)
+
+            msg = MIMEMultipart()
+
+            message_txt = MIMEText(message, 'plain', 'utf-8')
+            msg.attach(message_txt)
+
+            msg['to'] = 'ckykokoko@gmail.com'
+            msg['from'] = 'ckyckyko@gmail.com'
+            msg['subject'] = subject
+
+
 
     return render(req, 'contact.html', data)
 
