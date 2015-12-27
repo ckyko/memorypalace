@@ -110,7 +110,6 @@ $(function(){
 
     var data = new FormData($('form').get(2));
     var palace_id = $("#palace_id").text();
-    console.log(palace_id);
     data.append('palace_id',palace_id);
     $.ajax({
         url: $(upload_image).attr('action'),
