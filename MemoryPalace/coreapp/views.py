@@ -85,8 +85,8 @@ def log_in(req):
     user and redirect to index page.
     """
     data = {'title': 'MemoryPalace',
-            'CreatePalaceForm':CreatePalaceForm(),
-            'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+            'CreatePalaceForm': CreatePalaceForm(),
+            'CreateRoomForm': CreateRoomForm(), 'objectForm': UploadImageForm()}
     if req.method == "POST":      # check if user submit or not
         name = req.POST.get('username', '')    # get username
         password = req.POST.get('password', '')
@@ -182,8 +182,7 @@ def register(req):
         else:
             try:                                   # check if username was used
                 user = User.objects.get(username=name)
-                errors = 'user name is used'
-                return redirect('/#modal_register/')
+                errors = 'user name was used'
             except User.DoesNotExist:
                 user = User.objects.create_user(             # create a user
                     username=name,
