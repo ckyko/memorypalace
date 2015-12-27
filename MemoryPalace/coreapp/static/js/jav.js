@@ -127,24 +127,10 @@ var url;
 //*** FOR HTE ROOM UPLOAD IMAGES ***
 $(function(){
    $("#id_objectImage").change(function(e){
-//		 var file = e.target.files||e.dataTransfer.files;
-//
-//		 if(file){
-//			 var reader = new FileReader();
-//			 reader.onload=function(){
-//					// append the "<img class='draggable' src=... />" to roombg
-//					$("<img class='scrollBoxImg' src='"+this.result+"'/>").appendTo("#vertscrollbox");
-//			 }
-//			reader.readAsDataURL(file[0]);
-//		}
-//		sentImg();
 
     var data = new FormData($('form').get(2));
-//    var room_name = $("#room_name").text();
     var palace_id = $("#palace_id").text();
     console.log(palace_id);
-//    alert(room_name);
-//    alert(typeof(room_name));
     data.append('palace_id',palace_id);
     $.ajax({
         url: $(upload_image).attr('action'),
@@ -154,9 +140,7 @@ $(function(){
         processData: false,
         contentType: false,
         success: function(msg) {
-//            alert(msg['id']);
             object_id = msg['id']
-//            alert(msg['url'])
             url = msg['url']
             $("<img title = 'right click to delete' class='scrollBoxImg' id='"+object_id+"' src='/"+url+"'/>").prependTo("#vertscrollbox");
 //            $("<img class='draggable' id='"+object_id+"' src='/"+url+"'/>").appendTo("#roombg");
@@ -174,22 +158,22 @@ $(document).ready(function(){
 
     if (window.location.href.indexOf("&roomName") > -1){
        $('#vertscrollbox').on("click", "img.scrollBoxImg", function(event){
-        var target = event.target;
-        var id = target.id;
-        var url = target.getAttribute('src');
-        var room_name = $("#room_name").text();
-      $.get("/create_room_object/",{'id': id, 'url':url, 'room_name':room_name }, function(msg){
-            object_id = msg['id']
-            $("<img class='draggable'"+ "id='"+ object_id + "' src='"+url+"'/>").appendTo("#roombg");
-        })
-    });
-      }
-      else {
+            var target = event.target;
+            var id = target.id;
+            var url = target.getAttribute('src');
+            var room_name = $("#room_name").text();
+            $.get("/create_room_object/",{'id': id, 'url':url, 'room_name':room_name }, function(msg){
+                object_id = msg['id']
+                $("<img class='draggable'"+ "id='"+ object_id + "' src='"+url+"'/>").appendTo("#roombg");
+            })
+       });
+    }
+    else {
         $("#add_objectImag").addClass('disabled');
         $('.scrollBoxImg').click(function(){
         alert("Please add/select a room first!");
         });
-      }
+    }
 
 
     //Add a caption to the image.
@@ -248,6 +232,7 @@ $(document).ready(function(){
           window.location.href = root+"/deletePalaceImageObject"+window.location.search+"&palaceobjectID="+e.target.id;
         }
       });
+
 
     /* Delete functionality. For Later.
     $('#delete-draggable').click(function() {
