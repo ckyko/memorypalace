@@ -44,8 +44,13 @@ def contact(req):
     this function return contact page
     """
     data = {'title': 'MemoryPalace',
-            'CreatePalaceForm':CreatePalaceForm(),
-            'CreateRoomForm':CreateRoomForm(), 'objectForm': UploadImageForm()}
+            'CreatePalaceForm': CreatePalaceForm(),
+            'CreateRoomForm': CreateRoomForm(), 'objectForm': UploadImageForm()}
+    if req.user.is_authenticated():
+        data['send_email'] = True
+        if req.method == "POST":      # check if user submit or not
+            subject = req.POST.get('')
+
     return render(req, 'contact.html', data)
 
 def log_in(req):
@@ -256,14 +261,8 @@ def createPalace(req):
             if data['CreatePalaceForm'].is_valid():
                 # get user name
                 palaceName = data['CreatePalaceForm'].cleaned_data['palaceName']
-                # get number of room
-                #numOfRooms = data['CreatePalaceForm'].cleaned_data['numOfRooms']
-                # get public or not
-                # public = data['CreatePalaceForm'].cleaned_data['public']
                 palace = UserPalace()                    # create form instance
                 palace.palaceName = palaceName           # put user information
-                # palace.numOfRooms = numOfRooms
-                # palace.public = public
                 palace.user = req.user             # get user and put in form
                 palace.save()                      # save form to database
                 data['CreatePalaceForm'] = CreatePalaceForm()# reset form avoid duplication
