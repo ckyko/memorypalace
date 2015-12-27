@@ -17,9 +17,7 @@ interact('.draggable')
     onmove: dragMoveListener,
     // call this function on every dragend event
     onend: function (event) {
-      var textEl = event.target.querySelector('p');
-//      alert("get in");
-//      sentData(event);
+
         var target = event.target,
          id = target.getAttribute('id'),
          position_x = target.getAttribute('data-x'),
@@ -34,24 +32,6 @@ interact('.draggable')
 
         })
 
-
-//        $.ajax({
-//            url:"/update/",
-//            type: "POST",
-//            data: {'id': id, 'position_x': position_x, 'position_y':position_y, 'height':height, 'width': 'width' },
-//            success:function(response){ alert("success..."); },
-//            complete:function(){},
-//            error:function (xhr, textStatus, thrownError){
-//                alert("error doing something");
-//            }
-//        });
-
-
-
-      textEl && (textEl.textContent =
-        'moved a distance of '
-        + (Math.sqrt(event.dx * event.dx +
-                     event.dy * event.dy)|0) + 'px');
     }
   })
 //*** THE REST OF THE DRAGGING CODE CONTINUES AFTER THE END OF THE RESIZING CODE ***
@@ -143,7 +123,6 @@ $(function(){
             object_id = msg['id']
             url = msg['url']
             $("<img title = 'right click to delete' class='scrollBoxImg' id='"+object_id+"' src='/"+url+"'/>").prependTo("#vertscrollbox");
-//            $("<img class='draggable' id='"+object_id+"' src='/"+url+"'/>").appendTo("#roombg");
 
         }
     });
