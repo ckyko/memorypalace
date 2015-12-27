@@ -13,20 +13,23 @@
         </div><br><br>
       <h6>Sending Email:</h6>
     <div class="row">
-      <form class="col s12"  method="post" enctype="multipart/form-data" action="contact/">{% csrf_token %}
+      <form class="col s12"  method="post" enctype="multipart/form-data" action="contact/">
+          {% csrf_token %}
         <div class="row">
           <div class="input-field col s6">
-            <input id="subject_text" type="text" length="100">
+            <input id="subject_text" name ='subject_text' type="text" length="100">
             <label for="subject_text">subject</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <textarea id="message_textarea" class="materialize-textarea" length="2500"></textarea>
+            <textarea id="message_textarea" name='message_textarea' class="materialize-textarea"
+                      length="2500"></textarea>
             <label for="message_textarea">Message</label>
           </div>
         </div>
-          <button id="email_submit" class="btn waves-effect waves-light" type="submit" name="action">submit</button>
+          <button id="email_submit" class="btn waves-effect waves-light" type="submit"
+                  name="action">submit</button>
       </form>
     </div>
   </div></br>
