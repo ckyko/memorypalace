@@ -1,5 +1,5 @@
 <div class = "row" id=modal_register>
-  <form class = "col s12" method="post" enctype="multipart/form-data" action="register/">
+  <form class = "col s12" method="post" enctype="multipart/form-data" action="/register/">
     {%csrf_token%}
     {% if messages%}
       {% for error in messages %}
