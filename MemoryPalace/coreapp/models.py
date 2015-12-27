@@ -103,3 +103,4 @@ def PalaceObject_post_delete_handler(sender, **kwargs):
     PalaceObject = kwargs['instance']
     storage, path = PalaceObject.objectImage.storage, PalaceObject.objectImage.path
     storage.delete(path)
+
