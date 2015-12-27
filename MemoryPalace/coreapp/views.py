@@ -52,8 +52,8 @@ def contact(req):
     if req.user.is_authenticated():
         data['send_email'] = True
         if req.method == "POST":      # check if user submit or not
-            subject = req.POST.get('subject_text','')
-            message = req.POST.get('message_textarea','')
+            subject = req.POST.get('subject_text', '')
+            message = req.POST.get('message_textarea', '')
             print(subject)
             print(message)
 
@@ -62,10 +62,20 @@ def contact(req):
             message_txt = MIMEText(message, 'plain', 'utf-8')
             msg.attach(message_txt)
 
-            msg['to'] = 'ckykokoko@gmail.com'
+            msg['to'] = 'ckykook@gmail.com'
             msg['from'] = 'ckyckyko@gmail.com'
             msg['subject'] = subject
-
+            try:
+                smtpObj = smtplib.SMTP('smtp.gmail.com', 587)
+                smtpObj.ehlo()
+                smtpObj.starttls()
+                smtpObj.ehlo()
+                smtpObj.login(msg['from'], '/.,mnbvcxz')
+                smtpObj.sendmail(msg['from'], msg['to'], msg.as_string())
+                smtpObj.quit()
+                print("Successfully sent email")
+            except smtplib.SMTPException:
+                print("Error: unable to send email")
 
 
     return render(req, 'contact.html', data)
