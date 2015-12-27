@@ -65,7 +65,7 @@ footer.page-footer {
   width: 1024px; height: 720px;
   border: 2px solid black;
   background-repeat: no-repeat;
-  background-color: DarkGray;
+  background-image: url('../images/rooms/room2.jpg');
 }
 .outerscrollbox {
   display: inline-block; *display: inline;
@@ -147,19 +147,9 @@ img.draggable:hover {
   position: relative;
 }
 
-#modal_caption{
-  height:300px;
-  width:300px;
-}
+#modal1{
+  overflow-x: hidden;
 
-#modal_createPalace{
-  height:300px;
-  width:300px;
-}
-
-#modal_createRoom{
-  height:300px;
-  width:300px;
 }
 
 #modal_register_login{
@@ -203,8 +193,8 @@ img.draggable:hover {
 }
 
 .roomImage{
-  width:150px;
-  height:100px;
+  width:100%;
+  height:50%;
 }
 
 div.room_card:hover span:first-of-type a {
