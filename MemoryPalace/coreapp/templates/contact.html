@@ -11,7 +11,9 @@
             <li>Imer Jance</li>
           </ul>
         </div><br><br>
+      {% if send_email == True %}
       <h6>Sending Email:</h6>
+      <p>{{ status_msg }}</p>
     <div class="row">
       <form class="col s12"  method="post" enctype="multipart/form-data" action="contact/">
           {% csrf_token %}
@@ -32,5 +34,6 @@
                   name="action">submit</button>
       </form>
     </div>
+      {% endif %}
   </div></br>
 {% endblock %}

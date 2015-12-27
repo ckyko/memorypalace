@@ -54,9 +54,6 @@ def contact(req):
         if req.method == "POST":      # check if user submit or not
             subject = req.POST.get('subject_text', '')
             message = req.POST.get('message_textarea', '')
-            print(subject)
-            print(message)
-
             msg = MIMEMultipart()
 
             message_txt = MIMEText(message, 'plain', 'utf-8')
@@ -73,10 +70,9 @@ def contact(req):
                 smtpObj.login(msg['from'], '/.,mnbvcxz')
                 smtpObj.sendmail(msg['from'], msg['to'], msg.as_string())
                 smtpObj.quit()
-                print("Successfully sent email")
+                data['status_msg'] = 'Successfully sent email!'
             except smtplib.SMTPException:
-                print("Error: unable to send email")
-
+                data['status_msg'] = 'Error: unable to send email!'
 
     return render(req, 'contact.html', data)
 
