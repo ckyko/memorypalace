@@ -164,7 +164,6 @@ $(document).ready(function(){
          position_x = target.getAttribute('data-x'),
          position_y = target.getAttribute('data-y'),
          title = target.getAttribute('title');
-         console.log(title);
 
          var height = $('#'+id).css('height');
          var width = $('#'+id).css('width');
@@ -173,7 +172,6 @@ $(document).ready(function(){
           'position_y':position_y, 'height':height, 'width':width }, function(ret){
 
             })
-        $('#'+e.target.id).attr('title', caption);
     });
 
     var timeout_id = 0,
