@@ -1,8 +1,12 @@
+"""
+test_views.py
+Tests if the all the views are functioning
+"""
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.http import HttpRequest
-from coreapp import views
 from django.contrib.auth.models import User
+from coreapp import views
 
 
 class ViewsTestCase(TestCase):
@@ -34,6 +38,9 @@ class ViewsTestCase(TestCase):
 
 
     def test_memory_palace_page(self):
+        """
+        Tests memory Palace page is running
+        """
         response = self.client.get(reverse('MemoryPalace'))
         self.assertEqual(response.status_code, 200)
 
@@ -78,9 +85,9 @@ class ViewsTestCase(TestCase):
         """
 
         response = self.client.post(reverse('register'),
-                        {'username': 'newUserName', 'password1': 'password',
-
-                         'password2': 'password'})
+                                           {'username': 'newUserName',
+                                            'password1': 'password',
+                                            'password2': 'password'})
 
         new_user = User.objects.get(username='newUserName')
         self.assertTrue(new_user is not None, msg="user not create.")
@@ -89,15 +96,19 @@ class ViewsTestCase(TestCase):
         """
         Testing login
         """
-        user=User.objects.create_user(username="testing", password="password")
+        user = User.objects.create_user(username="testing", password="password")
         self.assertTrue(user is not None, msg="user not create.")
         response = self.client.post(reverse('login'), {'username': 'testing',
-                                                         'password': 'password'})
+                                                       'password': 'password'})
         self.assertEqual(response.status_code, 302)
         index_response = self.client.get(reverse('index'))
-        self.assertContains(index_response,'<li><a class="modal-trigger" href=/logout>Logout</a></li>')
+        self.assertContains(index_response,
+                            '<li><a class="modal-trigger" href=/logout>Logout</a></li>')
 
 
 
     def test_create_palace(self):
+        """
+        Tests creating a palace
+        """
         user = User.objects.create_user(username="testing", password="password")

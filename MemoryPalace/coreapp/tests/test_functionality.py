@@ -1,11 +1,17 @@
+"""
+test_functionality
+Test most of the major functions of the project
+"""
+import os
+import unittest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver import ActionChains
-import os
-import unittest
 
 loc=os.getcwd()#get current location
-keys_dict = {"username":"testuser", "email":"testuser@testemail.com", "password":"testuser", "palace_name":"testuser_palace", "room_name":"testuser_palace_room", "img_loc":loc+"/coreapp/static/images/previews/pre1.jpg"  }
+keys_dict = {"username":"testuser", "email":"testuser@testemail.com", "password":"testuser",
+             "palace_name":"testuser_palace", "room_name":"testuser_palace_room",
+             "img_loc":loc+"/coreapp/static/images/previews/pre1.jpg"  }
 class NewVisitorTest(unittest.TestCase):
 
 
@@ -109,7 +115,8 @@ class NewVisitorTest(unittest.TestCase):
         #click on edit button to edit the palace
         self.browser.find_element_by_id("edit_"+keys_dict["palace_name"]).click()
         #Check if it gets redirected to the Memory Palace
-        self.assertEquals(self.browser.current_url, "http://localhost:8000/MemoryPalace/?palaceName=testuser_palace" )
+        self.assertEquals(self.browser.current_url,
+                          "http://localhost:8000/MemoryPalace/?palaceName=testuser_palace")
         #click on the add button to add room
         self.browser.find_element_by_id("background_add").click()
         #Enter the room name
@@ -119,14 +126,16 @@ class NewVisitorTest(unittest.TestCase):
         #Submit the form
         self.browser.find_element_by_id("createRoom_submit").submit()
         #Check if in Memory Palace under specific room
-        self.assertEquals(self.browser.current_url, "http://localhost:8000/MemoryPalace/?palaceName="+keys_dict['palace_name']+'&roomName='+keys_dict['room_name'] )
+        self.assertEquals(self.browser.current_url, "http://localhost:8000/MemoryPalace/?palaceName="
+                          +keys_dict['palace_name']+'&roomName='+keys_dict['room_name'])
 
     def Room_delete(self):
         '''
         This function lets user delete a room
         '''
         #Delete the room
-        self.browser.get('http://127.0.0.1:8000/deleteRoom?palaceName='+keys_dict['palace_name']+'&roomName='+keys_dict['room_name'])
+        self.browser.get('http://127.0.0.1:8000/deleteRoom?palaceName='+keys_dict['palace_name']
+                         +'&roomName='+keys_dict['room_name'])
 
     '''
     Funtions defined below are test functions
@@ -175,7 +184,7 @@ class NewVisitorTest(unittest.TestCase):
         #click on edit button of palace
         self.browser.find_element_by_id("edit_"+keys_dict["palace_name"]).click()
         #Check if redirected to Memory Palace
-        self.assertEquals(self.browser.current_url, "http://localhost:8000/MemoryPalace/?palaceName=testuser_palace" )
+        self.assertEquals(self.browser.current_url, "http://localhost:8000/MemoryPalace/?palaceName=testuser_palace")
         #Call logout function
         self.logout()
 
