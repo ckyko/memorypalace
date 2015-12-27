@@ -85,9 +85,6 @@ class RoomObject(models.Model):
     def __unicode__(self):
         return self.url
 
-    class Meta:
-        unique_together = (("palaceRoom", "url"),)
-
 
 @receiver(post_delete, sender=PalaceRoom)
 def PalaceRoom_post_delete_handler(sender, **kwargs):
