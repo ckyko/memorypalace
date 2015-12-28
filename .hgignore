@@ -1,0 +1,14 @@
+# use glob syntax.
+syntax: glob
+
+*.log
+*.pyc
+*~
+*.git/*
+*.gitignore*
+*/htmlcov/*
+*Procfile
+*.idea/*
+*db.sqlite3
+000*
+*.coverage

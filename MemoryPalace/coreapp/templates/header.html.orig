@@ -1,0 +1,20 @@
+{% load staticfiles %}
+<nav class="white" role="navigation">
+  <div class="nav-wrapper container">
+    <img height="65px" src="{% static "images/logo.jpg"%}" />
+    <ul class="right hide-on-med-and-down">
+      <li><a href="/">Home</a></li>
+      <li><a href="/palace_library/">Library</a></li>
+      <li><a class="modal-trigger" href={{headerLink}}>{{header}}</a></li>
+    </ul>
+
+    <ul id="nav-mobile" class="side-nav">
+      <li><a href="/">Home</a></li>
+      <li><a href="/palace_library">Library</a></li>
+      <li><a class="modal-trigger" href="{{headerLink}}">{{header}}</a></li>
+    </ul>
+    <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+
+  </div>
+</nav>
+{% include "modal_register_login.html" %}
